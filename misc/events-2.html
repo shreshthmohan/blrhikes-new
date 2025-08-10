@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events | Our Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm">
+      <div class="container mx-auto px-4 py-6">
+        <div class="flex items-center justify-between">
+          <div class="text-2xl font-bold">Community Events</div>
+          <nav class="hidden md:block">
+            <ul class="flex space-x-8">
+              <li>
+                <a href="#" class="hover:text-green-600 transition">Home</a>
+              </li>
+              <li><a href="#" class="text-green-600 font-medium">Events</a></li>
+              <li>
+                <a href="#" class="hover:text-green-600 transition">Trails</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-green-600 transition">About</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-green-600 transition">Contact</a>
+              </li>
+            </ul>
+          </nav>
+          <button class="md:hidden">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+      <!-- Page Title -->
+      <div class="mb-12 text-center">
+        <h1 class="text-4xl font-bold mb-4">Community Events</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Join us as we gather to celebrate, learn, and grow together. From
+          guided hikes to seasonal celebrations, our events connect us with each
+          other and the natural world.
+        </p>
+      </div>
+
+      <!-- Upcoming Events Section -->
+      <section class="mb-20">
+        <div class="flex items-center mb-8">
+          <h2 class="text-2xl font-bold">Upcoming Events</h2>
+          <div class="h-0.5 bg-green-500 flex-grow ml-4"></div>
+        </div>
+
+        <!-- Upcoming Event Card (Large) -->
+        <div
+          class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg transform hover:-translate-y-1"
+        >
+          <div class="md:flex">
+            <div class="md:w-1/2 h-64 md:h-auto relative">
+              <img
+                src="/api/placeholder/800/600"
+                alt="Spring Equinox Guided Hike"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute top-4 left-4 bg-green-500 text-white py-1 px-3 rounded-full text-sm font-medium"
+              >
+                Registration Open
+              </div>
+            </div>
+            <div class="md:w-1/2 p-6 md:p-8 flex flex-col">
+              <div
+                class="flex items-center text-green-600 text-sm font-medium mb-2"
+              >
+                <i class="far fa-calendar mr-2"></i>
+                <span>March 25, 2025 • 9:00 AM - 2:00 PM</span>
+              </div>
+              <h3 class="text-2xl font-bold mb-2">
+                Spring Equinox Guided Hike
+              </h3>
+              <div class="flex items-start text-gray-600 mb-4">
+                <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                <span>Redwood Valley Trailhead, North Ridge Area</span>
+              </div>
+              <p class="text-gray-600 mb-6">
+                Join us for a special spring hike as we welcome the changing
+                season. Our expert guides will lead this moderate 4-mile hike
+                through awakening forests and meadows full of early wildflowers.
+              </p>
+              <div class="mt-auto">
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Guided Hike</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Moderate</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Family-friendly</span
+                  >
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold">$15 / $10 members</span>
+                  <a
+                    href="#"
+                    class="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded-md transition"
+                    >Register</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Past Events Section -->
+      <section>
+        <div class="flex items-center mb-8">
+          <h2 class="text-2xl font-bold">Past Events</h2>
+          <div class="h-0.5 bg-gray-300 flex-grow ml-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <!-- Past Event 1 -->
+          <div
+            class="bg-white rounded-lg shadow overflow-hidden transition duration-300 hover:shadow-md"
+          >
+            <div class="relative h-48">
+              <img
+                src="/api/placeholder/400/300"
+                alt="Winter Solstice Celebration"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4"
+              >
+                <h3 class="text-white text-xl font-bold">
+                  Winter Solstice Celebration
+                </h3>
+                <div class="text-white text-sm opacity-90">
+                  December 21, 2024
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex items-start text-gray-600 text-sm mb-3">
+                <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                <span>Community Center</span>
+              </div>
+              <p class="text-gray-600 text-sm mb-4">
+                We gathered to celebrate the longest night with music,
+                storytelling, and a community fire ceremony.
+              </p>
+              <button
+                class="text-green-600 hover:text-green-700 text-sm font-medium flex items-center"
+                id="eventDetails1"
+              >
+                View photos
+                <i class="fas fa-chevron-right text-xs ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Past Event 2 -->
+          <div
+            class="bg-white rounded-lg shadow overflow-hidden transition duration-300 hover:shadow-md"
+          >
+            <div class="relative h-48">
+              <img
+                src="/api/placeholder/400/300"
+                alt="Mushroom Foraging Workshop"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4"
+              >
+                <h3 class="text-white text-xl font-bold">
+                  Mushroom Foraging Workshop
+                </h3>
+                <div class="text-white text-sm opacity-90">
+                  November 12, 2024
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex items-start text-gray-600 text-sm mb-3">
+                <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                <span>West Forest Trails</span>
+              </div>
+              <p class="text-gray-600 text-sm mb-4">
+                Local mycologists led our sold-out workshop on identifying local
+                mushroom species safely and ethically.
+              </p>
+              <button
+                class="text-green-600 hover:text-green-700 text-sm font-medium flex items-center"
+                id="eventDetails2"
+              >
+                View photos
+                <i class="fas fa-chevron-right text-xs ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Past Event 3 -->
+          <div
+            class="bg-white rounded-lg shadow overflow-hidden transition duration-300 hover:shadow-md"
+          >
+            <div class="relative h-48">
+              <img
+                src="/api/placeholder/400/300"
+                alt="Fall Trail Maintenance Day"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4"
+              >
+                <h3 class="text-white text-xl font-bold">
+                  Fall Trail Maintenance Day
+                </h3>
+                <div class="text-white text-sm opacity-90">
+                  October 15, 2024
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex items-start text-gray-600 text-sm mb-3">
+                <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                <span>Cedar Valley Trails</span>
+              </div>
+              <p class="text-gray-600 text-sm mb-4">
+                Volunteers gathered to clear fallen trees, repair erosion
+                damage, and prepare our community trails for winter.
+              </p>
+              <button
+                class="text-green-600 hover:text-green-700 text-sm font-medium flex items-center"
+                id="eventDetails3"
+              >
+                View photos
+                <i class="fas fa-chevron-right text-xs ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center">
+          <nav class="inline-flex rounded-md shadow">
+            <a
+              href="#"
+              class="py-2 px-4 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50"
+            >
+              <i class="fas fa-chevron-left text-sm"></i>
+            </a>
+            <a
+              href="#"
+              class="py-2 px-4 bg-green-600 text-white border border-green-600"
+            >
+              1
+            </a>
+            <a
+              href="#"
+              class="py-2 px-4 bg-white border border-gray-300 hover:bg-gray-50"
+            >
+              2
+            </a>
+            <a
+              href="#"
+              class="py-2 px-4 bg-white border border-gray-300 hover:bg-gray-50"
+            >
+              3
+            </a>
+            <a
+              href="#"
+              class="py-2 px-4 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50"
+            >
+              <i class="fas fa-chevron-right text-sm"></i>
+            </a>
+          </nav>
+        </div>
+      </section>
+    </main>
+
+    <!-- Photo Viewer Modal (Hidden by default) -->
+    <div
+      id="photoModal"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+      >
+        <div class="p-4 border-b flex items-center justify-between">
+          <h3 class="text-xl font-bold" id="modalTitle">Event Photos</h3>
+          <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+        <div class="p-6 overflow-y-auto flex-grow">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+            id="photoGrid"
+          >
+            <!-- Photos will be inserted here by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Simple modal functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("photoModal");
+        const closeBtn = document.getElementById("closeModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const photoGrid = document.getElementById("photoGrid");
+
+        // Event detail buttons
+        const detailBtns = [
+          document.getElementById("eventDetails1"),
+          document.getElementById("eventDetails2"),
+          document.getElementById("eventDetails3"),
+        ];
+
+        const eventTitles = [
+          "Winter Solstice Celebration Photos",
+          "Mushroom Foraging Workshop Photos",
+          "Fall Trail Maintenance Day Photos",
+        ];
+
+        // Open modal with appropriate content
+        detailBtns.forEach((btn, index) => {
+          btn.addEventListener("click", function () {
+            modalTitle.textContent = eventTitles[index];
+
+            // Clear previous photos
+            photoGrid.innerHTML = "";
+
+            // Add placeholder photos (in a real app, these would be actual event photos)
+            for (let i = 0; i < 6; i++) {
+              const photoEl = document.createElement("div");
+              photoEl.innerHTML = `
+                            <img src="/api/placeholder/400/300?text=Photo ${
+                              i + 1
+                            }" 
+                                 alt="Event photo ${i + 1}" 
+                                 class="w-full h-48 object-cover rounded">
+                        `;
+              photoGrid.appendChild(photoEl);
+            }
+
+            modal.classList.remove("hidden");
+            document.body.style.overflow = "hidden"; // Prevent scrolling while modal is open
+          });
+        });
+
+        // Close modal
+        closeBtn.addEventListener("click", function () {
+          modal.classList.add("hidden");
+          document.body.style.overflow = "";
+        });
+
+        // Close modal if clicking outside of content
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.classList.add("hidden");
+            document.body.style.overflow = "";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

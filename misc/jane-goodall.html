@@ -1,0 +1,2349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jane Goodall - Gombe Stream Research</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.min.js"
+      defer
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&display=swap");
+
+      body {
+        font-family: "Lora", serif;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .hero-text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body class="bg-stone-100 text-stone-800">
+    <!-- Navigation -->
+    <nav class="bg-stone-900 text-stone-100">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <span class="font-semibold text-xl">Jane Goodall</span>
+          <span class="text-sm italic text-stone-400"
+            >Gombe Stream Research</span
+          >
+        </div>
+        <div class="hidden md:flex space-x-6">
+          <a
+            href="#research"
+            class="hover:text-amber-300 transition duration-300"
+            >Research</a
+          >
+          <a
+            href="#chimpanzees"
+            class="hover:text-amber-300 transition duration-300"
+            >The Chimpanzees</a
+          >
+          <a
+            href="#field-notes"
+            class="hover:text-amber-300 transition duration-300"
+            >Field Notes</a
+          >
+          <a
+            href="#gallery"
+            class="hover:text-amber-300 transition duration-300"
+            >Photo Gallery</a
+          >
+          <a
+            href="#support"
+            class="hover:text-amber-300 transition duration-300"
+            >Support Our Work</a
+          >
+        </div>
+        <button class="md:hidden text-xl">≡</button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative h-screen">
+      <!-- Hero Background with Parallax Effect -->
+      <div
+        class="absolute inset-0 bg-cover bg-center bg-fixed"
+        style="
+          background-image: url('/api/placeholder/1600/900');
+          filter: brightness(0.8);
+        "
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-transparent to-stone-900 opacity-80"
+        ></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div
+        class="relative container mx-auto h-full flex flex-col justify-center px-4 md:px-6"
+      >
+        <div
+          class="max-w-3xl"
+          x-data="{ currentQuote: 0 }"
+          x-init="setInterval(() => currentQuote = (currentQuote + 1) % 3, 8000)"
+        >
+          <h1
+            class="text-4xl md:text-6xl font-bold text-white hero-text-shadow mb-4"
+          >
+            Witnessing the<br />Wild
+          </h1>
+
+          <div class="relative h-32 md:h-28 mb-6">
+            <p
+              class="absolute top-0 left-0 right-0 transition-opacity duration-1000 italic text-white text-xl md:text-2xl hero-text-shadow"
+              x-show="currentQuote === 0"
+              x-transition.duration.800ms
+            >
+              "The least I can do is speak out for those who cannot speak for
+              themselves."
+            </p>
+            <p
+              class="absolute top-0 left-0 right-0 transition-opacity duration-1000 italic text-white text-xl md:text-2xl hero-text-shadow"
+              x-show="currentQuote === 1"
+              x-transition.duration.800ms
+            >
+              "We share over 98% of our DNA with chimpanzees. We're not as
+              different as we thought."
+            </p>
+            <p
+              class="absolute top-0 left-0 right-0 transition-opacity duration-1000 italic text-white text-xl md:text-2xl hero-text-shadow"
+              x-show="currentQuote === 2"
+              x-transition.duration.800ms
+            >
+              "Only if we understand, will we care. Only if we care, will we
+              help."
+            </p>
+          </div>
+
+          <p
+            class="text-stone-200 text-lg md:text-xl mb-8 max-w-2xl hero-text-shadow"
+          >
+            I am Jane Goodall, a researcher documenting the lives, behaviors,
+            and social structures of wild chimpanzees at Gombe Stream in
+            Tanzania. My observations challenge our understanding of what it
+            means to be human.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a
+              href="#research"
+              class="bg-amber-700 hover:bg-amber-800 text-white py-3 px-6 rounded-sm transition duration-300 text-center font-semibold"
+            >
+              Explore My Research
+            </a>
+            <a
+              href="#field-notes"
+              class="bg-transparent border-2 border-stone-200 hover:bg-stone-800 text-white py-3 px-6 rounded-sm transition duration-300 text-center font-semibold"
+            >
+              Read Field Notes
+            </a>
+          </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div
+          class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white animate-bounce"
+        >
+          <span class="text-sm mb-2">Scroll to discover</span>
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Research Findings Section -->
+    <section id="research" class="py-16 bg-stone-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <span
+            class="block text-amber-700 text-sm font-semibold tracking-widest uppercase mb-2"
+            >Our Discoveries</span
+          >
+          <h2 class="text-3xl md:text-4xl font-bold mb-8">Research Findings</h2>
+
+          <p class="text-lg mb-8">
+            The forest speaks in a thousand voices if we but listen. For three
+            years now, I have sat among the trees of Gombe, watching our closest
+            relatives move through their world with a grace and complexity that
+            challenges what we thought we knew about being alive on this planet.
+            What I have witnessed is not merely animal behavior—it is the
+            unfolding story of consciousness itself, a narrative we share more
+            deeply than we once imagined.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-12 mb-16">
+            <div>
+              <div
+                class="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-lg shadow-lg"
+              >
+                <img
+                  src="/api/placeholder/600/400"
+                  alt="Chimpanzee using tools"
+                  class="w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                />
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Tool Making & Usage</h3>
+              <p class="text-stone-700">
+                When I first observed David Greybeard fashioning and using tools
+                to extract termites, the boundary between human and animal began
+                to dissolve before my eyes. These weren't random acts but
+                deliberate crafting—stems carefully selected, stripped of
+                leaves, and fashioned to just the right length. Each tool bears
+                the signature of its maker and purpose, a humble technology born
+                of necessity and intelligence. What we call "human" is perhaps
+                better understood as a pattern that flows through all life,
+                expressing itself in varying degrees of complexity.
+              </p>
+            </div>
+            <div>
+              <div
+                class="aspect-w-16 aspect-h-9 mb-6 overflow-hidden rounded-lg shadow-lg"
+              >
+                <img
+                  src="/api/placeholder/600/400"
+                  alt="Chimpanzee social behavior"
+                  class="w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                />
+              </div>
+              <h3 class="text-xl font-semibold mb-3">
+                Social Structures & Relationships
+              </h3>
+              <p class="text-stone-700">
+                The chimpanzee community reveals itself as a living tapestry of
+                relationships—mothers and children, allies and rivals, all woven
+                together in patterns that stretch across generations. I've
+                documented complex coalitions forming and dissolving, grudges
+                held for years, and reconciliations marked by tender embraces.
+                In their social fluidity, I see reflections of our own
+                societies, suggesting that the roots of our politics and ethics
+                may reach deeper than our civilizations. The boundaries between
+                their social awareness and ours blur with each day of
+                observation.
+              </p>
+            </div>
+          </div>
+
+          <div class="bg-stone-100 p-8 rounded-lg shadow-inner mb-16">
+            <h3 class="text-xl font-semibold mb-4">
+              Key Observations That Challenge Convention
+            </h3>
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <span class="text-amber-700 font-semibold text-lg mr-4"
+                  >01</span
+                >
+                <div>
+                  <h4 class="font-semibold mb-1">Meat Consumption & Hunting</h4>
+                  <p class="text-stone-700">
+                    The prevailing wisdom that chimpanzees were strictly
+                    vegetarian has fallen away as I've documented coordinated
+                    hunting parties pursuing colobus monkeys through the canopy.
+                    This is not mindless predation but strategic
+                    cooperation—with sharing behaviors that follow successful
+                    hunts, creating bonds between individuals. The line between
+                    herbivore and carnivore reveals itself as another of our
+                    artificial categories that nature refuses to honor.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span class="text-amber-700 font-semibold text-lg mr-4"
+                  >02</span
+                >
+                <div>
+                  <h4 class="font-semibold mb-1">Individual Personalities</h4>
+                  <p class="text-stone-700">
+                    Each chimpanzee emerges in my notes as unmistakably
+                    themselves—Flo with her fierce maternal protectiveness,
+                    Figan with his political intelligence, David Greybeard with
+                    his gentle curiosity. These are not interchangeable units of
+                    a species but unique beings navigating their world through
+                    the lens of their distinct temperaments. In acknowledging
+                    their individuality, we must also acknowledge the ethical
+                    implications of how we regard these fellow travelers on
+                    Earth's journey.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span class="text-amber-700 font-semibold text-lg mr-4"
+                  >03</span
+                >
+                <div>
+                  <h4 class="font-semibold mb-1">Communication Systems</h4>
+                  <p class="text-stone-700">
+                    Their world pulses with meaning conveyed through gesture,
+                    vocalization, and touch. I have documented over 20 distinct
+                    calls, each contextual, each carrying information vital to
+                    community cohesion. This is not the absence of language but
+                    perhaps its embryonic form—or more accurately, a different
+                    mode of communion that humans, in our fixation on words,
+                    have largely forgotten how to hear. The forest itself
+                    becomes a medium through which meaning flows between beings.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="relative py-10 px-8 bg-stone-800 text-white rounded-lg overflow-hidden mb-16"
+          >
+            <div class="absolute top-0 right-0 opacity-20">
+              <svg
+                width="200"
+                height="200"
+                viewBox="0 0 200 200"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M40 100C40 66.8629 66.8629 40 100 40C133.137 40 160 66.8629 160 100C160 133.137 133.137 160 100 160C66.8629 160 40 133.137 40 100Z"
+                  stroke="white"
+                  stroke-width="2"
+                />
+                <path
+                  d="M20 100C20 55.8172 55.8172 20 100 20C144.183 20 180 55.8172 180 100C180 144.183 144.183 180 100 180C55.8172 180 20 144.183 20 100Z"
+                  stroke="white"
+                  stroke-width="2"
+                />
+                <path
+                  d="M0 100C0 44.7715 44.7715 0 100 0C155.228 0 200 44.7715 200 100C200 155.228 155.228 200 100 200C44.7715 200 0 155.228 0 100Z"
+                  stroke="white"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 relative z-10">
+              The Methodological Revolution
+            </h3>
+            <p class="relative z-10 mb-6">
+              Traditional scientific approaches demanded distance, detachment,
+              and even the assignment of numbers rather than names. But to truly
+              understand these beings, I have chosen a different path—one of
+              patient relationship-building and recognition of each individual's
+              unique presence in the world. In this approach, observation
+              becomes not an act of extraction but of communion.
+            </p>
+            <p class="relative z-10 italic">
+              "When I look into the eyes of a chimpanzee, I see an intelligent
+              being looking back. They deserve a special status, a special
+              consideration that recognizes the shadow of ourselves we see in
+              them."
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-amber-700 mb-3">
+                <svg
+                  class="w-10 h-10"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="font-semibold mb-2">Behavioral Flexibility</h3>
+              <p class="text-stone-600">
+                Adaptation to changing conditions through learned behaviors
+                rather than genetic changes, demonstrating cognitive plasticity.
+              </p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-amber-700 mb-3">
+                <svg
+                  class="w-10 h-10"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="font-semibold mb-2">Cultural Transmission</h3>
+              <p class="text-stone-600">
+                Knowledge passed between generations through observation and
+                teaching, forming distinct cultural traditions within
+                communities.
+              </p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-amber-700 mb-3">
+                <svg
+                  class="w-10 h-10"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="font-semibold mb-2">Emotional Intelligence</h3>
+              <p class="text-stone-600">
+                Complex emotional lives including grief, joy, jealousy, and
+                reconciliation behaviors that maintain community bonds.
+              </p>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <a
+              href="#publications"
+              class="inline-flex items-center text-amber-700 hover:text-amber-800 font-semibold transition duration-300"
+            >
+              View Scientific Publications
+              <svg
+                class="w-5 h-5 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Meet the Chimpanzees Section -->
+    <section id="chimpanzees" class="py-16 bg-stone-800 text-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <span
+            class="block text-amber-400 text-sm font-semibold tracking-widest uppercase mb-2"
+            >The Community</span
+          >
+          <h2 class="text-3xl md:text-4xl font-bold mb-8">
+            Meet the Chimpanzees
+          </h2>
+
+          <p class="text-lg mb-12">
+            Each morning as the mist rises from the forest floor, I am greeted
+            not by specimens but by persons—each with their own story, their own
+            way of moving through the world. These are not merely objects of
+            study but sovereign beings with whom I share this time and place. In
+            their eyes I recognize consciousness looking back at me, asking
+            questions of their own. Here you will meet some of the remarkable
+            individuals who have allowed me into their lives, each one teaching
+            me something about what it means to be alive on this shared Earth.
+          </p>
+
+          <div class="space-y-16">
+            <!-- David Greybeard -->
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div class="order-2 md:order-1">
+                <h3 class="text-2xl font-semibold mb-3">David Greybeard</h3>
+                <p class="text-amber-300 mb-4 italic">"The Bridge-Builder"</p>
+                <p class="mb-4">
+                  The first to trust me enough to approach, David Greybeard
+                  became the doorway through which I entered the chimpanzee
+                  world. It was his gentle acceptance that encouraged others to
+                  overcome their fear. When I think of wisdom embodied, I see
+                  his thoughtful face with its distinctive silver chin, his
+                  measured movements, his patient observation before action.
+                </p>
+                <p class="mb-4">
+                  David was the first chimpanzee I observed using
+                  tools—carefully selecting stems, modifying them, and using
+                  them to extract termites from their mounds. This moment
+                  dissolved the supposed boundary between human and animal
+                  technology, challenging centuries of human exceptionalism in a
+                  single, elegant motion of his hand.
+                </p>
+                <div class="flex space-x-4 text-sm text-stone-300">
+                  <span>Age: ~15 years</span>
+                  <span>Status: Respected Male</span>
+                </div>
+              </div>
+              <div class="order-1 md:order-2">
+                <div
+                  class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="/api/placeholder/600/450"
+                    alt="David Greybeard"
+                    class="w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Flo -->
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div
+                  class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="/api/placeholder/600/450"
+                    alt="Flo and her infant"
+                    class="w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
+              <div>
+                <h3 class="text-2xl font-semibold mb-3">Flo</h3>
+                <p class="text-amber-300 mb-4 italic">"The Matriarch"</p>
+                <p class="mb-4">
+                  If the community has a center, it might be found in Flo—a
+                  mother whose influence flows through multiple generations.
+                  With her distinctive bulbous nose and torn ears that speak of
+                  a long life's journey, she carries herself with the quiet
+                  authority of one who has seen much of what the forest has to
+                  offer, both its abundance and its hardships.
+                </p>
+                <p class="mb-4">
+                  Her maternal style reveals something profound about chimpanzee
+                  society—affectionate, protective, yet encouraging independence
+                  in her children. Through Flo, I witness how knowledge passes
+                  between generations, not through books or formal instruction,
+                  but through the intimate dance of daily life shared between
+                  mother and child. Her relationship with her offspring Fifi,
+                  Figan, and infant Flint offers a mirror in which we might
+                  better understand our own evolutionary history.
+                </p>
+                <div class="flex space-x-4 text-sm text-stone-300">
+                  <span>Age: ~28 years</span>
+                  <span>Status: Matriarch</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Goliath -->
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div class="order-2 md:order-1">
+                <h3 class="text-2xl font-semibold mb-3">Goliath</h3>
+                <p class="text-amber-300 mb-4 italic">"The Challenger"</p>
+                <p class="mb-4">
+                  In Goliath's powerful presence, I witness the complex
+                  interplay of strength and restraint that governs chimpanzee
+                  social structures. His displays—charging through the forest,
+                  dragging branches, drumming on buttress roots—speak to his
+                  ambition and vitality. Yet even in his most impressive
+                  displays, there remains a choreography, a sense of
+                  communication rather than mere intimidation.
+                </p>
+                <p class="mb-4">
+                  Currently second to Mike in the dominance hierarchy, Goliath's
+                  relationship with other males reveals the ever-shifting
+                  alliances and tensions that weave through the community. Power
+                  here is not simply about physical strength but about building
+                  coalitions, about knowing when to display and when to
+                  reconcile. In his political maneuvering, I see reflections of
+                  our own social structures, suggesting that the roots of
+                  politics reach deeper than civilization.
+                </p>
+                <div class="flex space-x-4 text-sm text-stone-300">
+                  <span>Age: ~16 years</span>
+                  <span>Status: Beta Male</span>
+                </div>
+              </div>
+              <div class="order-1 md:order-2">
+                <div
+                  class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="/api/placeholder/600/450"
+                    alt="Goliath"
+                    class="w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Mike -->
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div
+                  class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="/api/placeholder/600/450"
+                    alt="Mike"
+                    class="w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
+              <div>
+                <h3 class="text-2xl font-semibold mb-3">Mike</h3>
+                <p class="text-amber-300 mb-4 italic">"The Innovator"</p>
+                <p class="mb-4">
+                  How does an individual transform their position within a
+                  complex social web? Mike's remarkable rise to alpha status
+                  offers a case study in innovation and strategic thinking. Once
+                  a low-ranking male, Mike discovered that empty kerosene cans
+                  from our camp made his displays exponentially more
+                  intimidating—a technological adaptation that fundamentally
+                  shifted his social standing.
+                </p>
+                <p class="mb-4">
+                  In Mike's strategic appropriation of human objects, I observe
+                  something profound about adaptability and the cognitive
+                  flexibility to recognize opportunity in the unfamiliar. His
+                  story challenges simple narratives about dominance, suggesting
+                  that intelligence and adaptability can sometimes overcome raw
+                  physical power. The social structure bends around innovation,
+                  just as human societies have been shaped by technological
+                  leaps throughout our history.
+                </p>
+                <div class="flex space-x-4 text-sm text-stone-300">
+                  <span>Age: ~14 years</span>
+                  <span>Status: Alpha Male</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Figan -->
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div class="order-2 md:order-1">
+                <h3 class="text-2xl font-semibold mb-3">Figan</h3>
+                <p class="text-amber-300 mb-4 italic">"The Strategist"</p>
+                <p class="mb-4">
+                  Son of Flo, brother of Fifi and Flint, Figan moves through the
+                  community with a keen social intelligence that makes him
+                  fascinating to observe. While not physically imposing, he
+                  navigates the complex web of relationships with a political
+                  acumen that suggests depth of understanding beyond mere
+                  instinct or conditioning.
+                </p>
+                <p class="mb-4">
+                  I have watched him form alliances, wait for opportune moments,
+                  and use his observations of others to strategic advantage. His
+                  relationship with his brother Faben—who has a partially
+                  paralyzed arm—reveals a capacity for cooperation that extends
+                  beyond immediate self-interest. Together, they coordinate in
+                  ways that complement each other's strengths and weaknesses,
+                  suggesting an understanding of differing abilities and mutual
+                  benefit.
+                </p>
+                <div class="flex space-x-4 text-sm text-stone-300">
+                  <span>Age: ~9 years</span>
+                  <span>Status: Adolescent Male</span>
+                </div>
+              </div>
+              <div class="order-1 md:order-2">
+                <div
+                  class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="/api/placeholder/600/450"
+                    alt="Figan"
+                    class="w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Fifi -->
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div
+                  class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="/api/placeholder/600/450"
+                    alt="Fifi"
+                    class="w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
+              <div>
+                <h3 class="text-2xl font-semibold mb-3">Fifi</h3>
+                <p class="text-amber-300 mb-4 italic">"The Observer"</p>
+                <p class="mb-4">
+                  Flo's adolescent daughter Fifi moves through the forest with a
+                  quiet attentiveness that seems to absorb everything around
+                  her. In her watchful presence, I recognize the vital
+                  importance of social learning—how she studies her mother's
+                  techniques for termite fishing, for selecting medicinal
+                  plants, for navigating complex social interactions.
+                </p>
+                <p class="mb-4">
+                  As she transitions toward adulthood, she carries her mother's
+                  knowledge forward, not as a passive inheritance but as a
+                  living tradition modified by her own experiences and insights.
+                  Through Fifi, I witness how knowledge accumulates across
+                  generations, creating cultural continuity that exists beyond
+                  any individual life span. Her story is a reminder that we
+                  humans are not the only species to build upon the wisdom of
+                  ancestors.
+                </p>
+                <div class="flex space-x-4 text-sm text-stone-300">
+                  <span>Age: ~7 years</span>
+                  <span>Status: Adolescent Female</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-16 bg-stone-700 p-8 rounded-lg">
+            <h3 class="text-xl font-semibold mb-6">Family Relationships</h3>
+            <div class="overflow-x-auto">
+              <div class="inline-block min-w-full">
+                <div class="h-96 w-full" id="family-tree">
+                  <!-- Family Tree Visualization Placeholder -->
+                  <div class="flex items-center justify-center h-full">
+                    <p class="text-center text-stone-400">
+                      Interactive family tree visualization<br />
+                      <span class="text-sm"
+                        >(Showing maternal lineages and social
+                        connections)</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="text-stone-300 mt-4 text-sm">
+              This diagram illustrates the complex kinship structures that shape
+              chimpanzee society. Maternal lineages form the strongest bonds,
+              with knowledge and social status flowing through these
+              relationships across generations. Note how Flo's offspring occupy
+              varying positions within the community structure.
+            </p>
+          </div>
+
+          <div class="mt-16 text-center">
+            <p class="text-lg italic mb-6">
+              "When you meet their gaze, you know at once that you are looking
+              into the eyes of an individual. Not only is each physically
+              different from the other... but each also has his or her own
+              personality."
+            </p>
+            <a
+              href="#field-notes"
+              class="inline-flex items-center text-amber-400 hover:text-amber-300 font-semibold transition duration-300"
+            >
+              Read Field Notes About Daily Interactions
+              <svg
+                class="w-5 h-5 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Field Notes & Journal Section -->
+    <section id="field-notes" class="py-16 bg-stone-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <span
+            class="block text-amber-700 text-sm font-semibold tracking-widest uppercase mb-2"
+            >Daily Rhythms</span
+          >
+          <h2 class="text-3xl md:text-4xl font-bold mb-8">
+            Field Notes & Journal
+          </h2>
+
+          <p class="text-lg mb-10">
+            The practice of waiting, of witnessing, of entering into the stream
+            of another being's time—this is the heart of my work at Gombe. Each
+            day unfolds as a sacred text written in tracks and calls, in
+            gestures and silences. In these field notes, I share glimpses of
+            what I've been privileged to witness: moments when the boundary
+            between observer and observed dissolves into mutual presence, when
+            the forest itself becomes both teacher and classroom. These are not
+            merely records of behavior but testaments to relationship, to the
+            gradual revelation that comes through patient attention to lives
+            unfolding at their own pace.
+          </p>
+
+          <div class="border-l-4 border-amber-700 pl-6 mb-12">
+            <p class="italic text-stone-600 mb-2">From my journal:</p>
+            <p class="text-xl mb-4">
+              "Science requires detachment, they told me. But here among the
+              breathing trees, I've found that true understanding arises not
+              from separation but from connection—from allowing oneself to be
+              present to another's reality without imposing one's own. Perhaps
+              this is not the abandonment of objectivity but its deepening."
+            </p>
+          </div>
+
+          <!-- Journal Entry 1 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden mb-10">
+            <div class="flex flex-col md:flex-row">
+              <div
+                class="md:w-1/3 bg-stone-800 text-white p-6 flex flex-col justify-between"
+              >
+                <div>
+                  <h3 class="font-semibold text-xl mb-1">March 17, 1966</h3>
+                  <p class="text-stone-300 text-sm mb-4">Peak of Dry Season</p>
+                  <div class="space-y-3 mb-6">
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <span>0530 - 1830 hrs</span>
+                    </div>
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <span>Ridge Trail to Valley Stream</span>
+                    </div>
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                        ></path>
+                      </svg>
+                      <span>Flo's Group</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-sm text-stone-400">
+                  <p>Entry #247</p>
+                </div>
+              </div>
+              <div class="md:w-2/3 p-6">
+                <div class="prose max-w-none">
+                  <p>
+                    Dawn broke over the valley with that particular amber light
+                    that seems to illuminate the world from within rather than
+                    without. I found Flo and her family still nested in the
+                    great fig tree that overhangs the eastern ravine. The soft
+                    sounds of their awakening—the rustle of nest leaves, the
+                    gentle hoots that pass between mother and child—serve as
+                    counterpoint to the dawn chorus of birds.
+                  </p>
+                  <p>
+                    As they descended, I watched Flint (now 3.5 years) imitate
+                    his mother's careful testing of branches. There is nothing
+                    automatic in this learning—it is a deliberate transmission,
+                    a curriculum written in gestures rather than words. Fifi
+                    watched from above, then took a more daring route down, her
+                    adolescent confidence both mirroring and diverging from her
+                    mother's caution. In these subtly different approaches to
+                    the same necessity, I glimpse how innovation enters
+                    tradition, how knowledge evolves across generations.
+                  </p>
+                  <p>
+                    The morning centered around a termite mound near the stream
+                    crossing. For two hours, I watched three generations engaged
+                    in the same activity, each with their distinctive style.
+                    Flo's movements were economical, practiced—each probe
+                    carefully selected and modified with minimal effort. Fifi
+                    worked with greater concentration, her focus almost palpable
+                    as she refined her technique through trial and adjustment.
+                    Young Flint alternated between serious imitation and playful
+                    experimentation, sometimes using the tools properly,
+                    sometimes inventing games with them.
+                  </p>
+                  <p>
+                    Most revealing was a moment when Flint's tool broke. Rather
+                    than immediately fashioning another, he turned to Flo with a
+                    soft whimper. She paused in her own fishing, watched him for
+                    a moment, then deliberately slowed her movements as she
+                    created a new tool—as if offering a clearer demonstration
+                    for his benefit. Is this teaching? The boundary between
+                    incidental learning and intentional instruction blurs in
+                    such moments, challenging our assumptions about the
+                    uniqueness of human pedagogy.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Journal Entry 2 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden mb-10">
+            <div class="flex flex-col md:flex-row">
+              <div
+                class="md:w-1/3 bg-stone-800 text-white p-6 flex flex-col justify-between"
+              >
+                <div>
+                  <h3 class="font-semibold text-xl mb-1">April 2, 1966</h3>
+                  <p class="text-stone-300 text-sm mb-4">Early Rains</p>
+                  <div class="space-y-3 mb-6">
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <span>0615 - 1745 hrs</span>
+                    </div>
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <span>Northern Grove</span>
+                    </div>
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                        ></path>
+                      </svg>
+                      <span>Mike, David Greybeard, Goliath</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-sm text-stone-400">
+                  <p>Entry #261</p>
+                </div>
+              </div>
+              <div class="md:w-2/3 p-6">
+                <div class="prose max-w-none">
+                  <p>
+                    The first substantial rain of the season transformed the
+                    forest today. The percussion of water on leaves created a
+                    sound chamber in which all other activities seemed to take
+                    place. Even the calls of the chimpanzees took on different
+                    acoustic properties, their hoots and pants resonating
+                    differently in the moisture-laden air.
+                  </p>
+                  <p>
+                    What I witnessed during the downpour challenges conventional
+                    wisdom about chimpanzee responses to rain. Rather than
+                    seeking immediate shelter, Mike, David Greybeard, and
+                    Goliath remained in the open for nearly ten minutes as the
+                    storm intensified. Their behavior shifted subtly—movement
+                    patterns becoming more fluid, vocalizations dropping to
+                    softer registers. David Greybeard extended his hand palm-up
+                    into the rain repeatedly, bringing drops to his mouth. Was
+                    this simply opportunistic drinking, or something
+                    more—perhaps a form of sensory engagement with the changing
+                    conditions?
+                  </p>
+                  <p>
+                    Most remarkable was what followed the heaviest rainfall. As
+                    the clouds broke and sunlight streamed through in defined
+                    shafts, Goliath initiated what I can only describe as play.
+                    He began picking up the newly fallen palm fruits, made
+                    slippery by the rain, and sliding them across a smooth,
+                    exposed root system. When the fruits gathered in a natural
+                    depression, he would retrieve them and begin again. Soon
+                    David Greybeard joined, and for twenty minutes they engaged
+                    in this seemingly purposeless but clearly absorbing
+                    activity.
+                  </p>
+                  <p>
+                    Even Mike, usually so focused on maintaining his status
+                    through displays of strength, paused to watch and eventually
+                    participated—his typical dominance behaviors temporarily
+                    suspended in this shared engagement with their transformed
+                    environment. In such moments, the boundary between necessary
+                    activity and what we might call aesthetic appreciation
+                    becomes wonderfully blurred. These beings do not merely
+                    survive in their world—they experience it, respond to its
+                    changes, and sometimes appear to savor its sensory offerings
+                    beyond any immediate survival value.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Journal Entry 3 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden mb-10">
+            <div class="flex flex-col md:flex-row">
+              <div
+                class="md:w-1/3 bg-stone-800 text-white p-6 flex flex-col justify-between"
+              >
+                <div>
+                  <h3 class="font-semibold text-xl mb-1">April 17, 1966</h3>
+                  <p class="text-stone-300 text-sm mb-4">Rainy Season</p>
+                  <div class="space-y-3 mb-6">
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <span>0550 - 1815 hrs</span>
+                    </div>
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <span>Western Ridge</span>
+                    </div>
+                    <div class="flex items-center">
+                      <svg
+                        class="w-5 h-5 text-amber-400 mr-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                        ></path>
+                      </svg>
+                      <span>Mixed Group - Hunt</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-sm text-stone-400">
+                  <p>Entry #272</p>
+                </div>
+              </div>
+              <div class="md:w-2/3 p-6">
+                <div class="prose max-w-none">
+                  <p>
+                    Today I witnessed the forest's ancient choreography of life
+                    and death—a coordinated hunt that challenges any simplistic
+                    understanding of chimpanzee social behavior. The morning
+                    began with distant pant-hoots echoing from the western
+                    ridge, a chorus of voices converging from different
+                    directions. By mid-morning, fourteen individuals had
+                    gathered in a loose association that seemed to pulse with
+                    collective anticipation.
+                  </p>
+                  <p>
+                    What followed was not chaos but coordination. Without
+                    visible signals I could discern, individuals began taking
+                    positions that effectively surrounded a section of forest
+                    known to harbor colobus monkey troops. Mike and three adult
+                    males formed the center of the approach, while Figan and two
+                    others moved to positions that would cut off potential
+                    escape routes. Even females normally uninvolved in hunting
+                    took peripheral positions, their presence narrowing the
+                    colobus's options.
+                  </p>
+                  <p>
+                    The question that haunts me: How is this synchrony achieved
+                    without language as we understand it? There were no
+                    vocalized commands, no single individual directing others.
+                    Instead, a distributed awareness seemed to flow through the
+                    group—each participant both acting and responding, leading
+                    and following in turns. This suggests a mode of social
+                    cognition that transcends our traditional categories of
+                    instinct versus planning.
+                  </p>
+                  <p>
+                    Most revealing was the aftermath. The successful hunt
+                    yielded a single juvenile colobus, not enough to provide
+                    significant nutrition to all present. Yet the distribution
+                    followed patterns that reflected social bonds rather than
+                    simply dominance. David Greybeard received choice portions
+                    despite not being the highest-ranking male, his alliances
+                    with both Mike and several mature females seemingly
+                    influencing the outcome. A young female with a new infant
+                    was given access before some higher-ranking males—a
+                    deviation from the expected pattern that suggests nuanced
+                    social calculations beyond mere hierarchy.
+                  </p>
+                  <p>
+                    In the sharing of meat, I glimpse something that might be
+                    called ethics—not in the human philosophical sense, but in
+                    the embodied wisdom of a social structure that has evolved
+                    to balance individual need against group cohesion. The seeds
+                    of our own moral systems perhaps lie in such moments, not as
+                    their cause but as their distant echo.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Observation Methods -->
+          <div class="bg-stone-100 rounded-lg p-8 mb-12">
+            <h3 class="text-xl font-semibold mb-6">Observation Methodology</h3>
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <p class="mb-4">
+                  My approach defies conventional scientific distance. Rather
+                  than observing from predetermined intervals with clipboard in
+                  hand, I move with the rhythms of chimpanzee life—waiting when
+                  they wait, traveling when they travel, attending to what
+                  captures their attention rather than imposing my human
+                  categories of significance.
+                </p>
+                <p>
+                  This method requires dismantling the wall between observer and
+                  observed—becoming, in a sense, transparent to their experience
+                  while remaining conscious of one's own presence as an element
+                  within their social field. The aim is not to disappear but to
+                  participate respectfully in a multispecies community where
+                  humans are not the measure of all things.
+                </p>
+              </div>
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div class="text-amber-700 mr-3 mt-1">
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-semibold">
+                      Habituation Without Interference
+                    </p>
+                    <p class="text-sm text-stone-600">
+                      Building trust through consistent, non-threatening
+                      presence while minimizing disruption to natural behaviors.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div class="text-amber-700 mr-3 mt-1">
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-semibold">Individual Recognition</p>
+                    <p class="text-sm text-stone-600">
+                      Naming and tracking individuals to understand social
+                      relationships and personality differences.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div class="text-amber-700 mr-3 mt-1">
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-semibold">Extended Immersion</p>
+                    <p class="text-sm text-stone-600">
+                      Long-term presence allows observation of rare events and
+                      recognition of patterns invisible in short-term studies.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div class="text-amber-700 mr-3 mt-1">
+                    <svg
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-semibold">Contextual Documentation</p>
+                    <p class="text-sm text-stone-600">
+                      Recording environmental factors, social context, and
+                      emotional states alongside behavioral observations.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Journal Excerpt Cards -->
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-amber-700 mb-3">
+                <svg
+                  class="w-8 h-8"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <p class="italic mb-4">February 11, 1966</p>
+              <p class="text-stone-700">
+                "Watched young Flint attempt to use a termite fishing tool
+                today. After multiple failures, he turned to observe Flo more
+                carefully, then adjusted his technique to match hers. Learning
+                here is not passive absorption but active problem-solving."
+              </p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-amber-700 mb-3">
+                <svg
+                  class="w-8 h-8"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <p class="italic mb-4">March 30, 1966</p>
+              <p class="text-stone-700">
+                "Witnessed reconciliation between Mike and Goliath following a
+                boundary dispute. After 30 minutes of separation, they
+                approached with extended hands, embraced, and engaged in mutual
+                grooming. The restoration of social harmony appears as important
+                as the establishment of boundaries."
+              </p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-amber-700 mb-3">
+                <svg
+                  class="w-8 h-8"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <p class="italic mb-4">April 8, 1966</p>
+              <p class="text-stone-700">
+                "Observed David Greybeard using leaves medicinally
+                today—selecting a specific rough-textured species that he chewed
+                briefly before swallowing whole rather than consuming. This
+                suggests both botanical knowledge and self-medication
+                practices."
+              </p>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <p class="text-lg italic mb-6">
+              "The longer I spend with them, the more I understand that my field
+              notes document not just their lives but the gradual expansion of
+              human understanding beyond its species boundaries."
+            </p>
+            <a
+              href="#gallery"
+              class="inline-flex items-center text-amber-700 hover:text-amber-800 font-semibold transition duration-300"
+            >
+              Explore the Photo Gallery
+              <svg
+                class="w-5 h-5 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Photo Gallery Section -->
+    <section id="gallery" class="py-16 bg-stone-900 text-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <span
+            class="block text-amber-400 text-sm font-semibold tracking-widest uppercase mb-2"
+            >Visual Memory</span
+          >
+          <h2 class="text-3xl md:text-4xl font-bold mb-8">Photo Gallery</h2>
+
+          <p class="text-lg mb-12">
+            Each photograph here serves not as a capture but as a portal—an
+            invitation to witness moments where worlds touch and overlap, where
+            the boundaries between observer and observed dissolve into mutual
+            presence. The camera, like all technology, creates both distance and
+            intimacy. In selecting these images, I've sought those rare
+            instances when the lens becomes transparent, when what flows through
+            is not merely light but relationship—the silent conversation between
+            beings sharing time, sharing space, sharing the breath of a forest
+            that holds us all equally in its green embrace.
+          </p>
+
+          <!-- Gallery Filter -->
+          <div
+            class="flex flex-wrap items-center justify-center gap-4 mb-10"
+            id="gallery-filter"
+          >
+            <button
+              class="px-4 py-2 bg-stone-800 hover:bg-amber-700 transition duration-300 rounded-sm text-sm active"
+            >
+              All Photographs
+            </button>
+            <button
+              class="px-4 py-2 bg-stone-800 hover:bg-amber-700 transition duration-300 rounded-sm text-sm"
+            >
+              Social Behaviors
+            </button>
+            <button
+              class="px-4 py-2 bg-stone-800 hover:bg-amber-700 transition duration-300 rounded-sm text-sm"
+            >
+              Tool Use
+            </button>
+            <button
+              class="px-4 py-2 bg-stone-800 hover:bg-amber-700 transition duration-300 rounded-sm text-sm"
+            >
+              Mother-Child
+            </button>
+            <button
+              class="px-4 py-2 bg-stone-800 hover:bg-amber-700 transition duration-300 rounded-sm text-sm"
+            >
+              Gombe Landscape
+            </button>
+          </div>
+
+          <!-- Gallery Grid -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16"
+          >
+            <!-- Photo 1 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="David Greybeard using a tool"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">First Contact with David</h3>
+                <p class="text-sm text-stone-300">January 1964</p>
+              </div>
+            </div>
+
+            <!-- Photo 2 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="Mother and infant chimpanzee"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">Flo and Infant Flint</h3>
+                <p class="text-sm text-stone-300">March 1965</p>
+              </div>
+            </div>
+
+            <!-- Photo 3 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="Termite fishing"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">
+                  The Art of Termite Fishing
+                </h3>
+                <p class="text-sm text-stone-300">February 1965</p>
+              </div>
+            </div>
+
+            <!-- Photo 4 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="Chimpanzee dominance display"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">Mike's Dominance Display</h3>
+                <p class="text-sm text-stone-300">November 1965</p>
+              </div>
+            </div>
+
+            <!-- Photo 5 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="Gombe forest landscape"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">Dawn at Gombe Stream</h3>
+                <p class="text-sm text-stone-300">April 1966</p>
+              </div>
+            </div>
+
+            <!-- Photo 6 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="Chimpanzees grooming"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">The Language of Touch</h3>
+                <p class="text-sm text-stone-300">January 1966</p>
+              </div>
+            </div>
+
+            <!-- Photo 7 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="Chimpanzee using leaf sponge"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">Leaf Sponging Technique</h3>
+                <p class="text-sm text-stone-300">December 1965</p>
+              </div>
+            </div>
+
+            <!-- Photo 8 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="Chimpanzee nest building"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">The Architecture of Sleep</h3>
+                <p class="text-sm text-stone-300">February 1966</p>
+              </div>
+            </div>
+
+            <!-- Photo 9 -->
+            <div class="gallery-item relative group overflow-hidden">
+              <div class="aspect-w-1 aspect-h-1 bg-stone-700">
+                <img
+                  src="/api/placeholder/600/600"
+                  alt="Juvenile chimpanzee playing"
+                  class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
+                />
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4"
+              >
+                <h3 class="font-semibold text-lg">Play as Learning</h3>
+                <p class="text-sm text-stone-300">March 1966</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Photo -->
+          <div class="mb-16">
+            <h3 class="text-xl font-semibold mb-6">Featured Photograph</h3>
+            <div class="relative">
+              <div
+                class="aspect-w-16 aspect-h-9 bg-stone-800 rounded-lg overflow-hidden"
+              >
+                <img
+                  src="/api/placeholder/1200/675"
+                  alt="Jane Goodall observing chimpanzees from a distance"
+                  class="object-cover w-full h-full"
+                />
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-stone-900 to-transparent p-6"
+              >
+                <h4 class="text-xl font-semibold mb-2">The Space Between</h4>
+                <p class="text-stone-300 mb-4">
+                  Photographed by Hugo van Lawick, National Geographic, 1965
+                </p>
+                <p class="text-sm md:text-base max-w-2xl">
+                  This image captures not only a moment of observation but the
+                  very philosophy that guides my work—the careful negotiation of
+                  distance and intimacy, of presence without intrusion. Here,
+                  the threshold between human and chimpanzee worlds becomes
+                  visible not as a boundary to be crossed but as a space to be
+                  honored, a shared dimension where different ways of being
+                  alive can acknowledge one another without collapsing into
+                  sameness.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photography Approach -->
+          <div class="bg-stone-800 rounded-lg p-8 mb-16">
+            <h3 class="text-xl font-semibold mb-6">Photography Approach</h3>
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <p class="mb-4">
+                  Each photograph emerges from hours of patient waiting, from
+                  the slow dissolution of novelty into familiarity. The camera
+                  becomes not an instrument of capture but of witness—a
+                  technological extension of attention that allows moments of
+                  connection to be shared beyond the boundaries of time and
+                  place.
+                </p>
+                <p>
+                  This is not documentation in the traditional scientific sense
+                  of creating specimens for analysis. Rather, these images serve
+                  as invitations to relationship—windows through which others
+                  might glimpse not just the physical forms of chimpanzees but
+                  their presence as beings with whom we share both differences
+                  and profound kinship.
+                </p>
+              </div>
+              <div>
+                <div class="space-y-4">
+                  <div class="flex items-start">
+                    <div class="text-amber-400 mr-3 mt-1">
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="font-semibold">Non-intrusive Presence</p>
+                      <p class="text-sm text-stone-400">
+                        Photographs taken only after sufficient habituation,
+                        using minimal equipment to reduce disturbance.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div class="text-amber-400 mr-3 mt-1">
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="font-semibold">Ethical Documentation</p>
+                      <p class="text-sm text-stone-400">
+                        Prioritizing chimpanzee wellbeing over photographic
+                        opportunity, never baiting or manipulating behavior.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div class="text-amber-400 mr-3 mt-1">
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="font-semibold">Context Preservation</p>
+                      <p class="text-sm text-stone-400">
+                        Capturing not only individuals but their relationships
+                        to one another and to their environment.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div class="text-amber-400 mr-3 mt-1">
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="font-semibold">Narrative Integrity</p>
+                      <p class="text-sm text-stone-400">
+                        Using images to tell honest stories rather than
+                        reinforce preconceptions about animal behavior.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photography Equipment -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-stone-800 p-6 rounded-lg">
+              <div class="text-amber-400 mb-3">
+                <svg
+                  class="w-8 h-8"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <h4 class="font-semibold mb-2">Primary Camera</h4>
+              <p class="text-stone-400">
+                Leica M3 with 50mm lens — chosen for its silent operation and
+                mechanical reliability in humid conditions. The manual focus
+                encourages deliberate composition and patience.
+              </p>
+            </div>
+            <div class="bg-stone-800 p-6 rounded-lg">
+              <div class="text-amber-400 mb-3">
+                <svg
+                  class="w-8 h-8"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"
+                  ></path>
+                </svg>
+              </div>
+              <h4 class="font-semibold mb-2">Field Techniques</h4>
+              <p class="text-stone-400">
+                Natural light only, avoiding flash to prevent disturbance. Long
+                lenses (135mm) allow distance while capturing detail. Slower
+                film stock (Kodak Tri-X 400) provides more natural grain
+                structure.
+              </p>
+            </div>
+            <div class="bg-stone-800 p-6 rounded-lg">
+              <div class="text-amber-400 mb-3">
+                <svg
+                  class="w-8 h-8"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.563-.187a1.993 1.993 0 00-.114-.035l1.063-1.063A3 3 0 009 8.172z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <h4 class="font-semibold mb-2">Documentation System</h4>
+              <p class="text-stone-400">
+                Each photograph paired with detailed field notes recording date,
+                time, individuals present, behaviors observed, and environmental
+                conditions. Creating context beyond the visual frame.
+              </p>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <p class="text-lg italic mb-6">
+              "Photography can be an act of communion when practiced with
+              humility—a quiet acknowledgment that we stand not outside nature
+              looking in, but within its flowing currents, briefly touching
+              lives that move on their own trajectories."
+            </p>
+            <a
+              href="#support"
+              class="inline-flex items-center text-amber-400 hover:text-amber-300 font-semibold transition duration-300"
+            >
+              Support Our Research
+              <svg
+                class="w-5 h-5 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Support Our Work Section -->
+    <section id="support" class="py-16 bg-stone-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <span
+            class="block text-amber-700 text-sm font-semibold tracking-widest uppercase mb-2"
+            >Sustaining Presence</span
+          >
+          <h2 class="text-3xl md:text-4xl font-bold mb-8">Support Our Work</h2>
+
+          <p class="text-lg mb-10">
+            To witness is to enter into relationship, and relationship carries
+            responsibility. The chimpanzees of Gombe have given me the profound
+            gift of their trust, allowing glimpses into their world that
+            redefine our understanding of consciousness and community. Now I
+            invite you to become part of this widening circle of
+            relationship—not as distant observers but as participants in the
+            ongoing story of understanding that flows between species and across
+            generations. Your support creates the conditions for continued
+            presence, for the patient waiting that allows deeper patterns to
+            reveal themselves. In choosing to sustain this work, you become not
+            just a funder but a fellow witness to the unfolding wisdom of our
+            more-than-human world.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-12 mb-16">
+            <div>
+              <h3 class="text-xl font-semibold mb-4">
+                Why Your Support Matters
+              </h3>
+              <p class="mb-4">
+                The conventional scientific approach demands quick results,
+                publishable findings, measurable outcomes. But the wisdom of
+                Gombe reveals itself slowly, in its own time. Your support
+                creates a rare space of continuity—allowing for the kind of
+                long, patient observation that sees beyond momentary behaviors
+                to the deeper currents of relationship and culture that flow
+                through generations.
+              </p>
+              <p class="mb-4">
+                Unlike extractive research that takes samples and leaves, our
+                presence at Gombe is itself a relationship that requires
+                nurturing and care. We move lightly on the land, our small
+                research station designed to minimize disruption while
+                maximizing our ability to witness. Each day in the field builds
+                upon the thousands that came before—creating a continuous thread
+                of understanding that would unravel if broken.
+              </p>
+              <p>
+                When you support this work, you're not funding the conquest of
+                knowledge but its patient cultivation—an approach that honors
+                the autonomy and dignity of those we study while acknowledging
+                the profound lessons they have to teach us about being alive on
+                this shared Earth.
+              </p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-4">
+                  Become a Sustaining Witness
+                </h3>
+                <p class="text-stone-600 mb-6">
+                  Join our community of support by becoming a monthly
+                  contributor. Your regular commitment, whatever its size,
+                  creates the foundation of continuity that allows this work to
+                  unfold at the pace of the forest rather than the pace of
+                  academic calendars or grant cycles.
+                </p>
+                <form class="space-y-4">
+                  <div>
+                    <label
+                      for="name"
+                      class="block text-sm font-medium text-stone-700 mb-1"
+                      >Name</label
+                    >
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="email"
+                      class="block text-sm font-medium text-stone-700 mb-1"
+                      >Email Address</label
+                    >
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-stone-700 mb-2"
+                      >Monthly Contribution</label
+                    >
+                    <div class="grid grid-cols-3 gap-3">
+                      <div>
+                        <input
+                          type="radio"
+                          id="amount-5"
+                          name="amount"
+                          value="5"
+                          class="hidden peer"
+                        />
+                        <label
+                          for="amount-5"
+                          class="block text-center border border-stone-300 rounded-md py-2 cursor-pointer peer-checked:bg-amber-700 peer-checked:text-white transition duration-300"
+                          >£5</label
+                        >
+                      </div>
+                      <div>
+                        <input
+                          type="radio"
+                          id="amount-10"
+                          name="amount"
+                          value="10"
+                          class="hidden peer"
+                          checked
+                        />
+                        <label
+                          for="amount-10"
+                          class="block text-center border border-stone-300 rounded-md py-2 cursor-pointer peer-checked:bg-amber-700 peer-checked:text-white transition duration-300"
+                          >£10</label
+                        >
+                      </div>
+                      <div>
+                        <input
+                          type="radio"
+                          id="amount-25"
+                          name="amount"
+                          value="25"
+                          class="hidden peer"
+                        />
+                        <label
+                          for="amount-25"
+                          class="block text-center border border-stone-300 rounded-md py-2 cursor-pointer peer-checked:bg-amber-700 peer-checked:text-white transition duration-300"
+                          >£25</label
+                        >
+                      </div>
+                    </div>
+                    <div class="mt-3">
+                      <input
+                        type="radio"
+                        id="amount-custom"
+                        name="amount"
+                        value="custom"
+                        class="hidden peer"
+                      />
+                      <label
+                        for="amount-custom"
+                        class="flex items-center border border-stone-300 rounded-md px-3 py-2 cursor-pointer peer-checked:border-amber-700 transition duration-300"
+                      >
+                        <span class="mr-2">Custom Amount:</span>
+                        <input
+                          type="text"
+                          placeholder="£"
+                          class="w-24 focus:outline-none"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full bg-amber-700 hover:bg-amber-800 text-white py-3 px-6 rounded-md transition duration-300 font-semibold"
+                  >
+                    Join Our Community
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- How Funds Are Used -->
+          <div class="bg-stone-100 p-8 rounded-lg mb-16">
+            <h3 class="text-xl font-semibold mb-6">
+              How Your Support Nurtures Understanding
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <div class="text-amber-700 mb-3">
+                  <svg
+                    class="w-10 h-10"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="font-semibold mb-2">Sustaining Presence</h4>
+                <p class="text-stone-600">
+                  Maintaining our small research station, supporting local field
+                  assistants who bring generations of forest wisdom to our work,
+                  and enabling daily observations throughout the year. Rather
+                  than extractive expeditions, we cultivate continuous
+                  relationship through sustained presence.
+                </p>
+              </div>
+              <div>
+                <div class="text-amber-700 mb-3">
+                  <svg
+                    class="w-10 h-10"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="font-semibold mb-2">Documentation & Distribution</h4>
+                <p class="text-stone-600">
+                  Creating photographic documentation, maintaining detailed
+                  field notes, and sharing our findings through publications
+                  that challenge conventional understandings. Knowledge held
+                  privately loses its transformative power—your support helps
+                  wisdom flow beyond Gombe's boundaries.
+                </p>
+              </div>
+              <div>
+                <div class="text-amber-700 mb-3">
+                  <svg
+                    class="w-10 h-10"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="font-semibold mb-2">Community Integration</h4>
+                <p class="text-stone-600">
+                  Building relationships with local communities around Gombe,
+                  supporting their needs while creating shared understanding of
+                  conservation's importance. The future of these chimpanzees
+                  depends not on isolation but on weaving human and
+                  more-than-human communities together in mutual flourishing.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other Ways to Support -->
+          <h3 class="text-xl font-semibold mb-6">Other Ways to Participate</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+              <div class="p-6">
+                <h4 class="font-semibold text-lg mb-3">
+                  One-Time Contributions
+                </h4>
+                <p class="text-stone-600 mb-4">
+                  If a recurring commitment isn't possible for you, one-time
+                  gifts provide vital flexibility to respond to emergent
+                  needs—whether replacing field equipment damaged by the
+                  elements or supporting new documentation techniques as they
+                  become available.
+                </p>
+                <div class="space-y-3">
+                  <div
+                    class="flex items-center justify-between border border-stone-200 rounded-md px-4 py-3"
+                  >
+                    <span>Field Equipment</span>
+                    <span class="text-amber-700 font-semibold">£75</span>
+                  </div>
+                  <div
+                    class="flex items-center justify-between border border-stone-200 rounded-md px-4 py-3"
+                  >
+                    <span>Week of Research</span>
+                    <span class="text-amber-700 font-semibold">£150</span>
+                  </div>
+                  <div
+                    class="flex items-center justify-between border border-stone-200 rounded-md px-4 py-3"
+                  >
+                    <span>Documentation Materials</span>
+                    <span class="text-amber-700 font-semibold">£250</span>
+                  </div>
+                </div>
+                <button
+                  class="mt-5 w-full bg-stone-800 hover:bg-stone-900 text-white py-2 px-4 rounded-md transition duration-300 font-medium"
+                >
+                  Make a One-Time Gift
+                </button>
+              </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+              <div class="p-6">
+                <h4 class="font-semibold text-lg mb-3">
+                  Non-Financial Support
+                </h4>
+                <p class="text-stone-600 mb-4">
+                  Relationship flows through many channels beyond the financial.
+                  Your attention, advocacy, and amplification create vital
+                  currents that sustain this work in ways equally meaningful to
+                  monetary support.
+                </p>
+                <ul class="space-y-3">
+                  <li class="flex items-start">
+                    <div class="text-amber-700 mr-3 mt-1">
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="font-medium">Share Our Story</p>
+                      <p class="text-sm text-stone-500">
+                        Speak of what you've learned here with others, creating
+                        ripples of understanding that extend beyond Gombe's
+                        boundaries.
+                      </p>
+                    </div>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="text-amber-700 mr-3 mt-1">
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="font-medium">Correspondence</p>
+                      <p class="text-sm text-stone-500">
+                        Write to us with your questions and reflections,
+                        creating a dialogue that enriches our understanding.
+                      </p>
+                    </div>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="text-amber-700 mr-3 mt-1">
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="font-medium">Ethical Choices</p>
+                      <p class="text-sm text-stone-500">
+                        Consider how your daily choices either strengthen or
+                        weaken the web of relationships that sustains all life,
+                        human and more-than-human alike.
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+                <button
+                  class="mt-5 w-full border border-stone-300 hover:bg-stone-100 py-2 px-4 rounded-md transition duration-300 font-medium"
+                >
+                  Contact Us
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Supporter Testimonial -->
+          <div
+            class="relative py-10 px-8 bg-stone-800 text-white rounded-lg overflow-hidden mb-16"
+          >
+            <div
+              class="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 opacity-10"
+            >
+              <svg
+                width="240"
+                height="240"
+                viewBox="0 0 240 240"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 96C0 42.98 42.98 0 96 0H144C197.02 0 240 42.98 240 96V144C240 197.02 197.02 240 144 240H96C42.98 240 0 197.02 0 144V96Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+            <div class="relative z-10">
+              <svg
+                class="w-10 h-10 text-amber-400 mb-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13.92 3.845a19.361 19.361 0 01-6.3 1.98C6.765 5.942 5.89 6 5 6a4 4 0 00-.504 7.969 15.974 15.974 0 001.271 3.341c.397.77 1.342 1 2.05.59l1.244-.712a3.302 3.302 0 011.412-.397 3.532 3.532 0 011.847.498l1.301.75c.708.407 1.652.172 2.048-.596a16.097 16.097 0 001.33-3.409c.283-.99.427-2.01.427-3.034a4 4 0 00-3.448-3.953 40.772 40.772 0 01-2.43-.579c-.347-.09-.664-.222-.957-.391a5.94 5.94 0 01-.605-.425c-.435-.332-.827-.681-1.242-1z"
+                ></path>
+              </svg>
+              <p class="text-lg italic mb-6">
+                "Supporting Jane's work at Gombe has been transformative for me.
+                It's not about charity but about participation—becoming part of
+                a community that extends beyond species boundaries. Through her
+                field notes and photographs, I've gained insights that apply not
+                just to understanding chimpanzees but to living more attentively
+                in my own habitat, more consciously within my own web of
+                relationships."
+              </p>
+              <div class="flex items-center">
+                <div class="mr-4">
+                  <div
+                    class="w-12 h-12 bg-stone-700 rounded-full overflow-hidden"
+                  >
+                    <img
+                      src="/api/placeholder/100/100"
+                      alt="Margaret Mead"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <p class="font-semibold">Dr. Margaret Mead</p>
+                  <p class="text-sm text-stone-400">
+                    Anthropologist & Supporter since 1964
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-amber-50 border-l-4 border-amber-700 p-6 mb-12">
+            <h3 class="font-semibold mb-3">A Note on Transparency</h3>
+            <p class="text-stone-700">
+              Our relationship with supporters is built on the same principles
+              that guide our field research—patience, attention, and
+              transparency. Quarterly letters detail not only how contributions
+              are used but also the evolving understanding that they make
+              possible. We share both challenges and insights, believing that
+              honest communication honors the trust you place in this work.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <p class="text-lg italic mb-6">
+              "In the end, we will conserve only what we love. We will love only
+              what we understand. We will understand only what we are taught to
+              see."
+            </p>
+            <a
+              href="#about"
+              class="inline-flex items-center text-amber-700 hover:text-amber-800 font-semibold transition duration-300"
+            >
+              Learn About Jane's Journey
+              <svg
+                class="w-5 h-5 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // JavaScript for mobile menu toggle would go here
+      // Additional interactivity for image galleries, etc.
+    </script>
+  </body>
+</html>

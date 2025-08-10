@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lin Rivers - Mindful Digital Living</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Base styles */
+      body {
+        font-family: "Freight Text Pro", Georgia, serif;
+        overflow-x: hidden;
+      }
+
+      /* Water-inspired decorative elements */
+      .ripple {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ripple::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(196, 217, 255, 0.1) 0%,
+          rgba(196, 217, 255, 0) 70%
+        );
+        animation: ripple 15s infinite linear;
+        pointer-events: none;
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .flow-line {
+        position: absolute;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(196, 217, 255, 0),
+          rgba(196, 217, 255, 0.5) 50%,
+          rgba(196, 217, 255, 0) 100%
+        );
+        width: 100%;
+        animation: flow 8s infinite ease-in-out;
+      }
+
+      @keyframes flow {
+        0% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+
+      /* Time-aware styling (will be controlled by JavaScript) */
+      .time-aware {
+        transition: background-color 2s ease, color 2s ease;
+      }
+
+      /* Day/night variations will be applied via JavaScript */
+      .dawn {
+        background-color: #e8f9ff;
+        color: #555555;
+      }
+
+      .day {
+        background-color: #fbfbfb;
+        color: #333333;
+      }
+
+      .dusk {
+        background-color: #c5baff;
+        color: #333333;
+      }
+
+      .night {
+        background-color: #2d3748;
+        color: #e8f9ff;
+      }
+
+      /* Seasonal indicator */
+      .season-indicator {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .season-winter {
+        border-color: #e8f9ff;
+        background: linear-gradient(135deg, #fbfbfb, #e8f9ff);
+      }
+
+      .season-spring {
+        border-color: #c4d9ff;
+        background: linear-gradient(135deg, #e8f9ff, #c4d9ff);
+      }
+
+      .season-summer {
+        border-color: #c5baff;
+        background: linear-gradient(135deg, #c4d9ff, #c5baff);
+      }
+
+      .season-autumn {
+        border-color: #c5baff;
+        background: linear-gradient(135deg, #c5baff, #e8f9ff);
+      }
+
+      /* Natural shape for section divisions */
+      .wave-divider {
+        height: 50px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23FBFBFB'%3E%3C/path%3E%3C/svg%3E");
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    </style>
+  </head>
+  <body class="bg-stone-50 text-stone-800">
+    <!-- Time and Season Aware Header -->
+    <header class="time-aware day relative overflow-hidden">
+      <div class="flow-line" style="top: 20%"></div>
+      <div class="flow-line" style="top: 60%"></div>
+
+      <div class="max-w-5xl mx-auto px-6 py-16 relative z-10">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="md:w-2/3">
+            <h1 class="text-4xl font-light tracking-wide mb-3">Lin Rivers</h1>
+            <p class="text-xl font-light mb-6">
+              Mindful pathways through digital currents
+            </p>
+
+            <p class="max-w-xl leading-relaxed">
+              Finding balance between technological convenience and the deep
+              nourishment of direct experience isn't about rejection—it's about
+              relationship. Welcome to a space where digital tools serve natural
+              rhythms.
+            </p>
+          </div>
+
+          <div class="mt-8 md:mt-0">
+            <div
+              class="season-indicator season-spring flex flex-col items-center"
+            >
+              <span
+                id="current-season"
+                class="text-sm uppercase tracking-widest"
+                >Spring</span
+              >
+              <span id="current-date" class="text-xs mt-1">March 24</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 flex space-x-4 overflow-x-auto pb-2">
+          <a
+            href="#finding-balance"
+            class="px-5 py-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition-all text-stone-700 whitespace-nowrap border border-stone-200"
+          >
+            Finding Balance
+          </a>
+          <a
+            href="#"
+            class="px-5 py-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition-all text-stone-700 whitespace-nowrap border border-stone-200"
+          >
+            Seasonal Practices
+          </a>
+          <a
+            href="#"
+            class="px-5 py-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition-all text-stone-700 whitespace-nowrap border border-stone-200"
+          >
+            Digital Watershed
+          </a>
+          <a
+            href="#"
+            class="px-5 py-2 rounded-full bg-white bg-opacity-60 hover:bg-opacity-100 transition-all text-stone-700 whitespace-nowrap border border-stone-200"
+          >
+            Connect
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="wave-divider"></div>
+
+    <!-- Finding Balance Section -->
+    <section id="finding-balance" class="py-16 relative ripple">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-light mb-12 text-stone-800 flex items-center">
+          <span
+            class="inline-block w-8 h-8 rounded-full mr-3"
+            style="background: linear-gradient(135deg, #c4d9ff, #c5baff)"
+          ></span>
+          Finding Balance
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-12">
+          <div>
+            <p class="mb-6 leading-relaxed">
+              The digital and natural worlds aren't inherently opposed—both
+              operate through patterns of connection, flow, and emergence. The
+              challenge lies not in choosing between them, but in cultivating a
+              relationship where technology aligns with, rather than disrupts,
+              our deeper biological rhythms.
+            </p>
+
+            <p class="mb-6 leading-relaxed">
+              My approach draws wisdom from three seemingly divergent sources:
+              the solitude of Christopher Knight, who lived 27 years in the
+              Maine woods seeking silence; the direct experience pursued by
+              Christopher McCandless in his journey into the wild; and Theodore
+              Kaczynski's penetrating analysis of how technological systems
+              subtly constrain autonomy.
+            </p>
+
+            <p class="leading-relaxed">
+              From these influences, I've developed practices that honor both
+              our need for connection and our need for unmediated
+              experience—approaches that use technology intentionally without
+              being unconsciously shaped by it.
+            </p>
+          </div>
+
+          <div
+            class="bg-gradient-to-br from-[#FBFBFB] to-[#E8F9FF] p-8 rounded-lg shadow-sm border border-[#C4D9FF] border-opacity-30"
+          >
+            <h3 class="text-xl font-light mb-6 text-stone-800">
+              Core Principles
+            </h3>
+
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <div
+                  class="h-6 w-6 rounded-full bg-[#C4D9FF] bg-opacity-40 flex items-center justify-center mt-1 mr-3 flex-shrink-0"
+                >
+                  <div class="h-2 w-2 rounded-full bg-[#C5BAFF]"></div>
+                </div>
+                <span
+                  ><strong class="font-medium text-stone-900"
+                    >Watershed awareness</strong
+                  >: Understanding how information, like water, flows through
+                  landscapes of attention—nourishing or eroding depending on its
+                  patterns.</span
+                >
+              </li>
+
+              <li class="flex items-start">
+                <div
+                  class="h-6 w-6 rounded-full bg-[#C4D9FF] bg-opacity-40 flex items-center justify-center mt-1 mr-3 flex-shrink-0"
+                >
+                  <div class="h-2 w-2 rounded-full bg-[#C5BAFF]"></div>
+                </div>
+                <span
+                  ><strong class="font-medium text-stone-900"
+                    >Cyclic engagement</strong
+                  >: Moving with natural rhythms of activity and rest, rather
+                  than the artificial constancy of digital environments.</span
+                >
+              </li>
+
+              <li class="flex items-start">
+                <div
+                  class="h-6 w-6 rounded-full bg-[#C4D9FF] bg-opacity-40 flex items-center justify-center mt-1 mr-3 flex-shrink-0"
+                >
+                  <div class="h-2 w-2 rounded-full bg-[#C5BAFF]"></div>
+                </div>
+                <span
+                  ><strong class="font-medium text-stone-900"
+                    >Deliberate boundaries</strong
+                  >: Creating intentional limitations that protect experiential
+                  depth, modeled after the way natural systems thrive through
+                  constraints.</span
+                >
+              </li>
+
+              <li class="flex items-start">
+                <div
+                  class="h-6 w-6 rounded-full bg-[#C4D9FF] bg-opacity-40 flex items-center justify-center mt-1 mr-3 flex-shrink-0"
+                >
+                  <div class="h-2 w-2 rounded-full bg-[#C5BAFF]"></div>
+                </div>
+                <span
+                  ><strong class="font-medium text-stone-900"
+                    >Direct encounter</strong
+                  >: Prioritizing first-hand experience with natural systems as
+                  the foundation for meaningful digital engagement.</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="mt-12 p-6 border border-stone-200 rounded-lg bg-white bg-opacity-70"
+        >
+          <h3 class="text-xl font-light mb-4 text-stone-800">
+            Begin Where You Are
+          </h3>
+
+          <p class="mb-6">
+            Balance doesn't require wilderness retreat or technological
+            abandonment. Start with small, deliberate adjustments to how you
+            engage with digital environments:
+          </p>
+
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-[#E8F9FF] bg-opacity-50 p-4 rounded-md">
+              <h4 class="font-medium text-stone-800 mb-2">Morning Practice</h4>
+              <p class="text-sm">
+                Engage with your local environment before digital streams.
+                Notice temperature, light, and seasonal shifts directly before
+                encountering them through screens.
+              </p>
+            </div>
+
+            <div class="bg-[#C4D9FF] bg-opacity-30 p-4 rounded-md">
+              <h4 class="font-medium text-stone-800 mb-2">
+                Attention Boundaries
+              </h4>
+              <p class="text-sm">
+                Create clear containers for digital engagement, defined by
+                purpose rather than habit. Ask: What natural rhythm am I
+                responding to with this tool?
+              </p>
+            </div>
+
+            <div class="bg-[#C5BAFF] bg-opacity-20 p-4 rounded-md">
+              <h4 class="font-medium text-stone-800 mb-2">Digital Sabbath</h4>
+              <p class="text-sm">
+                Establish regular periods of technological fallow time. Even
+                brief disconnections create space for direct experience and
+                internal restoration.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Seasonal Practices Section -->
+    <section
+      id="seasonal-practices"
+      class="py-16 bg-gradient-to-b from-stone-50 to-[#E8F9FF] relative"
+    >
+      <div class="absolute inset-0 opacity-10">
+        <div
+          class="absolute top-0 left-0 right-0 h-20"
+          style="
+            background: radial-gradient(
+              ellipse at top,
+              rgba(196, 217, 255, 0.3) 0%,
+              rgba(196, 217, 255, 0) 70%
+            );
+          "
+        ></div>
+        <div
+          class="absolute bottom-0 left-0 right-0 h-20"
+          style="
+            background: radial-gradient(
+              ellipse at bottom,
+              rgba(197, 186, 255, 0.3) 0%,
+              rgba(197, 186, 255, 0) 70%
+            );
+          "
+        ></div>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
+        <h2 class="text-3xl font-light mb-8 text-stone-800 flex items-center">
+          <span
+            class="inline-block w-8 h-8 rounded-full mr-3"
+            style="background: linear-gradient(135deg, #e8f9ff, #c4d9ff)"
+          ></span>
+          Seasonal Practices
+        </h2>
+
+        <div class="mb-12">
+          <p class="max-w-2xl leading-relaxed">
+            The rhythms that govern watershed ecosystems offer profound
+            templates for digital engagement. Each season invites different ways
+            of relating to information flows, attention patterns, and
+            technological boundaries—mirroring how rivers, streams, and lakes
+            respond to the turning year.
+          </p>
+        </div>
+
+        <!-- Seasonal Calendar -->
+        <div class="grid md:grid-cols-2 gap-10 mb-16">
+          <!-- Left column: Current Season -->
+          <div
+            class="bg-white bg-opacity-70 rounded-lg p-8 border border-[#C4D9FF] border-opacity-30 shadow-sm relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 w-20 h-20 -mt-10 -mr-10 rounded-full bg-[#E8F9FF] bg-opacity-50"
+            ></div>
+
+            <h3
+              class="text-xl font-light mb-6 text-stone-800"
+              id="current-season-heading"
+            >
+              Spring Practices
+            </h3>
+
+            <div class="space-y-6">
+              <div>
+                <h4 class="font-medium text-stone-800 mb-2 flex items-center">
+                  <span class="w-3 h-3 rounded-full bg-[#C4D9FF] mr-2"></span>
+                  Information Seeds
+                </h4>
+                <p class="text-stone-700">
+                  Spring invites discernment in what we plant. This season,
+                  examine which information sources genuinely nourish versus
+                  those that deplete. Like a careful gardener selecting seeds,
+                  curate input streams that foster growth rather than noise or
+                  distraction.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="font-medium text-stone-800 mb-2 flex items-center">
+                  <span class="w-3 h-3 rounded-full bg-[#C4D9FF] mr-2"></span>
+                  Digital Clearings
+                </h4>
+                <p class="text-stone-700">
+                  Create space for new growth by clearing accumulated digital
+                  debris. Unsubscribe from newsletters no longer serving you,
+                  remove unused apps, and simplify interfaces. Let your
+                  attention soil rest fallow in some areas to regenerate
+                  capacity.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="font-medium text-stone-800 mb-2 flex items-center">
+                  <span class="w-3 h-3 rounded-full bg-[#C4D9FF] mr-2"></span>
+                  Dawn Threshold
+                </h4>
+                <p class="text-stone-700">
+                  Spring dawns offer unique sensory information unavailable
+                  through screens. Before engaging with digital flows each day,
+                  step outside to witness seasonal emergence—bird migrations,
+                  budding plants, shifting weather patterns—grounding yourself
+                  in ecological reality.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-stone-100">
+              <h4 class="font-medium text-stone-800 mb-3">
+                Seasonal Reflection Question
+              </h4>
+              <p class="italic text-stone-600">
+                "What relationship patterns am I cultivating in both digital and
+                natural spaces, and how do they support or hinder genuine
+                emergence in my life?"
+              </p>
+            </div>
+          </div>
+
+          <!-- Right column: Calendar Preview -->
+          <div>
+            <div
+              class="bg-[#FBFBFB] rounded-lg p-6 border border-stone-200 shadow-sm"
+            >
+              <h3 class="text-xl font-light mb-4 text-stone-800">
+                Seasonal Awareness Calendar
+              </h3>
+              <p class="text-stone-600 mb-6">
+                A guide to aligning digital habits with natural cycles
+                throughout the year.
+              </p>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div
+                  class="rounded-md p-4 bg-gradient-to-br from-white to-[#E8F9FF] border border-[#E8F9FF] border-opacity-50 flex items-center"
+                >
+                  <div
+                    class="w-10 h-10 rounded-full flex-shrink-0 season-spring mr-3 flex items-center justify-center text-xs text-white font-medium"
+                  >
+                    Spring
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-stone-800 text-sm">
+                      Emergence & Curation
+                    </h4>
+                    <p class="text-xs text-stone-600">
+                      Planting attention seeds
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  class="rounded-md p-4 bg-white border border-[#C4D9FF] border-opacity-30 flex items-center opacity-60 hover:opacity-100 transition-opacity"
+                >
+                  <div
+                    class="w-10 h-10 rounded-full flex-shrink-0 season-summer mr-3 flex items-center justify-center text-xs text-white font-medium"
+                  >
+                    Summer
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-stone-800 text-sm">
+                      Abundance & Boundaries
+                    </h4>
+                    <p class="text-xs text-stone-600">
+                      Harvesting while preserving capacity
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  class="rounded-md p-4 bg-white border border-[#C4D9FF] border-opacity-30 flex items-center opacity-60 hover:opacity-100 transition-opacity"
+                >
+                  <div
+                    class="w-10 h-10 rounded-full flex-shrink-0 season-autumn mr-3 flex items-center justify-center text-xs text-white font-medium"
+                  >
+                    Autumn
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-stone-800 text-sm">
+                      Release & Essential Focus
+                    </h4>
+                    <p class="text-xs text-stone-600">
+                      Letting go of the inessential
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  class="rounded-md p-4 bg-white border border-[#C4D9FF] border-opacity-30 flex items-center opacity-60 hover:opacity-100 transition-opacity"
+                >
+                  <div
+                    class="w-10 h-10 rounded-full flex-shrink-0 season-winter mr-3 flex items-center justify-center text-xs text-white font-medium"
+                  >
+                    Winter
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-stone-800 text-sm">
+                      Rest & Deep Reflection
+                    </h4>
+                    <p class="text-xs text-stone-600">
+                      Digital dormancy periods
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 text-center">
+                <a
+                  href="#"
+                  class="inline-block px-5 py-2 rounded-full bg-[#C4D9FF] bg-opacity-30 hover:bg-opacity-50 transition-all text-stone-700 text-sm"
+                >
+                  Download Full Calendar
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="mt-6 p-4 bg-white bg-opacity-70 rounded-lg border border-stone-200"
+            >
+              <h4 class="font-medium text-stone-700 mb-2 text-sm">
+                Phenology Log Practice
+              </h4>
+              <p class="text-sm text-stone-600">
+                The intersection of digital documentation with direct natural
+                observation can create powerful feedback loops of awareness.
+                Consider maintaining a simple phenology log—recording first
+                blooms, bird arrivals, weather shifts—as a ground for more
+                mindful technological engagement.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Digital Watershed Section -->
+    <section id="digital-watershed" class="py-16 relative">
+      <div class="absolute inset-0 overflow-hidden">
+        <!-- Stylized water system pattern -->
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 1000 1000"
+          preserveAspectRatio="none"
+          class="absolute opacity-5"
+        >
+          <path
+            d="M0,200 Q250,100 500,200 T1000,200 V1000 H0 Z"
+            fill="#C4D9FF"
+          />
+          <path
+            d="M0,300 Q350,200 700,300 T1000,300 V1000 H0 Z"
+            fill="#C5BAFF"
+            fill-opacity="0.7"
+          />
+          <path
+            d="M0,400 Q150,350 300,400 T600,400 T1000,400 V1000 H0 Z"
+            fill="#E8F9FF"
+          />
+        </svg>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
+        <h2 class="text-3xl font-light mb-8 text-stone-800 flex items-center">
+          <span
+            class="inline-block w-8 h-8 rounded-full mr-3"
+            style="background: linear-gradient(135deg, #c4d9ff, #c5baff)"
+          ></span>
+          Digital Watershed
+        </h2>
+
+        <div class="mb-12">
+          <p class="max-w-2xl leading-relaxed">
+            Each of us inhabits a digital watershed—an interconnected system
+            through which information flows, pools, and shapes the landscape of
+            our attention. Understanding the contours of this personal ecosystem
+            is the first step toward mindful participation within it.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+          <div
+            class="bg-gradient-to-br from-white to-[#E8F9FF] rounded-lg p-6 border border-[#E8F9FF] border-opacity-40 shadow-sm flex flex-col"
+          >
+            <h3 class="text-lg font-medium text-stone-800 mb-3">Headwaters</h3>
+
+            <p class="text-stone-700 text-sm mb-6 grow">
+              The original sources from which your digital streams emerge:
+              direct experiences, core relationships, embodied knowledge, and
+              genuine curiosity. These are the springs that feed all meaningful
+              digital engagement.
+            </p>
+
+            <div class="border-t border-[#E8F9FF] pt-4">
+              <h4 class="font-medium text-stone-700 text-sm mb-2">
+                Practice: Source Mapping
+              </h4>
+              <p class="text-xs text-stone-600">
+                Take inventory of your information sources and trace them to
+                their origins. Which flow from direct experience? Which from
+                abstract systems disconnected from ecological reality?
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bg-gradient-to-br from-white to-[#C4D9FF] bg-opacity-20 rounded-lg p-6 border border-[#C4D9FF] border-opacity-30 shadow-sm flex flex-col"
+          >
+            <h3 class="text-lg font-medium text-stone-800 mb-3">
+              Channels & Flow Patterns
+            </h3>
+
+            <p class="text-stone-700 text-sm mb-6 grow">
+              The pathways through which digital information moves in your life:
+              devices, platforms, applications, and habitual usage patterns.
+              These channels shape not just what information reaches you, but
+              how it's contextualized.
+            </p>
+
+            <div class="border-t border-[#C4D9FF] pt-4">
+              <h4 class="font-medium text-stone-700 text-sm mb-2">
+                Practice: Flow Assessment
+              </h4>
+              <p class="text-xs text-stone-600">
+                For one week, observe when information feels like a nourishing
+                stream versus a flash flood. What contexts or channels create
+                each pattern? Where do you feel carried away rather than
+                sustained?
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bg-gradient-to-br from-white to-[#C5BAFF] bg-opacity-10 rounded-lg p-6 border border-[#C5BAFF] border-opacity-20 shadow-sm flex flex-col"
+          >
+            <h3 class="text-lg font-medium text-stone-800 mb-3">
+              Pools & Reservoirs
+            </h3>
+
+            <p class="text-stone-700 text-sm mb-6 grow">
+              Spaces where information collects and deepens: notes systems,
+              knowledge bases, reflection practices, memory. These determine
+              whether insight accumulates into wisdom or simply evaporates after
+              momentary attention.
+            </p>
+
+            <div class="border-t border-[#C5BAFF] pt-4">
+              <h4 class="font-medium text-stone-700 text-sm mb-2">
+                Practice: Reservoir Design
+              </h4>
+              <p class="text-xs text-stone-600">
+                Create intentional contexts for meaningful information to
+                accumulate. This might be a physical notebook, digital garden,
+                or contemplative practice that translates information into
+                understanding.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg p-8 border border-stone-200 shadow-sm">
+          <h3 class="text-xl font-light mb-6 text-stone-800">
+            Watershed Restoration Framework
+          </h3>
+
+          <p class="text-stone-700 mb-8">
+            Like ecological watersheds, digital information systems can become
+            degraded through channelization, pollution, or extractive practices.
+            The restoration of a healthy attention ecosystem follows principles
+            similar to watershed recovery projects:
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <div class="flex items-start mb-6">
+                <div
+                  class="h-10 w-10 rounded-full bg-[#E8F9FF] flex items-center justify-center mt-1 mr-4 flex-shrink-0"
+                >
+                  <div
+                    class="h-5 w-5 rounded-full bg-[#C4D9FF] flex items-center justify-center"
+                  >
+                    <span class="text-xs font-medium">1</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-medium text-stone-800 mb-1">
+                    Re-establish Meanders
+                  </h4>
+                  <p class="text-sm text-stone-700">
+                    Slow information flows by creating curves and bends in
+                    consumption patterns. Information that moves too
+                    quickly—like straightened rivers—lacks the opportunity to
+                    deposit nutrients or be properly filtered. Introduce
+                    deliberate pauses and reflection points.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start mb-6">
+                <div
+                  class="h-10 w-10 rounded-full bg-[#E8F9FF] flex items-center justify-center mt-1 mr-4 flex-shrink-0"
+                >
+                  <div
+                    class="h-5 w-5 rounded-full bg-[#C4D9FF] flex items-center justify-center"
+                  >
+                    <span class="text-xs font-medium">2</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-medium text-stone-800 mb-1">
+                    Remove Contamination
+                  </h4>
+                  <p class="text-sm text-stone-700">
+                    Identify and eliminate sources of attention pollution:
+                    manipulative design patterns, engineered outrage, artificial
+                    urgency. These are the heavy metals and toxins of the
+                    digital watershed, accumulating in the tissues of thought
+                    and emotion.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-start mb-6">
+                <div
+                  class="h-10 w-10 rounded-full bg-[#E8F9FF] flex items-center justify-center mt-1 mr-4 flex-shrink-0"
+                >
+                  <div
+                    class="h-5 w-5 rounded-full bg-[#C4D9FF] flex items-center justify-center"
+                  >
+                    <span class="text-xs font-medium">3</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-medium text-stone-800 mb-1">
+                    Reintroduce Diversity
+                  </h4>
+                  <p class="text-sm text-stone-700">
+                    Algorithmic monocultures reduce cognitive biodiversity.
+                    Deliberately seek information from varied sources, formats,
+                    and perspectives to create a more resilient thought ecology
+                    that can withstand manipulation and oversimplification.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start mb-6">
+                <div
+                  class="h-10 w-10 rounded-full bg-[#E8F9FF] flex items-center justify-center mt-1 mr-4 flex-shrink-0"
+                >
+                  <div
+                    class="h-5 w-5 rounded-full bg-[#C4D9FF] flex items-center justify-center"
+                  >
+                    <span class="text-xs font-medium">4</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-medium text-stone-800 mb-1">
+                    Create Filtering Wetlands
+                  </h4>
+                  <p class="text-sm text-stone-700">
+                    Develop personal practices that filter and process
+                    information before it enters your deeper consciousness. Like
+                    wetlands that purify water, these might include journaling,
+                    conversation, or contemplative pauses that transform
+                    information into understanding.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-10 bg-[#FBFBFB] p-6 rounded-lg border border-stone-200 flex flex-col md:flex-row items-center"
+        >
+          <div class="md:w-2/3 md:pr-6">
+            <h3 class="text-lg font-medium text-stone-800 mb-2">
+              Digital Watershed Assessment
+            </h3>
+            <p class="text-stone-700 text-sm">
+              Understanding your existing information ecosystem is the first
+              step toward intentional relationship. This guided process helps
+              you map your digital landscape, identifying patterns, obstacles,
+              and opportunities for creating healthier flows.
+            </p>
+          </div>
+          <div class="mt-4 md:mt-0 md:ml-auto">
+            <a
+              href="#"
+              class="inline-block px-5 py-2 rounded-full bg-[#C5BAFF] bg-opacity-20 hover:bg-opacity-40 transition-all text-stone-700 text-sm border border-[#C5BAFF] border-opacity-30"
+            >
+              Download Assessment Guide
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Connect Section -->
+    <section id="connect" class="py-16 relative overflow-hidden">
+      <!-- Subtle background pattern suggesting interconnection -->
+      <div class="absolute inset-0 opacity-5">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <pattern
+            id="connectPattern"
+            width="50"
+            height="50"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M25,0 C25,12.5 37.5,25 50,25 C37.5,25 25,37.5 25,50 C25,37.5 12.5,25 0,25 C12.5,25 25,12.5 25,0"
+              fill="#C5BAFF"
+            />
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#connectPattern)" />
+        </svg>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
+        <h2 class="text-3xl font-light mb-8 text-stone-800 flex items-center">
+          <span
+            class="inline-block w-8 h-8 rounded-full mr-3"
+            style="background: linear-gradient(135deg, #c5baff, #c4d9ff)"
+          ></span>
+          Connect
+        </h2>
+
+        <div class="mb-12">
+          <p class="max-w-2xl leading-relaxed">
+            Connection, like water, requires both flow and boundary—a permeable
+            membrane that allows exchange while maintaining integrity. These
+            pathways honor the cyclical nature of genuine dialogue, leaving
+            space for silence, reflection, and the emergence of the unexpected.
+          </p>
+        </div>
+
+        <div
+          class="bg-white rounded-lg p-8 border border-stone-200 shadow-sm mb-12"
+        >
+          <h3 class="text-xl font-light mb-6 text-stone-800">
+            Rhythms of Correspondence
+          </h3>
+
+          <div class="grid md:grid-cols-2 gap-10">
+            <div>
+              <p class="text-stone-700 mb-5">
+                Communication in the digital era often defaults to constant
+                availability and immediate response. These connection patterns
+                rarely mirror the rhythms we find in natural systems, where
+                exchange follows cycles of preparation, engagement, and
+                integration.
+              </p>
+
+              <p class="text-stone-700 mb-5">
+                The channels offered here intentionally embrace slower, more
+                deliberate correspondence—creating space for thoughts to deepen
+                before and after exchange, like the way groundwater moves
+                through stone, emerging clarified at the spring.
+              </p>
+
+              <div
+                class="bg-[#FBFBFB] p-4 rounded-md border border-stone-100 mt-6"
+              >
+                <h4 class="font-medium text-stone-800 mb-2 text-sm">
+                  A Note on Response Times
+                </h4>
+                <p class="text-sm text-stone-600">
+                  Messages received through these channels are gathered like
+                  rainwater, allowed to pool, and responded to during dedicated
+                  correspondence periods—usually within 7-10 days. This rhythm
+                  allows for depth of consideration rather than reactive
+                  exchange.
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div
+                class="bg-gradient-to-br from-white to-[#E8F9FF] p-5 rounded-lg border border-[#E8F9FF] border-opacity-30 relative overflow-hidden"
+              >
+                <div
+                  class="absolute top-0 right-0 w-20 h-20 -mt-10 -mr-10 rounded-full bg-[#E8F9FF] bg-opacity-40"
+                ></div>
+
+                <h4 class="font-medium text-stone-800 mb-3 flex items-center">
+                  <span class="w-3 h-3 rounded-full bg-[#C4D9FF] mr-2"></span>
+                  Seasonal Letter
+                </h4>
+
+                <p class="text-stone-700 text-sm mb-4">
+                  Four times yearly, at the solstices and equinoxes, I share
+                  reflections on the relationship between technology and natural
+                  rhythms—observations, practices, and questions arising from
+                  the turning season.
+                </p>
+
+                <div class="flex items-center mt-4">
+                  <input
+                    type="email"
+                    placeholder="Your email address"
+                    class="text-sm py-2 px-4 rounded-l-full border border-[#C4D9FF] border-opacity-40 focus:outline-none focus:ring-1 focus:ring-[#C4D9FF] bg-white bg-opacity-70 placeholder-stone-400 w-full"
+                  />
+                  <button
+                    class="bg-[#C4D9FF] bg-opacity-30 hover:bg-opacity-50 transition-all text-stone-700 text-sm py-2 px-4 rounded-r-full border border-[#C4D9FF] border-opacity-40 whitespace-nowrap"
+                  >
+                    Subscribe
+                  </button>
+                </div>
+
+                <p class="text-xs text-stone-500 mt-2">
+                  * No tracking, no forwarding, only seasonal correspondence
+                </p>
+              </div>
+
+              <div
+                class="bg-gradient-to-br from-white to-[#C5BAFF] bg-opacity-10 p-5 rounded-lg border border-[#C5BAFF] border-opacity-20 relative overflow-hidden"
+              >
+                <div
+                  class="absolute top-0 right-0 w-20 h-20 -mt-10 -mr-10 rounded-full bg-[#C5BAFF] bg-opacity-20"
+                ></div>
+
+                <h4 class="font-medium text-stone-800 mb-3 flex items-center">
+                  <span class="w-3 h-3 rounded-full bg-[#C5BAFF] mr-2"></span>
+                  Direct Correspondence
+                </h4>
+
+                <p class="text-stone-700 text-sm mb-4">
+                  For specific inquiries about watershed practices,
+                  collaborative possibilities, or to share your own observations
+                  of the digital-natural relationship, write directly through
+                  this bounded channel.
+                </p>
+
+                <a
+                  href="#letter-form"
+                  class="inline-block px-5 py-2 rounded-full bg-[#C5BAFF] bg-opacity-20 hover:bg-opacity-40 transition-all text-stone-700 text-sm border border-[#C5BAFF] border-opacity-30"
+                >
+                  Open Correspondence
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Correspondence Form (initially hidden, would be shown on interaction) -->
+        <div
+          id="letter-form"
+          class="hidden bg-white rounded-lg p-8 border border-stone-200 shadow-sm mb-12"
+        >
+          <h3 class="text-xl font-light mb-6 text-stone-800">Write a Letter</h3>
+
+          <form class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  for="name"
+                  class="block text-sm font-medium text-stone-700 mb-1"
+                  >Your Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  class="w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C4D9FF]"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-stone-700 mb-1"
+                  >Your Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C4D9FF]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="subject"
+                class="block text-sm font-medium text-stone-700 mb-1"
+                >Subject</label
+              >
+              <input
+                type="text"
+                id="subject"
+                class="w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C4D9FF]"
+              />
+            </div>
+
+            <div>
+              <label
+                for="message"
+                class="block text-sm font-medium text-stone-700 mb-1"
+                >Your Letter</label
+              >
+              <textarea
+                id="message"
+                rows="6"
+                class="w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C4D9FF]"
+                placeholder="Write as you would in a letter to a friend—with intention, care, and the awareness that your words will be received with the same presence you bring to them."
+              ></textarea>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <p class="text-xs text-stone-500">
+                * Correspondence is treasured and remains private
+              </p>
+
+              <button
+                type="submit"
+                class="px-6 py-2 bg-[#C4D9FF] bg-opacity-30 hover:bg-opacity-50 transition-all text-stone-700 rounded-full border border-[#C4D9FF] border-opacity-40"
+              >
+                Send Letter
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div
+          class="bg-[#FBFBFB] rounded-lg p-6 border border-stone-200 shadow-sm"
+        >
+          <h3 class="text-lg font-medium text-stone-800 mb-4">
+            Local Watershed Gatherings
+          </h3>
+
+          <p class="text-stone-700 mb-6">
+            Digital connection extends but doesn't replace the deep nourishment
+            of in-person exchange. Seasonal gatherings occur at various
+            watersheds, bringing together people exploring the integration of
+            technological and natural awareness in their local bioregions.
+          </p>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div
+              class="bg-white p-4 rounded-md border border-stone-100 relative overflow-hidden"
+            >
+              <div
+                class="absolute top-0 right-0 w-12 h-12 -mt-6 -mr-6 rounded-full bg-[#E8F9FF] bg-opacity-50"
+              ></div>
+
+              <h4 class="font-medium text-stone-800 mb-1 text-sm">
+                Pacific Northwest
+              </h4>
+              <p class="text-xs text-stone-600 mb-3">Columbia River Basin</p>
+              <div class="flex items-center text-xs text-stone-700">
+                <span
+                  class="inline-block w-2 h-2 rounded-full bg-[#C4D9FF] mr-2"
+                ></span>
+                Summer Solstice 2025
+              </div>
+            </div>
+
+            <div
+              class="bg-white p-4 rounded-md border border-stone-100 relative overflow-hidden"
+            >
+              <div
+                class="absolute top-0 right-0 w-12 h-12 -mt-6 -mr-6 rounded-full bg-[#E8F9FF] bg-opacity-50"
+              ></div>
+
+              <h4 class="font-medium text-stone-800 mb-1 text-sm">
+                New England
+              </h4>
+              <p class="text-xs text-stone-600 mb-3">
+                Connecticut River Watershed
+              </p>
+              <div class="flex items-center text-xs text-stone-700">
+                <span
+                  class="inline-block w-2 h-2 rounded-full bg-[#C4D9FF] mr-2"
+                ></span>
+                Autumn Equinox 2025
+              </div>
+            </div>
+
+            <div
+              class="bg-white p-4 rounded-md border border-stone-100 relative overflow-hidden"
+            >
+              <div
+                class="absolute top-0 right-0 w-12 h-12 -mt-6 -mr-6 rounded-full bg-[#E8F9FF] bg-opacity-50"
+              ></div>
+
+              <h4 class="font-medium text-stone-800 mb-1 text-sm">
+                Great Lakes
+              </h4>
+              <p class="text-xs text-stone-600 mb-3">Michigan Watershed</p>
+              <div class="flex items-center text-xs text-stone-700">
+                <span
+                  class="inline-block w-2 h-2 rounded-full bg-[#C4D9FF] mr-2"
+                ></span>
+                Winter Solstice 2025
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 text-center">
+            <a
+              href="#"
+              class="inline-block px-5 py-2 rounded-full bg-[#C4D9FF] bg-opacity-20 hover:bg-opacity-40 transition-all text-stone-700 text-sm"
+            >
+              Request Gathering Details
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer
+      class="py-16 bg-gradient-to-b from-white to-[#FBFBFB] border-t border-stone-200"
+    >
+      <div class="max-w-5xl mx-auto px-6">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start mb-12"
+        >
+          <div class="mb-8 md:mb-0">
+            <h2 class="text-xl font-light text-stone-800 mb-2">Lin Rivers</h2>
+            <p class="text-stone-600 max-w-sm">
+              Exploring the watershed where digital tools and natural systems
+              meet
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="text-sm font-medium text-stone-800 mb-3">Pathways</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a
+                    href="#finding-balance"
+                    class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    >Finding Balance</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#seasonal-practices"
+                    class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    >Seasonal Practices</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#digital-watershed"
+                    class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    >Digital Watershed</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#connect"
+                    class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    >Connect</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-sm font-medium text-stone-800 mb-3">Resources</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    >Seasonal Calendar</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    >Watershed Assessment</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    >Reading Circle</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-span-2 md:col-span-1">
+              <h3 class="text-sm font-medium text-stone-800 mb-3">Terrain</h3>
+              <p class="text-sm text-stone-600 mb-2">
+                Pacific Northwest Bioregion<br />
+                Salish Sea Watershed
+              </p>
+              <p class="text-xs text-stone-500">
+                Traditional territories of the Coast Salish peoples
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-stone-100 pt-6 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-sm text-stone-500 mb-4 md:mb-0">
+            Created with intention © 2025
+          </p>
+
+          <div class="flex items-center space-x-6">
+            <a
+              href="#"
+              class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+              >Plain Text Version</a
+            >
+            <a
+              href="#"
+              class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+              >Print View</a
+            >
+            <a
+              href="#"
+              class="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+              >Offline Reading</a
+            >
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <p class="text-xs text-stone-500">
+            This site uses no tracking, no analytics, no cookies.<br />
+            Your attention remains your own.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      /* Additional styles to smooth interaction */
+      @keyframes gentle-appear {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      #letter-form.visible {
+        display: block;
+        animation: gentle-appear 0.5s ease-out forwards;
+      }
+    </style>
+
+    <script>
+      // Simple script to show/hide the letter form
+      document.addEventListener("DOMContentLoaded", function () {
+        const openFormLink = document.querySelector('a[href="#letter-form"]');
+        const letterForm = document.getElementById("letter-form");
+
+        if (openFormLink && letterForm) {
+          openFormLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            letterForm.classList.add("visible");
+            letterForm.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        }
+      });
+    </script>
+
+    <!-- <style>
+    /* Additional styles for seasonal indicators */
+    .season-spring {
+        background: linear-gradient(135deg, #C4D9FF, #C5BAFF);
+    }
+    
+    .season-summer {
+        background: linear-gradient(135deg, #C5BAFF, #C4D9FF);
+    }
+    
+    .season-autumn {
+        background: linear-gradient(135deg, #C4D9FF, #E8F9FF);
+    }
+    
+    .season-winter {
+        background: linear-gradient(135deg, #E8F9FF, #FBFBFB);
+    }
+</style> -->
+
+    <script>
+      // JavaScript would update the current season content based on actual date
+      function updateSeasonalContent() {
+        const now = new Date();
+        const month = now.getMonth();
+
+        // Very simple season determination (Northern Hemisphere)
+        let seasonName, seasonHeading, seasonPractices;
+
+        if (month >= 2 && month < 5) {
+          seasonName = "Spring";
+          seasonHeading = "Spring Practices";
+          // Spring content already in HTML
+        } else if (month >= 5 && month < 8) {
+          seasonName = "Summer";
+          seasonHeading = "Summer Practices";
+          // Would update DOM with summer content
+        } else if (month >= 8 && month < 11) {
+          seasonName = "Autumn";
+          seasonHeading = "Autumn Practices";
+          // Would update DOM with autumn content
+        } else {
+          seasonName = "Winter";
+          seasonHeading = "Winter Practices";
+          // Would update DOM with winter content
+        }
+
+        // This would update the content if implemented
+        document.getElementById("current-season-heading").textContent =
+          seasonHeading;
+      }
+
+      // This would be called on page load in the full implementation
+      // updateSeasonalContent();
+    </script>
+
+    <script>
+      // Time awareness functionality
+      function updateTimeAwareness() {
+        const header = document.querySelector("header.time-aware");
+        const now = new Date();
+        const hour = now.getHours();
+
+        // Simple time period detection
+        if (hour >= 5 && hour < 8) {
+          header.className = "time-aware dawn relative overflow-hidden";
+        } else if (hour >= 8 && hour < 18) {
+          header.className = "time-aware day relative overflow-hidden";
+        } else if (hour >= 18 && hour < 21) {
+          header.className = "time-aware dusk relative overflow-hidden";
+        } else {
+          header.className = "time-aware night relative overflow-hidden";
+        }
+
+        // Update date display
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        document.getElementById("current-date").textContent = `${
+          months[now.getMonth()]
+        } ${now.getDate()}`;
+
+        // Update season (Northern Hemisphere approximation)
+        const month = now.getMonth();
+        const seasonIndicator = document.querySelector(".season-indicator");
+
+        if (month >= 2 && month < 5) {
+          document.getElementById("current-season").textContent = "Spring";
+          seasonIndicator.className =
+            "season-indicator season-spring flex flex-col items-center";
+        } else if (month >= 5 && month < 8) {
+          document.getElementById("current-season").textContent = "Summer";
+          seasonIndicator.className =
+            "season-indicator season-summer flex flex-col items-center";
+        } else if (month >= 8 && month < 11) {
+          document.getElementById("current-season").textContent = "Autumn";
+          seasonIndicator.className =
+            "season-indicator season-autumn flex flex-col items-center";
+        } else {
+          document.getElementById("current-season").textContent = "Winter";
+          seasonIndicator.className =
+            "season-indicator season-winter flex flex-col items-center";
+        }
+      }
+
+      // Initialize and set interval
+      updateTimeAwareness();
+      setInterval(updateTimeAwareness, 60000); // Update every minute
+    </script>
+  </body>
+</html>

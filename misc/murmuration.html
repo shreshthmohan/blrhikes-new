@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Murmuration</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #000510;
+      }
+      svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .controls {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: rgba(0, 5, 16, 0.7);
+        padding: 15px;
+        border-radius: 8px;
+        color: #a3b8cc;
+        font-family: system-ui, -apple-system, sans-serif;
+        z-index: 100;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 20px rgba(0, 30, 60, 0.2);
+        transition: opacity 0.5s ease;
+      }
+      .controls:hover {
+        opacity: 1;
+      }
+      input[type="range"] {
+        width: 100%;
+      }
+      .hide-controls {
+        opacity: 0.3;
+      }
+      .info-panel {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(0, 5, 16, 0.7);
+        padding: 15px;
+        border-radius: 8px;
+        color: #a3b8cc;
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 300px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 20px rgba(0, 30, 60, 0.2);
+        transition: opacity 0.5s ease;
+      }
+      .info-panel:hover {
+        opacity: 1;
+      }
+      .hide-panel {
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body class="bg-black">
+    <svg id="canvas" xmlns="http://www.w3.org/2000/svg"></svg>
+
+    <div class="controls hide-controls">
+      <h2 class="text-lg font-semibold mb-3 text-blue-200">
+        Ecosystem Parameters
+      </h2>
+      <div class="mb-3">
+        <label for="alignment" class="block text-sm mb-1"
+          >Alignment Force</label
+        >
+        <input
+          type="range"
+          id="alignment"
+          min="0"
+          max="0.2"
+          step="0.01"
+          value="0.05"
+          class="mb-2"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="cohesion" class="block text-sm mb-1">Cohesion Force</label>
+        <input
+          type="range"
+          id="cohesion"
+          min="0"
+          max="0.2"
+          step="0.01"
+          value="0.03"
+          class="mb-2"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="separation" class="block text-sm mb-1"
+          >Separation Force</label
+        >
+        <input
+          type="range"
+          id="separation"
+          min="0"
+          max="0.2"
+          step="0.01"
+          value="0.08"
+          class="mb-2"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="maxSpeed" class="block text-sm mb-1">Maximum Speed</label>
+        <input
+          type="range"
+          id="maxSpeed"
+          min="1"
+          max="8"
+          step="0.1"
+          value="3.5"
+          class="mb-2"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="perceptionRadius" class="block text-sm mb-1"
+          >Perception Radius</label
+        >
+        <input
+          type="range"
+          id="perceptionRadius"
+          min="10"
+          max="100"
+          step="1"
+          value="50"
+          class="mb-2"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="particleCount" class="block text-sm mb-1"
+          >Particle Count</label
+        >
+        <input
+          type="range"
+          id="particleCount"
+          min="50"
+          max="400"
+          step="10"
+          value="200"
+          class="mb-2"
+        />
+        <button
+          id="updateCount"
+          class="px-2 py-1 bg-blue-800 text-blue-100 rounded text-xs"
+        >
+          Update
+        </button>
+      </div>
+      <div class="flex space-x-2 mt-4">
+        <button
+          id="resetBtn"
+          class="px-3 py-1 bg-blue-800 text-blue-100 rounded text-sm"
+        >
+          Reset
+        </button>
+        <button
+          id="pauseBtn"
+          class="px-3 py-1 bg-blue-800 text-blue-100 rounded text-sm"
+        >
+          Pause
+        </button>
+      </div>
+    </div>
+
+    <div class="info-panel hide-panel">
+      <h2 class="text-lg font-semibold mb-2 text-blue-200">
+        Digital Murmuration
+      </h2>
+      <p class="text-sm mb-2">
+        This ecosystem simulates the emergent patterns of bird flocks, where
+        complex behavior arises from simple rules followed by each individual.
+      </p>
+      <p class="text-sm mb-2">
+        Move your cursor across the canvas to influence the environment. The
+        particles respond not just to each other, but to the subtle currents you
+        create.
+      </p>
+      <p class="text-sm italic">
+        Observe how order emerges from relationship, not from central control.
+      </p>
+    </div>
+
+    <script>
+      // Manage UI interactions
+      document.querySelector(".controls").addEventListener("mouseenter", () => {
+        document.querySelector(".controls").classList.remove("hide-controls");
+      });
+
+      document.querySelector(".controls").addEventListener("mouseleave", () => {
+        document.querySelector(".controls").classList.add("hide-controls");
+      });
+
+      document
+        .querySelector(".info-panel")
+        .addEventListener("mouseenter", () => {
+          document.querySelector(".info-panel").classList.remove("hide-panel");
+        });
+
+      document
+        .querySelector(".info-panel")
+        .addEventListener("mouseleave", () => {
+          document.querySelector(".info-panel").classList.add("hide-panel");
+        });
+
+      // Core simulation
+      const svg = document.getElementById("canvas");
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let paused = false;
+
+      // Resize handler
+      window.addEventListener("resize", () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+      });
+
+      // Store parameters
+      const params = {
+        alignment: 0.05,
+        cohesion: 0.03,
+        separation: 0.08,
+        maxSpeed: 3.5,
+        perceptionRadius: 50,
+        mouseInfluence: 100,
+        mouseStrength: 0.05,
+        edgeBehavior: "wrap", // or 'bounce'
+      };
+
+      // Parameter controls
+      document.getElementById("alignment").addEventListener("input", (e) => {
+        params.alignment = parseFloat(e.target.value);
+      });
+
+      document.getElementById("cohesion").addEventListener("input", (e) => {
+        params.cohesion = parseFloat(e.target.value);
+      });
+
+      document.getElementById("separation").addEventListener("input", (e) => {
+        params.separation = parseFloat(e.target.value);
+      });
+
+      document.getElementById("maxSpeed").addEventListener("input", (e) => {
+        params.maxSpeed = parseFloat(e.target.value);
+      });
+
+      document
+        .getElementById("perceptionRadius")
+        .addEventListener("input", (e) => {
+          params.perceptionRadius = parseFloat(e.target.value);
+        });
+
+      document
+        .getElementById("resetBtn")
+        .addEventListener("click", resetSimulation);
+
+      document.getElementById("pauseBtn").addEventListener("click", () => {
+        paused = !paused;
+        document.getElementById("pauseBtn").textContent = paused
+          ? "Resume"
+          : "Pause";
+      });
+
+      document.getElementById("updateCount").addEventListener("click", () => {
+        const newCount = parseInt(
+          document.getElementById("particleCount").value
+        );
+        updateParticleCount(newCount);
+      });
+
+      // Mouse interaction
+      let mouseX = 0;
+      let mouseY = 0;
+      let mousePresent = false;
+
+      svg.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        mousePresent = true;
+      });
+
+      svg.addEventListener("mouseout", () => {
+        mousePresent = false;
+      });
+
+      // Particle class
+      class Particle {
+        constructor(id) {
+          this.id = id;
+          this.position = {
+            x: Math.random() * width,
+            y: Math.random() * height,
+          };
+          this.velocity = {
+            x: (Math.random() * 2 - 1) * 2,
+            y: (Math.random() * 2 - 1) * 2,
+          };
+          this.acceleration = { x: 0, y: 0 };
+          this.hue = Math.random() * 60 + 160; // Blue to blue-green spectrum
+          this.size = Math.random() * 3 + 2;
+          this.history = [];
+          this.historyLength = Math.floor(Math.random() * 10) + 5;
+          this.element = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "g"
+          );
+          this.circle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          this.circle.setAttribute("r", this.size);
+          this.circle.setAttribute("fill", `hsla(${this.hue}, 90%, 60%, 0.7)`);
+
+          // Create path for trail
+          this.trail = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "path"
+          );
+          this.trail.setAttribute("stroke", `hsla(${this.hue}, 90%, 60%, 0.3)`);
+          this.trail.setAttribute("stroke-width", this.size / 2);
+          this.trail.setAttribute("fill", "none");
+
+          this.element.appendChild(this.trail);
+          this.element.appendChild(this.circle);
+          svg.appendChild(this.element);
+        }
+
+        updateTrail() {
+          if (this.history.length > 0) {
+            let pathData = `M ${this.history[0].x} ${this.history[0].y}`;
+            for (let i = 1; i < this.history.length; i++) {
+              pathData += ` L ${this.history[i].x} ${this.history[i].y}`;
+            }
+            this.trail.setAttribute("d", pathData);
+          }
+        }
+
+        applyBehaviors(particles) {
+          // Get nearby particles
+          const nearby = particles.filter((p) => {
+            if (p.id === this.id) return false;
+            const dx = p.position.x - this.position.x;
+            const dy = p.position.y - this.position.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            return distance < params.perceptionRadius;
+          });
+
+          if (nearby.length > 0) {
+            // Alignment
+            const alignment = this.align(nearby);
+
+            // Cohesion
+            const cohesion = this.cohere(nearby);
+
+            // Separation
+            const separation = this.separate(nearby);
+
+            // Apply forces
+            this.acceleration.x += alignment.x * params.alignment;
+            this.acceleration.y += alignment.y * params.alignment;
+
+            this.acceleration.x += cohesion.x * params.cohesion;
+            this.acceleration.y += cohesion.y * params.cohesion;
+
+            this.acceleration.x += separation.x * params.separation;
+            this.acceleration.y += separation.y * params.separation;
+          }
+
+          // Apply mouse influence if present
+          if (mousePresent) {
+            const dx = mouseX - this.position.x;
+            const dy = mouseY - this.position.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < params.mouseInfluence) {
+              // Gentle attraction to mouse
+              const strength =
+                (1 - distance / params.mouseInfluence) * params.mouseStrength;
+              this.acceleration.x += dx * strength;
+              this.acceleration.y += dy * strength;
+            }
+          }
+        }
+
+        align(nearby) {
+          let avgVx = 0;
+          let avgVy = 0;
+
+          nearby.forEach((p) => {
+            avgVx += p.velocity.x;
+            avgVy += p.velocity.y;
+          });
+
+          avgVx /= nearby.length;
+          avgVy /= nearby.length;
+
+          // Return the force needed to align with average velocity
+          return {
+            x: avgVx - this.velocity.x,
+            y: avgVy - this.velocity.y,
+          };
+        }
+
+        cohere(nearby) {
+          let avgX = 0;
+          let avgY = 0;
+
+          nearby.forEach((p) => {
+            avgX += p.position.x;
+            avgY += p.position.y;
+          });
+
+          avgX /= nearby.length;
+          avgY /= nearby.length;
+
+          // Return the force needed to move toward center of mass
+          return {
+            x: avgX - this.position.x,
+            y: avgY - this.position.y,
+          };
+        }
+
+        separate(nearby) {
+          let forceX = 0;
+          let forceY = 0;
+
+          nearby.forEach((p) => {
+            const dx = this.position.x - p.position.x;
+            const dy = this.position.y - p.position.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // The closer the neighbor, the stronger the repulsion
+            if (distance > 0) {
+              const repulsion = 1 / distance;
+              forceX += dx * repulsion;
+              forceY += dy * repulsion;
+            }
+          });
+
+          return { x: forceX, y: forceY };
+        }
+
+        update() {
+          // Update velocity based on acceleration
+          this.velocity.x += this.acceleration.x;
+          this.velocity.y += this.acceleration.y;
+
+          // Limit speed
+          const speed = Math.sqrt(
+            this.velocity.x * this.velocity.x +
+              this.velocity.y * this.velocity.y
+          );
+          if (speed > params.maxSpeed) {
+            this.velocity.x = (this.velocity.x / speed) * params.maxSpeed;
+            this.velocity.y = (this.velocity.y / speed) * params.maxSpeed;
+          }
+
+          // Update position
+          this.position.x += this.velocity.x;
+          this.position.y += this.velocity.y;
+
+          // Handle edges
+          if (params.edgeBehavior === "wrap") {
+            if (this.position.x > width) this.position.x = 0;
+            if (this.position.x < 0) this.position.x = width;
+            if (this.position.y > height) this.position.y = 0;
+            if (this.position.y < 0) this.position.y = height;
+          } else {
+            // Bounce behavior
+            if (this.position.x > width) {
+              this.position.x = width;
+              this.velocity.x *= -1;
+            }
+            if (this.position.x < 0) {
+              this.position.x = 0;
+              this.velocity.x *= -1;
+            }
+            if (this.position.y > height) {
+              this.position.y = height;
+              this.velocity.y *= -1;
+            }
+            if (this.position.y < 0) {
+              this.position.y = 0;
+              this.velocity.y *= -1;
+            }
+          }
+
+          // Update history for trail
+          this.history.push({ x: this.position.x, y: this.position.y });
+          if (this.history.length > this.historyLength) {
+            this.history.shift();
+          }
+
+          // Reset acceleration for next frame
+          this.acceleration.x = 0;
+          this.acceleration.y = 0;
+        }
+
+        draw() {
+          // Update circle position
+          this.circle.setAttribute("cx", this.position.x);
+          this.circle.setAttribute("cy", this.position.y);
+
+          // Update trail
+          this.updateTrail();
+
+          // Subtle rotation based on velocity
+          const angle =
+            Math.atan2(this.velocity.y, this.velocity.x) * (180 / Math.PI);
+          this.element.setAttribute(
+            "transform",
+            `rotate(${angle} ${this.position.x} ${this.position.y})`
+          );
+        }
+
+        remove() {
+          svg.removeChild(this.element);
+        }
+      }
+
+      // Create initial particles
+      let particles = [];
+      function createParticles(count) {
+        for (let i = 0; i < count; i++) {
+          particles.push(new Particle(i));
+        }
+      }
+
+      function updateParticleCount(newCount) {
+        // If we need more particles
+        if (newCount > particles.length) {
+          for (let i = particles.length; i < newCount; i++) {
+            particles.push(new Particle(i));
+          }
+        }
+        // If we need fewer particles
+        else if (newCount < particles.length) {
+          for (let i = particles.length - 1; i >= newCount; i--) {
+            particles[i].remove();
+          }
+          particles = particles.slice(0, newCount);
+        }
+      }
+
+      function resetSimulation() {
+        // Remove all existing particles
+        particles.forEach((p) => p.remove());
+        particles = [];
+
+        // Create new particles
+        const count = parseInt(document.getElementById("particleCount").value);
+        createParticles(count);
+      }
+
+      // Animation loop
+      function animate() {
+        if (!paused) {
+          particles.forEach((p) => p.applyBehaviors(particles));
+          particles.forEach((p) => p.update());
+          particles.forEach((p) => p.draw());
+        }
+        requestAnimationFrame(animate);
+      }
+
+      // Initialize
+      createParticles(parseInt(document.getElementById("particleCount").value));
+      animate();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DigitalCompost | Sustainable Computing for a Finite World</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              soil: {
+                50: "#f8f5f0",
+                100: "#e8e0d2",
+                200: "#d5c3aa",
+                300: "#c4a683",
+                400: "#b38b5d",
+                500: "#9d6f44",
+                600: "#7d5636",
+                700: "#5e412a",
+                800: "#422c1d",
+                900: "#29190f",
+              },
+              moss: {
+                50: "#f3f7ee",
+                100: "#e7f0dd",
+                200: "#d0e2be",
+                300: "#b5d099",
+                400: "#97bf71",
+                500: "#7da44a",
+                600: "#648536",
+                700: "#4c652a",
+                800: "#35451f",
+                900: "#1f2711",
+              },
+              stone: {
+                50: "#f5f5f4",
+                100: "#e6e6e3",
+                200: "#d5d5d0",
+                300: "#c2c1bb",
+                400: "#adac9e",
+                500: "#8d8b7a",
+                600: "#6f6e5c",
+                700: "#54534e",
+                800: "#36342b",
+                900: "#1c1a17",
+              },
+            },
+            fontFamily: {
+              mono: ["Courier New", "monospace"],
+            },
+            animation: {
+              slowpulse: "slowpulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "gentle-float": "gentle-float 6s ease-in-out infinite",
+              "slow-spin": "spin 12s linear infinite",
+            },
+            keyframes: {
+              slowpulse: {
+                "0%, 100%": { opacity: 1 },
+                "50%": { opacity: 0.8 },
+              },
+              "gentle-float": {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-5px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+
+      /* Minimal styling to enhance the "low-tech" feel */
+      body {
+        font-family: "Space Mono", monospace;
+        background-color: #f8f5f0;
+      }
+
+      /* Custom underline effect for links */
+      .sustainable-link {
+        text-decoration: none;
+        background-image: linear-gradient(to right, #7da44a, #7da44a);
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        background-size: 100% 1px;
+        transition: background-size 0.3s;
+      }
+
+      .sustainable-link:hover {
+        background-size: 100% 2px;
+      }
+
+      /* Terminal-style text container */
+      .terminal {
+        background-color: #1c1a17;
+        border-radius: 4px;
+        padding: 1rem;
+        font-family: "Space Mono", monospace;
+        color: #d0e2be;
+        overflow-x: auto;
+      }
+
+      /* Terminal blinking cursor */
+      .cursor {
+        display: inline-block;
+        width: 0.6em;
+        height: 1em;
+        background-color: #d0e2be;
+        animation: blink 1s step-end infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* Custom scrollbar for that retro feeling */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f8f5f0;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #7da44a;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #648536;
+      }
+
+      /* Focus styles that respect user preferences */
+      *:focus {
+        outline: 2px dotted #7da44a;
+        outline-offset: 2px;
+      }
+
+      /* Improved contrast for accessibility */
+      .accessible-text {
+        color: #4c652a;
+      }
+
+      /* Light dot pattern for texture */
+      .dot-pattern {
+        background-image: radial-gradient(#7da44a 1px, transparent 1px);
+        background-size: 20px 20px;
+        opacity: 0.1;
+      }
+
+      /* Typewriter effect */
+      .typewriter {
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 2px solid #7da44a;
+        animation: typing 3.5s steps(40, end),
+          blink-caret 0.75s step-end infinite;
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink-caret {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: #7da44a;
+        }
+      }
+
+      /* Low-fi images */
+      .low-fi-image {
+        image-rendering: pixelated;
+      }
+
+      /* Digital garden growth animation */
+      .growing-plant {
+        transform-origin: bottom;
+        animation: grow 8s ease-out forwards;
+      }
+
+      @keyframes grow {
+        0% {
+          transform: scaleY(0.1);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scaleY(1);
+          opacity: 1;
+        }
+      }
+
+      /* Paper texture */
+      .paper-texture {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%239C92AC' fill-opacity='0.05' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+      }
+
+      /* Simple loading animation that uses minimal resources */
+      .eco-loader {
+        width: 48px;
+        height: 48px;
+        border: 3px solid #e7f0dd;
+        border-radius: 50%;
+        border-top-color: #7da44a;
+        animation: spin 1s linear infinite;
+      }
+
+      /* Page transitions that use minimal CPU */
+      .page-transition {
+        transition: opacity 0.3s ease;
+      }
+
+      .page-transition.hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body class="text-stone-800 leading-relaxed">
+    <!-- Minimal Site Header -->
+    <header class="border-b border-stone-200 py-4">
+      <div
+        class="max-w-4xl mx-auto px-4 sm:px-6 flex justify-between items-center"
+      >
+        <a
+          href="#"
+          class="flex items-center space-x-2 text-moss-700 hover:text-moss-800 transition-colors"
+        >
+          <span class="text-2xl">🌱</span>
+          <span class="font-bold tracking-tight">DigitalCompost</span>
+        </a>
+
+        <nav class="hidden md:flex space-x-6">
+          <a
+            href="#about"
+            class="sustainable-link text-stone-700 hover:text-moss-700 transition-colors"
+            >About</a
+          >
+          <a
+            href="#principles"
+            class="sustainable-link text-stone-700 hover:text-moss-700 transition-colors"
+            >Principles</a
+          >
+          <a
+            href="#projects"
+            class="sustainable-link text-stone-700 hover:text-moss-700 transition-colors"
+            >Projects</a
+          >
+          <a
+            href="#resources"
+            class="sustainable-link text-stone-700 hover:text-moss-700 transition-colors"
+            >Resources</a
+          >
+          <a
+            href="#community"
+            class="sustainable-link text-stone-700 hover:text-moss-700 transition-colors"
+            >Community</a
+          >
+        </nav>
+
+        <button
+          class="md:hidden text-stone-700 hover:text-moss-700 transition-colors"
+          aria-label="Menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 sm:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 dot-pattern"></div>
+
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 relative">
+        <div class="mb-8 sm:mb-12">
+          <h1 class="text-3xl sm:text-4xl font-bold text-stone-900 mb-4">
+            Computing that gives<br />back to the earth
+          </h1>
+          <p class="text-lg sm:text-xl text-stone-700 max-w-xl">
+            Sustainable digital practices for a world with finite resources.
+            Minimize energy use, extend hardware life, and honor the cycles of
+            nature.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+          <a
+            href="#learn"
+            class="inline-flex items-center justify-center px-6 py-3 bg-moss-600 text-white font-medium rounded-md hover:bg-moss-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-moss-500"
+          >
+            Learn how
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 ml-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </a>
+          <a
+            href="#newsletter"
+            class="inline-flex items-center justify-center px-6 py-3 border border-moss-600 text-moss-700 font-medium rounded-md hover:bg-moss-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-moss-500"
+          >
+            Join our newsletter
+          </a>
+        </div>
+
+        <div class="flex items-center text-sm text-stone-600">
+          <span
+            class="inline-block h-2 w-2 rounded-full bg-moss-500 mr-2"
+          ></span>
+          <span
+            >Our servers use 94% less energy than conventional web hosting</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-stone-50 paper-texture">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="text-2xl font-bold text-stone-900 mb-4">
+              Digital sustainability<br />is environmental sustainability
+            </h2>
+            <p class="text-stone-700 mb-4">
+              Permacomputing applies permaculture principles to digital
+              technology—working with nature rather than against it.
+            </p>
+            <p class="text-stone-700 mb-4">
+              Every byte of data we generate consumes energy and resources. By
+              designing systems that require less, we reduce our digital
+              footprint on the planet.
+            </p>
+            <p class="text-stone-700">
+              From solar-powered servers to software that works on decade-old
+              hardware, we're cultivating a more resilient digital ecosystem.
+            </p>
+          </div>
+
+          <div class="terminal h-64 overflow-y-auto text-sm">
+            <div class="mb-2">$ uname -a</div>
+            <div class="mb-2">
+              Linux permaserver 5.15.0-lowpower #1 SMP PREEMPT solar-powered
+            </div>
+            <div class="mb-2">$ uptime</div>
+            <div class="mb-2">
+              14:23:42 up 437 days, 6:24, 1 user, load average: 0.02, 0.01, 0.00
+            </div>
+            <div class="mb-2">$ free -h</div>
+            <div class="mb-2">total used free</div>
+            <div class="mb-2">Mem: 256M 89M 167M</div>
+            <div class="mb-2">$ df -h</div>
+            <div class="mb-2">Filesystem Size Used Avail Use%</div>
+            <div class="mb-2">/dev/root 10G 2.8G 6.2G 32%</div>
+            <div class="mb-2">$ cat /proc/acpi/bbswitch</div>
+            <div class="mb-2">0000:01:00.0 OFF</div>
+            <div class="mb-2">$ sensors</div>
+            <div class="mb-2">CPU: +29.0°C</div>
+            <div class="mb-2">$ ps aux | grep -i watt</div>
+            <div class="mb-2">
+              root 3284 0.0 0.1 14888 2252 ? S May07 0:17 watt-watcher
+            </div>
+            <div class="mb-2">$ ./measure-energy.sh</div>
+            <div class="mb-2">Current consumption: 1.7W</div>
+            <div class="mb-2">Daily average: 1.4W</div>
+            <div class="mb-2">Yearly projection: 12.3 kWh</div>
+            <div class="mb-2">$ _</div>
+            <span class="cursor"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Principles Section -->
+    <section id="principles" class="py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-2xl font-bold text-stone-900 mb-4">
+            Permacomputing Principles
+          </h2>
+          <p class="text-stone-700 max-w-2xl mx-auto">
+            A holistic approach to computing that respects planetary boundaries.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <!-- Principle 1 -->
+          <div
+            class="p-6 border border-stone-200 rounded-lg hover:border-moss-300 transition-colors"
+          >
+            <div class="text-moss-600 mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">
+              Appropriate Technology
+            </h3>
+            <p class="text-stone-700">
+              Choose the simplest technology that solves the problem
+              effectively. Not every solution needs cloud computing or AI.
+            </p>
+          </div>
+
+          <!-- Principle 2 -->
+          <div
+            class="p-6 border border-stone-200 rounded-lg hover:border-moss-300 transition-colors"
+          >
+            <div class="text-moss-600 mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">
+              Regenerative Design
+            </h3>
+            <p class="text-stone-700">
+              Create systems that get better over time, not worse. Software
+              should improve with use rather than becoming obsolete.
+            </p>
+          </div>
+
+          <!-- Principle 3 -->
+          <div
+            class="p-6 border border-stone-200 rounded-lg hover:border-moss-300 transition-colors"
+          >
+            <div class="text-moss-600 mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">Longevity</h3>
+            <p class="text-stone-700">
+              Build for the long term. Design hardware and software that can be
+              maintained and repaired for decades, not just years.
+            </p>
+          </div>
+
+          <!-- Principle 4 -->
+          <div
+            class="p-6 border border-stone-200 rounded-lg hover:border-moss-300 transition-colors"
+          >
+            <div class="text-moss-600 mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
+                />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">
+              Fair Resource Use
+            </h3>
+            <p class="text-stone-700">
+              Distribute computational resources justly and equitably. Consider
+              the global impacts of your digital practices.
+            </p>
+          </div>
+
+          <!-- Principle 5 -->
+          <div
+            class="p-6 border border-stone-200 rounded-lg hover:border-moss-300 transition-colors"
+          >
+            <div class="text-moss-600 mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">Simplicity</h3>
+            <p class="text-stone-700">
+              Embrace minimal, elegant solutions. Complexity increases fragility
+              and resource consumption.
+            </p>
+          </div>
+
+          <!-- Principle 6 -->
+          <div
+            class="p-6 border border-stone-200 rounded-lg hover:border-moss-300 transition-colors"
+          >
+            <div class="text-moss-600 mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-stone-900 mb-2">
+              Cyclical Thinking
+            </h3>
+            <p class="text-stone-700">
+              Consider the full lifecycle of technology. Design for reuse,
+              repair, and eventual biodegradation or recycling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-stone-50 paper-texture">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-2xl font-bold text-stone-900 mb-4">
+            Current Projects
+          </h2>
+          <p class="text-stone-700 max-w-2xl mx-auto">
+            Practical applications of permacomputing principles in the wild.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Project 1 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <img
+              src="/api/placeholder/500/300"
+              alt="Solar-powered server farm"
+              class="w-full h-48 object-cover low-fi-image"
+            />
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-stone-900 mb-2">
+                Solar-Powered Servers
+              </h3>
+              <p class="text-stone-700 mb-4">
+                Our community-maintained server farm runs entirely on solar
+                power, with hardware designed to operate efficiently under
+                variable power conditions.
+              </p>
+              <a href="#" class="sustainable-link text-moss-700 font-medium"
+                >Learn more →</a
+              >
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <img
+              src="/api/placeholder/500/300"
+              alt="Low-tech web design workshop"
+              class="w-full h-48 object-cover low-fi-image"
+            />
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-stone-900 mb-2">
+                Low-Tech Web Design
+              </h3>
+              <p class="text-stone-700 mb-4">
+                Our design collective creates beautiful, functional websites
+                that work on any device, use minimal bandwidth, and require
+                minimal server resources.
+              </p>
+              <a href="#" class="sustainable-link text-moss-700 font-medium"
+                >Learn more →</a
+              >
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <img
+              src="/api/placeholder/500/300"
+              alt="Hardware repair workshop"
+              class="w-full h-48 object-cover low-fi-image"
+            />
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-stone-900 mb-2">
+                Repair Workshops
+              </h3>
+              <p class="text-stone-700 mb-4">
+                Monthly community workshops where people learn to repair and
+                upgrade their own devices, extending hardware lifespans and
+                reducing e-waste.
+              </p>
+              <a href="#" class="sustainable-link text-moss-700 font-medium"
+                >Learn more →</a
+              >
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <img
+              src="/api/placeholder/500/300"
+              alt="Open-source software coding"
+              class="w-full h-48 object-cover low-fi-image"
+            />
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-stone-900 mb-2">
+                Efficient Software Initiative
+              </h3>
+              <p class="text-stone-700 mb-4">
+                Creating open-source software designed to run smoothly on older
+                hardware, with minimal resource requirements and tiny code
+                footprints.
+              </p>
+              <a href="#" class="sustainable-link text-moss-700 font-medium"
+                >Learn more →</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <a
+            href="#all-projects"
+            class="inline-flex items-center text-moss-700 font-medium hover:text-moss-800 transition-colors"
+          >
+            View all projects
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 ml-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section with CTA -->
+    <section id="newsletter" class="py-16 bg-moss-50 border-y border-moss-100">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h2 class="text-2xl font-bold text-stone-900 mb-4">
+              Stay Connected
+            </h2>
+            <p class="text-stone-700 mb-6">
+              Join our low-bandwidth newsletter for sustainable computing tips,
+              project updates, and community events.
+            </p>
+
+            <form class="space-y-4">
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-stone-700 mb-1"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="w-full px-4 py-2 border border-stone-300 rounded-md focus:ring-moss-500 focus:border-moss-500"
+                  placeholder="you@example.com"
+                />
+              </div>
+
+              <div class="flex items-start">
+                <input
+                  id="consent"
+                  name="consent"
+                  type="checkbox"
+                  class="h-4 w-4 text-moss-600 border-stone-300 rounded mt-1"
+                />
+                <label for="consent" class="ml-2 block text-sm text-stone-700">
+                  I consent to receive emails that use minimal data and respect
+                  my digital boundaries
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full px-4 py-2 bg-moss-600 text-white font-medium rounded-md hover:bg-moss-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-moss-500"
+              >
+                Subscribe
+              </button>
+            </form>
+
+            <p class="mt-4 text-sm text-stone-600">
+              We send plain text emails (<2KB) and respect your right to
+              unsubscribe at any time.
+            </p>
+          </div>
+
+          <div class="hidden md:block">
+            <div class="growing-plant">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 330 400"
+                class="w-full max-w-xs mx-auto"
+              >
+                <!-- Stylized plant design -->
+                <path
+                  d="M165,380 Q165,280 165,80"
+                  stroke="#5e412a"
+                  stroke-width="6"
+                  fill="none"
+                />
+                <path
+                  d="M165,320 Q120,270 80,280"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,320 Q210,270 250,280"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,260 Q120,210 70,230"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,260 Q210,210 260,230"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,200 Q120,150 90,180"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,200 Q210,150 240,180"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,140 Q140,100 120,120"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,140 Q190,100 210,120"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,80 Q145,50 135,60"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <path
+                  d="M165,80 Q185,50 195,60"
+                  stroke="#7da44a"
+                  stroke-width="4"
+                  fill="none"
+                />
+                <circle cx="165" cy="380" r="20" fill="#5e412a" />
+                <circle cx="80" cy="280" r="10" fill="#7da44a" />
+                <circle cx="250" cy="280" r="10" fill="#7da44a" />
+                <circle cx="70" cy="230" r="8" fill="#7da44a" />
+                <circle cx="260" cy="230" r="8" fill="#7da44a" />
+                <circle cx="90" cy="180" r="6" fill="#7da44a" />
+                <circle cx="240" cy="180" r="6" fill="#7da44a" />
+                <circle cx="120" cy="120" r="5" fill="#7da44a" />
+                <circle cx="210" cy="120" r="5" fill="#7da44a" />
+                <circle cx="135" cy="60" r="4" fill="#7da44a" />
+                <circle cx="195" cy="60" r="4" fill="#7da44a" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-2xl font-bold text-stone-900 mb-4">
+            Learning Resources
+          </h2>
+          <p class="text-stone-700 max-w-2xl mx-auto">
+            Knowledge should be accessible to all. Our resources use minimal
+            bandwidth and work on any device.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Resource Category 1 -->
+          <div>
+            <h3
+              class="text-lg font-bold text-stone-900 mb-4 border-b border-stone-200 pb-2"
+            >
+              Guides & Tutorials
+            </h3>
+            <ul class="space-y-3">
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Building a Solar-Powered Server</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      1.2MB PDF, also available as plain text (72KB)
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Low-Energy Web Design Principles</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      820KB PDF, also available as HTML (95KB)
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Extending Hardware Lifespan</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      950KB PDF, also available as Markdown (64KB)
+                    </p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resource Category 2 -->
+          <div>
+            <h3
+              class="text-lg font-bold text-stone-900 mb-4 border-b border-stone-200 pb-2"
+            >
+              Code & Software
+            </h3>
+            <ul class="space-y-3">
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Lightweight Linux Distribution</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      ISO (256MB), optimized for older hardware
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Energy Monitor Tool</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      GitHub repository, 42KB codebase
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Minimal Web Framework</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      NPM package, 18KB gzipped
+                    </p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resource Category 3 -->
+          <div>
+            <h3
+              class="text-lg font-bold text-stone-900 mb-4 border-b border-stone-200 pb-2"
+            >
+              Community & Research
+            </h3>
+            <ul class="space-y-3">
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Quarterly Journal</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      Plain text emails, PDF, and print versions
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Forum Archives</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      15 years of community discussions, searchable
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="flex items-start group">
+                  <span
+                    class="text-moss-600 mr-2 group-hover:text-moss-700 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <span
+                      class="text-stone-800 group-hover:text-moss-700 transition-colors font-medium"
+                      >Energy Impact Calculator</span
+                    >
+                    <p class="text-sm text-stone-600">
+                      Estimate your digital carbon footprint
+                    </p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-12 p-6 bg-moss-50 rounded-lg border border-moss-100">
+          <h3 class="text-lg font-bold text-stone-900 mb-4">
+            Digital Resource Ethics
+          </h3>
+          <p class="text-stone-700 mb-4">
+            All resources we share follow these principles:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex items-start">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-moss-600 mt-0.5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <p class="text-sm text-stone-700">
+                Files are optimized for minimal storage and bandwidth
+              </p>
+            </div>
+
+            <div class="flex items-start">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-moss-600 mt-0.5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <p class="text-sm text-stone-700">
+                Content is available in multiple formats for accessibility
+              </p>
+            </div>
+
+            <div class="flex items-start">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-moss-600 mt-0.5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <p class="text-sm text-stone-700">
+                Open-source and libre licensing wherever possible
+              </p>
+            </div>
+
+            <div class="flex items-start">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-moss-600 mt-0.5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <p class="text-sm text-stone-700">
+                No tracking, analytics, or user data collection
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="py-16 bg-stone-50 paper-texture">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-2xl font-bold text-stone-900 mb-4">
+            Join Our Community
+          </h2>
+          <p class="text-stone-700 max-w-2xl mx-auto">
+            Connect with like-minded individuals pursuing sustainable computing
+            practices.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <img
+              src="/api/placeholder/500/400"
+              alt="Community workshop"
+              class="rounded-lg shadow-sm low-fi-image"
+            />
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold text-stone-900 mb-4">
+              How to Participate
+            </h3>
+
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <span class="text-moss-600 mr-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <h4 class="font-bold text-stone-800">Monthly Meetups</h4>
+                  <p class="text-stone-700">
+                    Join our in-person and low-bandwidth virtual gatherings to
+                    share knowledge and collaborate.
+                  </p>
+                </div>
+              </li>
+
+              <li class="flex items-start">
+                <span class="text-moss-600 mr-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <h4 class="font-bold text-stone-800">Forum & Mailing List</h4>
+                  <p class="text-stone-700">
+                    Text-based communications that work on any device, including
+                    dial-up and low-bandwidth connections.
+                  </p>
+                </div>
+              </li>
+
+              <li class="flex items-start">
+                <span class="text-moss-600 mr-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <h4 class="font-bold text-stone-800">
+                    Contribute Code & Documentation
+                  </h4>
+                  <p class="text-stone-700">
+                    Help improve our open-source projects and educational
+                    resources.
+                  </p>
+                </div>
+              </li>
+
+              <li class="flex items-start">
+                <span class="text-moss-600 mr-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <h4 class="font-bold text-stone-800">Seed Our Network</h4>
+                  <p class="text-stone-700">
+                    Host a node in our distributed, solar-powered content
+                    delivery network.
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="mt-6">
+              <a
+                href="#join"
+                class="inline-flex items-center justify-center px-6 py-3 bg-moss-600 text-white font-medium rounded-md hover:bg-moss-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-moss-500"
+              >
+                Get Involved
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact Statistics -->
+    <section class="py-16 bg-moss-700 text-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-2xl font-bold mb-4">Our Collective Impact</h2>
+          <p class="text-moss-100 max-w-2xl mx-auto">
+            Together, we're making a measurable difference in reducing digital
+            environmental impact.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="text-4xl font-bold mb-2">94%</div>
+            <p class="text-moss-100">
+              Energy reduction compared to conventional hosting
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="text-4xl font-bold mb-2">12,450</div>
+            <p class="text-moss-100">
+              Devices repaired and kept out of landfills
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="text-4xl font-bold mb-2">218</div>
+            <p class="text-moss-100">
+              Solar-powered nodes in our distributed network
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="text-4xl font-bold mb-2">5,280</div>
+            <p class="text-moss-100">Community members worldwide</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-stone-300 py-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-white font-bold mb-4">DigitalCompost</h3>
+            <p class="text-sm">Sustainable computing for a finite world.</p>
+            <div class="mt-4 text-moss-400">
+              <p class="text-xs">This page uses 0.12 MB of data</p>
+              <p class="text-xs">Solar-powered hosting</p>
+              <p class="text-xs">Optimized for text browsers</p>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-white font-bold mb-4">Navigation</h4>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a href="#about" class="hover:text-moss-400 transition-colors"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#principles"
+                  class="hover:text-moss-400 transition-colors"
+                  >Principles</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#projects"
+                  class="hover:text-moss-400 transition-colors"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#resources"
+                  class="hover:text-moss-400 transition-colors"
+                  >Resources</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#community"
+                  class="hover:text-moss-400 transition-colors"
+                  >Community</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-white font-bold mb-4">Connect</h4>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a href="#forum" class="hover:text-moss-400 transition-colors"
+                  >Forum</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#mailinglist"
+                  class="hover:text-moss-400 transition-colors"
+                  >Mailing List</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#repository"
+                  class="hover:text-moss-400 transition-colors"
+                  >Code Repository</a
+                >
+              </li>
+              <li>
+                <a href="#events" class="hover:text-moss-400 transition-colors"
+                  >Events Calendar</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-white font-bold mb-4">Legal</h4>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a href="#terms" class="hover:text-moss-400 transition-colors"
+                  >Terms</a
+                >
+              </li>
+              <li>
+                <a href="#privacy" class="hover:text-moss-400 transition-colors"
+                  >Privacy</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#licenses"
+                  class="hover:text-moss-400 transition-colors"
+                  >Licenses</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#attribution"
+                  class="hover:text-moss-400 transition-colors"
+                  >Attribution</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-stone-700 text-sm text-center">
+          <p>
+            © 2025 DigitalCompost Collective. This site uses 0% cookies and 100%
+            care for our planet.
+          </p>
+          <p class="mt-2 text-xs">
+            This site hosted on a Raspberry Pi powered by solar energy. Expected
+            uptime: During daylight hours.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Simple, lightweight JavaScript -->
+    <script>
+      // Wait for DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Mobile menu toggle
+        const menuButton = document.querySelector('button[aria-label="Menu"]');
+        const nav = document.querySelector("header nav");
+
+        if (menuButton && nav) {
+          menuButton.addEventListener("click", function () {
+            nav.classList.toggle("hidden");
+            nav.classList.toggle("flex");
+            nav.classList.toggle("flex-col");
+            nav.classList.toggle("absolute");
+            nav.classList.toggle("top-16");
+            nav.classList.toggle("right-4");
+            nav.classList.toggle("bg-white");
+            nav.classList.toggle("shadow-md");
+            nav.classList.toggle("p-4");
+            nav.classList.toggle("rounded-md");
+            nav.classList.toggle("z-50");
+          });
+        }
+
+        // Loading animation
+        const ecoLoaders = document.querySelectorAll(".eco-loader");
+        if (ecoLoaders.length > 0) {
+          // Hide loaders after content is loaded
+          setTimeout(function () {
+            ecoLoaders.forEach((loader) => {
+              loader.style.display = "none";
+            });
+          }, 800);
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+
+        // User counter simulation (increments slowly)
+        const userCounter = document.getElementById("user-counter");
+        if (userCounter) {
+          const count = parseInt(userCounter.textContent.replace(/,/g, ""), 10);
+          let currentCount = count;
+
+          // Random increment between 1-3 every 30 seconds
+          setInterval(function () {
+            const increment = Math.floor(Math.random() * 3) + 1;
+            currentCount += increment;
+            userCounter.textContent = currentCount.toLocaleString();
+          }, 30000);
+        }
+
+        // Simple dark mode toggle (but only if user explicitly requests it)
+        const darkModeToggle = document.getElementById("dark-mode-toggle");
+        if (darkModeToggle) {
+          // Check for user preference in localStorage
+          const darkModePreference = localStorage.getItem("darkMode");
+
+          if (darkModePreference === "enabled") {
+            document.body.classList.add("dark-mode");
+            darkModeToggle.checked = true;
+          }
+
+          darkModeToggle.addEventListener("change", function () {
+            if (this.checked) {
+              document.body.classList.add("dark-mode");
+              localStorage.setItem("darkMode", "enabled");
+            } else {
+              document.body.classList.remove("dark-mode");
+              localStorage.setItem("darkMode", "disabled");
+            }
+          });
+        }
+
+        // Lazy load images for bandwidth conservation
+        document.addEventListener("DOMContentLoaded", function () {
+          const lazyImages = document.querySelectorAll("img[data-src]");
+
+          if ("IntersectionObserver" in window) {
+            const imageObserver = new IntersectionObserver(function (
+              entries,
+              observer
+            ) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  const image = entry.target;
+                  image.src = image.dataset.src;
+                  image.removeAttribute("data-src");
+                  imageObserver.unobserve(image);
+                }
+              });
+            });
+
+            lazyImages.forEach(function (image) {
+              imageObserver.observe(image);
+            });
+          } else {
+            // Fallback for browsers without IntersectionObserver
+            lazyImages.forEach(function (image) {
+              image.src = image.dataset.src;
+              image.removeAttribute("data-src");
+            });
+          }
+        });
+
+        // Honor battery-saving preferences
+        if (navigator.getBattery) {
+          navigator.getBattery().then(function (battery) {
+            function updateForBatteryStatus() {
+              if (battery.level < 0.2 && !battery.charging) {
+                // Disable animations to save power
+                document.body.classList.add("battery-saving");
+              } else {
+                document.body.classList.remove("battery-saving");
+              }
+            }
+
+            // Initial check
+            updateForBatteryStatus();
+
+            // Listen for changes
+            battery.addEventListener("levelchange", updateForBatteryStatus);
+            battery.addEventListener("chargingchange", updateForBatteryStatus);
+          });
+        }
+
+        // Add lightweight analytics alternative that respects privacy
+        // Only counts page visits without tracking users
+        const pageCounter = document.getElementById("page-counter");
+        if (pageCounter) {
+          // This would ideally be a server-side increment
+          // For demo purposes, we'll use localStorage
+          let visitCount = parseInt(localStorage.getItem("visitCount") || "0");
+          visitCount++;
+          localStorage.setItem("visitCount", visitCount.toString());
+          pageCounter.textContent = visitCount.toString();
+        }
+      });
+    </script>
+
+    <!-- Eco-friendly Modal for Newsletter Signup -->
+    <div
+      id="newsletter-modal"
+      class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50"
+    >
+      <div
+        class="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 p-6 relative"
+      >
+        <button
+          id="close-modal"
+          class="absolute top-4 right-4 text-stone-500 hover:text-stone-700 transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+
+        <h3 class="text-xl font-bold text-stone-900 mb-4">
+          Join Our Low-Impact Newsletter
+        </h3>
+        <p class="text-stone-700 mb-6">
+          Receive sustainable computing tips directly to your inbox. We promise
+          to keep our emails small, meaningful, and respectful of your digital
+          boundaries.
+        </p>
+
+        <form class="space-y-4">
+          <div>
+            <label
+              for="modal-email"
+              class="block text-sm font-medium text-stone-700 mb-1"
+              >Email address</label
+            >
+            <input
+              type="email"
+              id="modal-email"
+              name="email"
+              class="w-full px-4 py-2 border border-stone-300 rounded-md focus:ring-moss-500 focus:border-moss-500"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div class="flex items-start">
+            <input
+              id="modal-consent"
+              name="consent"
+              type="checkbox"
+              class="h-4 w-4 text-moss-600 border-stone-300 rounded mt-1"
+            />
+            <label
+              for="modal-consent"
+              class="ml-2 block text-sm text-stone-700"
+            >
+              I consent to receive plain text emails (average size: 2KB)
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full px-4 py-2 bg-moss-600 text-white font-medium rounded-md hover:bg-moss-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-moss-500"
+          >
+            Subscribe
+          </button>
+        </form>
+
+        <div class="mt-4 text-xs text-stone-500 text-center">
+          We send 1-2 emails per month, and you can unsubscribe with a single
+          click.
+        </div>
+      </div>
+    </div>
+
+    <!-- Progressive Enhancement: Add a tiny bit of JavaScript only if the browser supports it -->
+    <script>
+      // Show the newsletter modal after 30 seconds, but only once per session
+      if (!sessionStorage.getItem("modalShown")) {
+        setTimeout(function () {
+          const modal = document.getElementById("newsletter-modal");
+          if (modal) {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+
+            // Save to session storage
+            sessionStorage.setItem("modalShown", "true");
+
+            // Close modal functionality
+            const closeButton = document.getElementById("close-modal");
+            if (closeButton) {
+              closeButton.addEventListener("click", function () {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+              });
+            }
+
+            // Close when clicking outside the modal content
+            modal.addEventListener("click", function (e) {
+              if (e.target === modal) {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+              }
+            });
+          }
+        }, 30000); // 30 seconds
+      }
+    </script>
+
+    <!-- Optional: No-JS Fallback Message -->
+    <noscript>
+      <div
+        class="fixed bottom-0 left-0 right-0 bg-moss-700 text-white p-4 text-center"
+      >
+        This website works perfectly fine without JavaScript! You're currently
+        viewing the JS-free version, which uses less energy.
+      </div>
+    </noscript>
+
+    <!-- Battery-saving CSS -->
+    <style>
+      .battery-saving * {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      /* Dark mode styles that only apply when explicitly requested */
+      body.dark-mode {
+        background-color: #1c1a17;
+        color: #e7f0dd;
+      }
+
+      body.dark-mode .bg-white {
+        background-color: #29190f;
+      }
+
+      body.dark-mode .text-stone-900 {
+        color: #f8f5f0;
+      }
+
+      body.dark-mode .text-stone-800 {
+        color: #e8e0d2;
+      }
+
+      body.dark-mode .text-stone-700 {
+        color: #d5c3aa;
+      }
+
+      body.dark-mode .border-stone-200 {
+        border-color: #422c1d;
+      }
+
+      body.dark-mode .bg-stone-50 {
+        background-color: #29190f;
+      }
+
+      body.dark-mode .terminal {
+        background-color: #000;
+        border: 1px solid #422c1d;
+      }
+    </style>
+
+    <!-- Accessibility enhancements -->
+    <div class="sr-only">
+      <h2>Accessibility Navigation</h2>
+      <ul>
+        <li><a href="#content">Skip to main content</a></li>
+        <li><a href="#about">About section</a></li>
+        <li><a href="#principles">Principles section</a></li>
+        <li><a href="#projects">Projects section</a></li>
+        <li><a href="#resources">Resources section</a></li>
+        <li><a href="#community">Community section</a></li>
+      </ul>
+    </div>
+  </body>
+</html>

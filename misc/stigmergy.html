@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stigmergy: Environmental Memory</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            earth: {
+              50: '#f5f3e8',
+              100: '#e9e5d1',
+              200: '#d9d2b0',
+              300: '#c5ba8a',
+              400: '#b0a169',
+              500: '#9c8d4f',
+              600: '#8a7b44',
+              700: '#736639',
+              800: '#5f522f',
+              900: '#4d4326',
+              950: '#2c2615'
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    /* Custom styles for trail visualization */
+    .pheromone-trail {
+      filter: blur(1px);
+      mix-blend-mode: screen;
+      transition: opacity 0.5s ease;
+    }
+
+    body {
+      overscroll-behavior: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-white min-h-screen overflow-hidden">
+  
+  <!-- Main simulation canvas -->
+  <div id="canvas-container" class="relative w-full h-screen overflow-hidden">
+    <canvas id="trailCanvas" class="absolute inset-0 w-full h-full z-0"></canvas>
+    <canvas id="agentCanvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+  </div>
+
+  <!-- Controls panel -->
+  <div id="controls" class="absolute bottom-4 left-4 bg-black/50 backdrop-blur-md p-4 rounded-lg text-sm w-72 transition-opacity duration-300 ease-in-out">
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="text-lg font-medium">System Parameters</h3>
+      <button id="toggleControls" class="text-xs px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 transition-colors">
+        Hide
+      </button>
+    </div>
+    
+    <div class="space-y-4">
+      <!-- Agent count -->
+      <div class="space-y-1">
+        <div class="flex justify-between">
+          <label for="agentCount" class="text-gray-300">Agents</label>
+          <span id="agentCountValue" class="text-amber-200">100</span>
+        </div>
+        <input type="range" id="agentCount" min="10" max="500" value="100" step="10"
+               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+      </div>
+      
+      <!-- Decay rate -->
+      <div class="space-y-1">
+        <div class="flex justify-between">
+          <label for="decayRate" class="text-gray-300">Trail Persistence</label>
+          <span id="decayRateValue" class="text-amber-200">0.004</span>
+        </div>
+        <input type="range" id="decayRate" min="0.001" max="0.02" value="0.004" step="0.001"
+               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+      </div>
+      
+      <!-- Trail influence -->
+      <div class="space-y-1">
+        <div class="flex justify-between">
+          <label for="trailInfluence" class="text-gray-300">Trail Influence</label>
+          <span id="trailInfluenceValue" class="text-amber-200">2.5</span>
+        </div>
+        <input type="range" id="trailInfluence" min="0.5" max="5" value="2.5" step="0.5"
+               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+      </div>
+      
+      <!-- Wandering tendency -->
+      <div class="space-y-1">
+        <div class="flex justify-between">
+          <label for="wanderingTendency" class="text-gray-300">Exploration Drive</label>
+          <span id="wanderingTendencyValue" class="text-amber-200">0.4</span>
+        </div>
+        <input type="range" id="wanderingTendency" min="0.1" max="1" value="0.4" step="0.1"
+               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+      </div>
+      
+      <!-- Sensor angle -->
+      <div class="space-y-1">
+        <div class="flex justify-between">
+          <label for="sensorAngle" class="text-gray-300">Perception Field</label>
+          <span id="sensorAngleValue" class="text-amber-200">45°</span>
+        </div>
+        <input type="range" id="sensorAngle" min="15" max="90" value="45" step="5"
+               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+      </div>
+      
+      <!-- Trail Colors -->
+      <div class="space-y-1">
+        <label class="text-gray-300">Trail Palette</label>
+        <div class="flex justify-between space-x-2">
+          <button data-palette="forest" class="flex-1 py-1 rounded bg-gradient-to-r from-green-800 to-amber-700 hover:opacity-90 border border-opacity-20 border-white"></button>
+          <button data-palette="ocean" class="flex-1 py-1 rounded bg-gradient-to-r from-blue-900 to-cyan-500 hover:opacity-90 border border-opacity-20 border-white"></button>
+          <button data-palette="sunset" class="flex-1 py-1 rounded bg-gradient-to-r from-orange-600 to-purple-600 hover:opacity-90 border border-opacity-20 border-white"></button>
+          <button data-palette="earth" class="flex-1 py-1 rounded bg-gradient-to-r from-earth-800 to-earth-400 hover:opacity-90 border border-opacity-20 border-white"></button>
+          <button data-palette="twilight" class="flex-1 py-1 rounded bg-gradient-to-r from-indigo-900 to-pink-500 hover:opacity-90 border border-opacity-20 border-white"></button>
+        </div>
+      </div>
+      
+      <!-- Reset button -->
+      <button id="resetSimulation" class="w-full py-2 bg-amber-700 hover:bg-amber-600 rounded transition-colors">
+        Reset Pathways
+      </button>
+    </div>
+  </div>
+  
+  <!-- Title -->
+  <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md p-4 rounded-lg text-sm max-w-md transition-opacity duration-300 ease-in-out">
+    <h2 class="text-xl font-medium mb-1">Stigmergy: Environmental Memory</h2>
+    <p class="text-gray-300 text-sm">Witness how wisdom emerges from the traces left behind. Each agent responds to the marks of others, gradually revealing collective intelligence without central coordination.</p>
+  </div>
+  
+  <!-- Information overlay -->
+  <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md p-4 rounded-lg text-xs max-w-xs transition-opacity duration-300 ease-in-out">
+    <p class="mb-2"><span class="text-amber-200">Click</span> to create food sources that agents will discover and share through trail-marking</p>
+    <p><span class="text-amber-200">Hover</span> to temporarily influence agent movement</p>
+  </div>
+
+  <script>
+    // Core simulation configuration
+    const config = {
+      agentCount: 100,
+      agentSize: 2.5,
+      moveSpeed: 1.2,
+      sensorDistance: 12,
+      sensorAngle: 45,
+      trailInfluence: 2.5,
+      wanderingTendency: 0.4,
+      decayRate: 0.004,
+      diffusionRate: 0.05,
+      foodRadius: 40,
+      foodIntensity: 0.8,
+      colorPalette: 'forest'
+    };
+    
+    // Color palettes
+    const palettes = {
+      forest: {
+        background: 'rgb(12, 16, 12)',
+        trail: ['rgba(179, 222, 111, 0.8)', 'rgba(145, 191, 81, 0.7)', 'rgba(92, 143, 41, 0.6)'],
+        agent: 'rgba(250, 229, 138, 0.9)'
+      },
+      ocean: {
+        background: 'rgb(10, 14, 21)',
+        trail: ['rgba(56, 178, 226, 0.7)', 'rgba(22, 130, 182, 0.6)', 'rgba(6, 86, 125, 0.5)'],
+        agent: 'rgba(240, 248, 255, 0.9)'
+      },
+      sunset: {
+        background: 'rgb(20, 10, 15)',
+        trail: ['rgba(255, 180, 120, 0.7)', 'rgba(220, 110, 115, 0.6)', 'rgba(120, 50, 100, 0.5)'],
+        agent: 'rgba(255, 241, 190, 0.9)'
+      },
+      earth: {
+        background: 'rgb(16, 13, 10)',
+        trail: ['rgba(165, 142, 94, 0.7)', 'rgba(125, 105, 65, 0.6)', 'rgba(98, 75, 43, 0.5)'],
+        agent: 'rgba(245, 233, 211, 0.9)'
+      },
+      twilight: {
+        background: 'rgb(13, 10, 20)',
+        trail: ['rgba(161, 140, 237, 0.7)', 'rgba(116, 90, 200, 0.6)', 'rgba(90, 60, 170, 0.5)'],
+        agent: 'rgba(238, 228, 255, 0.9)'
+      }
+    };
+    
+    // Core simulation state
+    let agents = [];
+    let trailMap = [];
+    let foodSources = [];
+    let animationId = null;
+    let mousePosition = { x: 0, y: 0, active: false };
+    
+    // Canvas setup
+    const trailCanvas = document.getElementById('trailCanvas');
+    const agentCanvas = document.getElementById('agentCanvas');
+    const trailCtx = trailCanvas.getContext('2d', { alpha: true });
+    const agentCtx = agentCanvas.getContext('2d', { alpha: true });
+    
+    let width, height;
+    
+    // UI Elements
+    const agentCountInput = document.getElementById('agentCount');
+    const agentCountValue = document.getElementById('agentCountValue');
+    const decayRateInput = document.getElementById('decayRate');
+    const decayRateValue = document.getElementById('decayRateValue');
+    const trailInfluenceInput = document.getElementById('trailInfluence');
+    const trailInfluenceValue = document.getElementById('trailInfluenceValue');
+    const wanderingTendencyInput = document.getElementById('wanderingTendency');
+    const wanderingTendencyValue = document.getElementById('wanderingTendencyValue');
+    const sensorAngleInput = document.getElementById('sensorAngle');
+    const sensorAngleValue = document.getElementById('sensorAngleValue');
+    const resetButton = document.getElementById('resetSimulation');
+    const toggleControlsButton = document.getElementById('toggleControls');
+    const controlsPanel = document.getElementById('controls');
+    const paletteBtns = document.querySelectorAll('[data-palette]');
+    
+    // UI event listeners
+    agentCountInput.addEventListener('input', () => {
+      config.agentCount = parseInt(agentCountInput.value);
+      agentCountValue.textContent = config.agentCount;
+      resetAgents();
+    });
+    
+    decayRateInput.addEventListener('input', () => {
+      config.decayRate = parseFloat(decayRateInput.value);
+      decayRateValue.textContent = config.decayRate.toFixed(3);
+    });
+    
+    trailInfluenceInput.addEventListener('input', () => {
+      config.trailInfluence = parseFloat(trailInfluenceInput.value);
+      trailInfluenceValue.textContent = config.trailInfluence.toFixed(1);
+    });
+    
+    wanderingTendencyInput.addEventListener('input', () => {
+      config.wanderingTendency = parseFloat(wanderingTendencyInput.value);
+      wanderingTendencyValue.textContent = config.wanderingTendency.toFixed(1);
+    });
+    
+    sensorAngleInput.addEventListener('input', () => {
+      config.sensorAngle = parseInt(sensorAngleInput.value);
+      sensorAngleValue.textContent = `${config.sensorAngle}°`;
+    });
+    
+    paletteBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        config.colorPalette = btn.dataset.palette;
+        restartSimulation();
+      });
+    });
+    
+    resetButton.addEventListener('click', () => {
+      restartSimulation();
+    });
+    
+    toggleControlsButton.addEventListener('click', () => {
+      const panels = document.querySelectorAll('.transition-opacity');
+      panels.forEach(panel => {
+        panel.classList.toggle('opacity-0');
+        panel.classList.toggle('pointer-events-none');
+      });
+      
+      toggleControlsButton.textContent = 
+        toggleControlsButton.textContent === 'Hide' ? 'Show' : 'Hide';
+    });
+    
+    // Resize handler
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      
+      trailCanvas.width = width;
+      trailCanvas.height = height;
+      agentCanvas.width = width;
+      agentCanvas.height = height;
+      
+      // Reset trail map with new dimensions
+      trailMap = Array(width).fill().map(() => Array(height).fill(0));
+      
+      // Apply background
+      trailCtx.fillStyle = palettes[config.colorPalette].background;
+      trailCtx.fillRect(0, 0, width, height);
+    }
+    
+    // Utility functions
+    function randomRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+    
+    function normalizeAngle(angle) {
+      return (angle + Math.PI * 2) % (Math.PI * 2);
+    }
+    
+    // Agent class
+    class Agent {
+      constructor(x, y) {
+        this.x = x || Math.random() * width;
+        this.y = y || Math.random() * height;
+        this.angle = Math.random() * Math.PI * 2;
+        this.trailStrength = randomRange(0.8, 1.0);
+        this.sensorAngleOffset = Math.PI * config.sensorAngle / 180;
+        this.carryingFood = 0;
+        this.state = 'exploring'; // exploring, tracking, returning
+        this.memory = { homeX: width / 2, homeY: height / 2 };
+        this.foodSourceIndex = -1;
+      }
+      
+      sense() {
+        // Front sensor
+        const frontX = this.x + Math.cos(this.angle) * config.sensorDistance;
+        const frontY = this.y + Math.sin(this.angle) * config.sensorDistance;
+        
+        // Left sensor
+        const leftAngle = normalizeAngle(this.angle - this.sensorAngleOffset);
+        const leftX = this.x + Math.cos(leftAngle) * config.sensorDistance;
+        const leftY = this.y + Math.sin(leftAngle) * config.sensorDistance;
+        
+        // Right sensor
+        const rightAngle = normalizeAngle(this.angle + this.sensorAngleOffset);
+        const rightX = this.x + Math.cos(rightAngle) * config.sensorDistance;
+        const rightY = this.y + Math.sin(rightAngle) * config.sensorDistance;
+        
+        // Sample trail strengths
+        const frontTrail = this.sampleTrail(frontX, frontY);
+        const leftTrail = this.sampleTrail(leftX, leftY);
+        const rightTrail = this.sampleTrail(rightX, rightY);
+        
+        return { frontTrail, leftTrail, rightTrail };
+      }
+      
+      sampleTrail(x, y) {
+        // Boundary check
+        if (x < 0 || x >= width || y < 0 || y >= height) return 0;
+        
+        // Convert to integer coordinates
+        const ix = Math.floor(x);
+        const iy = Math.floor(y);
+        
+        // Return trail value
+        return trailMap[ix][iy];
+      }
+      
+      move() {
+        // Check for nearby food sources
+        for (let i = 0; i < foodSources.length; i++) {
+          const food = foodSources[i];
+          const dx = food.x - this.x;
+          const dy = food.y - this.y;
+          const distSq = dx * dx + dy * dy;
+          
+          if (distSq < food.radius * food.radius) {
+            // Found food
+            if (this.state === 'exploring' || this.state === 'tracking') {
+              this.carryingFood = 1.0;
+              this.state = 'returning';
+              this.foodSourceIndex = i;
+              // Turn around to head back
+              this.angle = normalizeAngle(this.angle + Math.PI);
+            }
+            break;
+          }
+        }
+        
+        // Sense surroundings
+        const { frontTrail, leftTrail, rightTrail } = this.sense();
+        
+        // Behavior based on state
+        if (this.state === 'returning') {
+          // Depositng trail while returning with food
+          const homeDirection = Math.atan2(this.memory.homeY - this.y, this.memory.homeX - this.x);
+          const angleDiff = normalizeAngle(homeDirection - this.angle);
+          
+          // Gradually turn towards home
+          if (angleDiff < Math.PI) {
+            this.angle = normalizeAngle(this.angle + 0.05);
+          } else {
+            this.angle = normalizeAngle(this.angle - 0.05);
+          }
+          
+          // Check if back at nest
+          const homeDistSq = (this.x - this.memory.homeX) ** 2 + (this.y - this.memory.homeY) ** 2;
+          if (homeDistSq < 100) {
+            this.state = 'exploring';
+            this.carryingFood = 0;
+            // Turn around to head back to food
+            this.angle = normalizeAngle(this.angle + Math.PI);
+          }
+        } else {
+          // Follow trails when exploring or tracking
+          let randomTurn = (Math.random() - 0.5) * config.wanderingTendency;
+          
+          // If we detect trails, follow them
+          if (Math.max(frontTrail, leftTrail, rightTrail) > 0.05) {
+            this.state = 'tracking';
+            
+            if (leftTrail > rightTrail && leftTrail > frontTrail) {
+              // Turn left
+              this.angle = normalizeAngle(this.angle - 0.1 * config.trailInfluence);
+            } else if (rightTrail > leftTrail && rightTrail > frontTrail) {
+              // Turn right
+              this.angle = normalizeAngle(this.angle + 0.1 * config.trailInfluence);
+            }
+            // else continue forward
+          } else {
+            // Random wandering with some directionality
+            this.angle = normalizeAngle(this.angle + randomTurn);
+            this.state = 'exploring';
+          }
+        }
+        
+        // Mouse influence
+        if (mousePosition.active) {
+          const dx = mousePosition.x - this.x;
+          const dy = mousePosition.y - this.y;
+          const distSq = dx * dx + dy * dy;
+          const influenceRadius = 150 * 150;
+          
+          if (distSq < influenceRadius) {
+            // Calculate influence based on distance (stronger when closer)
+            const influence = 0.02 * (1 - Math.sqrt(distSq) / 150);
+            
+            // Calculate angle to mouse
+            const mouseAngle = Math.atan2(dy, dx);
+            
+            // Blend current angle with mouse angle
+            this.angle = normalizeAngle(
+              this.angle * (1 - influence) + mouseAngle * influence
+            );
+          }
+        }
+        
+        // Update position
+        this.x += Math.cos(this.angle) * config.moveSpeed;
+        this.y += Math.sin(this.angle) * config.moveSpeed;
+        
+        // Wrap around boundaries
+        if (this.x < 0) this.x = width - 1;
+        if (this.x >= width) this.x = 0;
+        if (this.y < 0) this.y = height - 1;
+        if (this.y >= height) this.y = 0;
+        
+        // Deposit pheromone trail
+        const ix = Math.floor(this.x);
+        const iy = Math.floor(this.y);
+        
+        if (ix >= 0 && ix < width && iy >= 0 && iy < height) {
+          // Stronger trail when carrying food
+          const trailValue = this.carryingFood > 0 ? this.trailStrength : this.trailStrength * 0.2;
+          trailMap[ix][iy] = Math.min(1, trailMap[ix][iy] + trailValue);
+        }
+      }
+      
+      draw(ctx) {
+        // Draw agent as a small oriented triangle
+        const headX = this.x + Math.cos(this.angle) * config.agentSize * 1.5;
+        const headY = this.y + Math.sin(this.angle) * config.agentSize * 1.5;
+        
+        const rightAngle = normalizeAngle(this.angle + Math.PI * 0.8);
+        const rightX = this.x + Math.cos(rightAngle) * config.agentSize;
+        const rightY = this.y + Math.sin(rightAngle) * config.agentSize;
+        
+        const leftAngle = normalizeAngle(this.angle - Math.PI * 0.8);
+        const leftX = this.x + Math.cos(leftAngle) * config.agentSize;
+        const leftY = this.y + Math.sin(leftAngle) * config.agentSize;
+        
+        ctx.beginPath();
+        ctx.moveTo(headX, headY);
+        ctx.lineTo(rightX, rightY);
+        ctx.lineTo(leftX, leftY);
+        ctx.closePath();
+        
+        // Color based on state
+        if (this.carryingFood > 0) {
+          ctx.fillStyle = 'rgba(255, 220, 100, 0.9)';
+        } else if (this.state === 'tracking') {
+          ctx.fillStyle = 'rgba(220, 255, 220, 0.9)';
+        } else {
+          ctx.fillStyle = palettes[config.colorPalette].agent;
+        }
+        
+        ctx.fill();
+      }
+    }
+    
+    // Setup food sources
+    function addFoodSource(x, y) {
+      const food = {
+        x,
+        y,
+        radius: config.foodRadius,
+        intensity: config.foodIntensity
+      };
+      
+      foodSources.push(food);
+    }
+    
+    // Draw food sources
+    function drawFoodSources(ctx) {
+      ctx.save();
+      
+      for (const food of foodSources) {
+        // Draw food source with radial gradient
+        const gradient = ctx.createRadialGradient(
+          food.x, food.y, 0,
+          food.x, food.y, food.radius
+        );
+        
+        const palette = palettes[config.colorPalette];
+        gradient.addColorStop(0, 'rgba(255, 230, 150, 0.8)');
+        gradient.addColorStop(0.5, 'rgba(255, 200, 100, 0.4)');
+        gradient.addColorStop(1, 'rgba(255, 180, 50, 0)');
+        
+        ctx.beginPath();
+        ctx.arc(food.x, food.y, food.radius, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+      }
+      
+      ctx.restore();
+    }
+    
+    // Initialize agents
+    function initAgents() {
+      agents = [];
+      for (let i = 0; i < config.agentCount; i++) {
+        agents.push(new Agent());
+      }
+    }
+    
+    // Reset agents but keep trail
+    function resetAgents() {
+      const currentCount = agents.length;
+      
+      if (currentCount < config.agentCount) {
+        // Add more agents
+        for (let i = 0; i < config.agentCount - currentCount; i++) {
+          agents.push(new Agent());
+        }
+      } else if (currentCount > config.agentCount) {
+        // Remove excess agents
+        agents = agents.slice(0, config.agentCount);
+      }
+    }
+    
+    // Restart simulation
+    function restartSimulation() {
+      // Clear the trail map
+      trailMap = Array(width).fill().map(() => Array(height).fill(0));
+      
+      // Apply background
+      trailCtx.fillStyle = palettes[config.colorPalette].background;
+      trailCtx.fillRect(0, 0, width, height);
+      
+      // Reinitialize agents
+      initAgents();
+    }
+    
+    // Process trail map (decay and diffusion)
+    function processTrails() {
+      // Apply decay to all trails
+      for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+          if (trailMap[x][y] > 0) {
+            trailMap[x][y] = Math.max(0, trailMap[x][y] - config.decayRate);
+          }
+        }
+      }
+      
+      // Apply simple diffusion (much less frequent for performance)
+      if (Math.random() < 0.05) {
+        const newTrailMap = Array(width).fill().map(() => Array(height).fill(0));
+        
+        for (let x = 1; x < width - 1; x++) {
+          for (let y = 1; y < height - 1; y++) {
+            // Simple 3x3 kernel
+            const diffusedValue = 
+              trailMap[x][y] * (1 - config.diffusionRate) +
+              (trailMap[x-1][y] + trailMap[x+1][y] + 
+               trailMap[x][y-1] + trailMap[x][y+1]) * (config.diffusionRate / 4);
+            
+            newTrailMap[x][y] = diffusedValue;
+          }
+        }
+        
+        // Update trail map
+        for (let x = 1; x < width - 1; x++) {
+          for (let y = 1; y < height - 1; y++) {
+            trailMap[x][y] = newTrailMap[x][y];
+          }
+        }
+      }
+    }
+    
+    // Render trail map
+    function renderTrails() {
+      // Clear trail canvas with semi-transparent background for fading effect
+      trailCtx.fillStyle = `rgba(${palettes[config.colorPalette].background.slice(4, -1)}, 0.1)`;
+      trailCtx.fillRect(0, 0, width, height);
+      
+      // Draw food sources first
+      drawFoodSources(trailCtx);
+      
+      // Batch draw trails for better performance
+      const imageData = trailCtx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      
+      const palette = palettes[config.colorPalette].trail;
+      
+      for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+          const value = trailMap[x][y];
+          
+          if (value > 0.01) {
+            const i = (y * width + x) * 4;
+            
+            // Select color based on intensity
+            let color;
+            if (value > 0.7) color = palette[0];
+            else if (value > 0.4) color = palette[1];
+            else color = palette[2];
+            
+            // Parse RGB values from rgba string
+            const rgba = color.match(/\d+/g).map(Number);
+            const alpha = rgba[3] !== undefined ? rgba[3] / 255 : 1;
+            
+            // Blend with existing pixel
+            data[i] = data[i] * (1 - value * alpha) + rgba[0] * value * alpha;
+            data[i+1] = data[i+1] * (1 - value * alpha) + rgba[1] * value * alpha;
+            data[i+2] = data[i+2] * (1 - value * alpha) + rgba[2] * value * alpha;
+            data[i+3] = 255; // Full alpha
+          }
+        }
+      }
+      
+      trailCtx.putImageData(imageData, 0, 0);
+    }
+    
+    // Main animation loop
+    function animate() {
+      // Clear agent canvas
+      agentCtx.clearRect(0, 0, width, height);
+      
+      // Process and render trails
+      processTrails();
+      renderTrails();
+      
+      // Update and draw agents
+      for (const agent of agents) {
+        agent.move();
+        agent.draw(agentCtx);
+      }
+      
+      animationId = requestAnimationFrame(animate);
+    }
+    
+    // Handle mouse interaction
+    agentCanvas.addEventListener

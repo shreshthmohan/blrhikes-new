@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adaptive Synchronization</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: #080c10;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        flex-direction: column;
+      }
+
+      #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .controls {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 15px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 280px;
+        transition: opacity 0.3s ease;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .control-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      input[type="range"] {
+        width: 160px;
+      }
+
+      .value-display {
+        font-size: 0.8rem;
+        opacity: 0.7;
+        width: 35px;
+        text-align: right;
+      }
+
+      .title {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 1.4rem;
+        font-weight: 300;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 15px;
+        border-radius: 12px;
+        transition: opacity 0.3s ease;
+      }
+
+      .info {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 0.8rem;
+        opacity: 0.7;
+        z-index: 10;
+        text-align: right;
+        transition: opacity 0.3s ease;
+      }
+
+      .hide-ui {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        z-index: 10;
+        font-size: 0.8rem;
+      }
+
+      .hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">Adaptive Synchronization</div>
+
+    <div class="controls">
+      <div class="control-group">
+        <div class="control-row">
+          <label for="entityCount">Entity Population</label>
+          <input
+            type="range"
+            id="entityCount"
+            min="50"
+            max="500"
+            value="200"
+            step="50"
+          />
+          <span class="value-display" id="entityCountValue">200</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-row">
+          <label for="synchronizationRate">Synchronization Rate</label>
+          <input
+            type="range"
+            id="synchronizationRate"
+            min="0"
+            max="0.05"
+            value="0.015"
+            step="0.005"
+          />
+          <span class="value-display" id="synchronizationRateValue">0.015</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-row">
+          <label for="influenceRadius">Influence Radius</label>
+          <input
+            type="range"
+            id="influenceRadius"
+            min="20"
+            max="150"
+            value="80"
+            step="10"
+          />
+          <span class="value-display" id="influenceRadiusValue">80</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-row">
+          <label for="chaosLevel">Chaos Level</label>
+          <input
+            type="range"
+            id="chaosLevel"
+            min="0"
+            max="0.1"
+            value="0.02"
+            step="0.01"
+          />
+          <span class="value-display" id="chaosLevelValue">0.02</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-row">
+          <label for="movementSpeed">Movement Speed</label>
+          <input
+            type="range"
+            id="movementSpeed"
+            min="0.2"
+            max="2"
+            value="0.8"
+            step="0.2"
+          />
+          <span class="value-display" id="movementSpeedValue">0.8</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info">
+      Move your cursor to guide the flow<br />Click to spawn new entities
+    </div>
+
+    <button class="hide-ui">Toggle UI</button>
+
+    <svg id="canvas"></svg>
+
+    <script>
+      // Configuration
+      const config = {
+        entityCount: 200,
+        synchronizationRate: 0.015,
+        influenceRadius: 80,
+        chaosLevel: 0.02,
+        movementSpeed: 0.8,
+        pulseMin: 0.1,
+        pulseMax: 2.5,
+      };
+
+      // UI Interaction
+      document
+        .getElementById("entityCount")
+        .addEventListener("input", function () {
+          config.entityCount = parseInt(this.value);
+          document.getElementById("entityCountValue").textContent = this.value;
+          resetSimulation();
+        });
+
+      document
+        .getElementById("synchronizationRate")
+        .addEventListener("input", function () {
+          config.synchronizationRate = parseFloat(this.value);
+          document.getElementById("synchronizationRateValue").textContent =
+            this.value;
+        });
+
+      document
+        .getElementById("influenceRadius")
+        .addEventListener("input", function () {
+          config.influenceRadius = parseInt(this.value);
+          document.getElementById("influenceRadiusValue").textContent =
+            this.value;
+        });
+
+      document
+        .getElementById("chaosLevel")
+        .addEventListener("input", function () {
+          config.chaosLevel = parseFloat(this.value);
+          document.getElementById("chaosLevelValue").textContent = this.value;
+        });
+
+      document
+        .getElementById("movementSpeed")
+        .addEventListener("input", function () {
+          config.movementSpeed = parseFloat(this.value);
+          document.getElementById("movementSpeedValue").textContent =
+            this.value;
+        });
+
+      document.querySelector(".hide-ui").addEventListener("click", function () {
+        document.querySelector(".controls").classList.toggle("hidden");
+        document.querySelector(".title").classList.toggle("hidden");
+        document.querySelector(".info").classList.toggle("hidden");
+      });
+
+      // SVG Setup
+      const svg = d3.select("#canvas");
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      // Create gradient definitions
+      const defs = svg.append("defs");
+
+      // Create several radial gradients for different entity types
+      const gradients = [
+        { id: "pulse-gradient-1", colors: ["#3FABF3", "#6A11CB"] },
+        { id: "pulse-gradient-2", colors: ["#08AEEA", "#2AF598"] },
+        { id: "pulse-gradient-3", colors: ["#FF3CAC", "#784BA0"] },
+        { id: "pulse-gradient-4", colors: ["#F9D423", "#FF4E50"] },
+        { id: "pulse-gradient-5", colors: ["#00C9FF", "#92FE9D"] },
+      ];
+
+      gradients.forEach((gradient) => {
+        const radialGradient = defs
+          .append("radialGradient")
+          .attr("id", gradient.id)
+          .attr("cx", "50%")
+          .attr("cy", "50%")
+          .attr("r", "50%")
+          .attr("fx", "50%")
+          .attr("fy", "50%");
+
+        radialGradient
+          .append("stop")
+          .attr("offset", "0%")
+          .attr("stop-color", gradient.colors[0])
+          .attr("stop-opacity", 1);
+
+        radialGradient
+          .append("stop")
+          .attr("offset", "100%")
+          .attr("stop-color", gradient.colors[1])
+          .attr("stop-opacity", 0.3);
+      });
+
+      // Blur filter for glow effect
+      const filter = defs
+        .append("filter")
+        .attr("id", "glow")
+        .attr("x", "-50%")
+        .attr("y", "-50%")
+        .attr("width", "200%")
+        .attr("height", "200%");
+
+      filter
+        .append("feGaussianBlur")
+        .attr("stdDeviation", "3")
+        .attr("result", "blur");
+
+      filter
+        .append("feComposite")
+        .attr("in", "SourceGraphic")
+        .attr("in2", "blur")
+        .attr("operator", "over");
+
+      // Add a background rectangle
+      svg
+        .append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("fill", "#080C10");
+
+      // Lines container for connections
+      const linesContainer = svg.append("g").attr("class", "connections");
+
+      // Group for entities
+      const entitiesContainer = svg.append("g").attr("class", "entities");
+
+      // Class representing a single entity in our system
+      class Entity {
+        constructor(x, y) {
+          this.x = x || Math.random() * width;
+          this.y = y || Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 2;
+          this.vy = (Math.random() - 0.5) * 2;
+          this.phase = Math.random() * 2 * Math.PI; // Current phase in the cycle
+          this.frequency = 0.5 + Math.random() * 1.5; // Natural frequency
+          this.size = 5 + Math.random() * 10; // Base size
+          this.type = Math.floor(Math.random() * gradients.length); // Entity type for coloring
+          this.id = Math.random().toString(36).substr(2, 9); // Unique ID
+
+          // Create the visual representation
+          this.element = entitiesContainer
+            .append("circle")
+            .attr("cx", this.x)
+            .attr("cy", this.y)
+            .attr("r", this.size)
+            .attr("fill", `url(#${gradients[this.type].id})`)
+            .attr("filter", "url(#glow)")
+            .attr("opacity", 0.6);
+        }
+
+        // Update position and phase
+        update(entities, mouseInfluence) {
+          // Update phase based on nearby entities
+          let averagePhase = 0;
+          let neighborCount = 0;
+
+          entities.forEach((other) => {
+            if (other === this) return;
+
+            const dx = other.x - this.x;
+            const dy = other.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < config.influenceRadius) {
+              // Influence from other entities
+              averagePhase += other.phase;
+              neighborCount++;
+
+              // Subtle attraction/repulsion
+              const force =
+                0.01 * (distance > config.influenceRadius / 2 ? 1 : -1);
+              this.vx += (dx * force) / distance;
+              this.vy += (dy * force) / distance;
+            }
+          });
+
+          // Apply synchronization if we have neighbors
+          if (neighborCount > 0) {
+            averagePhase /= neighborCount;
+            // Gradually adjust phase toward neighbors' average
+            const phaseDiff = averagePhase - this.phase;
+            this.phase += config.synchronizationRate * Math.sin(phaseDiff);
+          }
+
+          // Progress natural cycle
+          this.phase += this.frequency * 0.01;
+
+          // Apply small random changes (chaos)
+          this.phase += (Math.random() - 0.5) * config.chaosLevel;
+
+          // Mouse influence
+          if (mouseInfluence && mouseInfluence.active) {
+            const dx = mouseInfluence.x - this.x;
+            const dy = mouseInfluence.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const mouseRadius = 150;
+
+            if (distance < mouseRadius) {
+              const strength = 0.1 * (1 - distance / mouseRadius);
+              // Entities are attracted to mouse position
+              this.vx += (dx * strength) / (distance + 1);
+              this.vy += (dy * strength) / (distance + 1);
+            }
+          }
+
+          // Update position
+          this.x += this.vx * config.movementSpeed;
+          this.y += this.vy * config.movementSpeed;
+
+          // Damping
+          this.vx *= 0.98;
+          this.vy *= 0.98;
+
+          // Boundary wrapping
+          if (this.x < 0) this.x = width;
+          if (this.x > width) this.x = 0;
+          if (this.y < 0) this.y = height;
+          if (this.y > height) this.y = 0;
+
+          // Calculate current pulse size based on phase
+          const pulseFactor = Math.sin(this.phase) * 0.5 + 0.5;
+          const currentSize =
+            this.size *
+            (config.pulseMin +
+              pulseFactor * (config.pulseMax - config.pulseMin));
+
+          // Update visual representation
+          this.element
+            .attr("cx", this.x)
+            .attr("cy", this.y)
+            .attr("r", currentSize)
+            .attr("opacity", 0.4 + pulseFactor * 0.6);
+        }
+
+        // Remove this entity
+        remove() {
+          this.element.remove();
+        }
+      }
+
+      // Store all entities
+      let entities = [];
+
+      // Mouse influence
+      const mouseInfluence = {
+        active: false,
+        x: 0,
+        y: 0,
+      };
+
+      // Track mouse position
+      svg.on("mousemove", function (event) {
+        mouseInfluence.active = true;
+        mouseInfluence.x = event.clientX;
+        mouseInfluence.y = event.clientY;
+      });
+
+      svg.on("mouseout", function () {
+        mouseInfluence.active = false;
+      });
+
+      // Add entities on click
+      svg.on("click", function (event) {
+        for (let i = 0; i < 10; i++) {
+          addEntity(
+            event.clientX + (Math.random() - 0.5) * 50,
+            event.clientY + (Math.random() - 0.5) * 50
+          );
+        }
+      });
+
+      // Lines to show connections
+      let connectionLines = [];
+
+      // Function to add a new entity
+      function addEntity(x, y) {
+        if (entities.length < config.entityCount) {
+          entities.push(new Entity(x, y));
+        }
+      }
+
+      // Initialize entities
+      function resetSimulation() {
+        // Remove existing entities
+        entities.forEach((entity) => entity.remove());
+        entities = [];
+
+        // Create new entities
+        for (let i = 0; i < config.entityCount; i++) {
+          addEntity();
+        }
+      }
+
+      // Update connections between entities
+      function updateConnections() {
+        // Remove existing lines
+        linesContainer.selectAll("line").remove();
+
+        const lines = [];
+
+        // Find entities that should be connected
+        entities.forEach((entity, i) => {
+          for (let j = i + 1; j < entities.length; j++) {
+            const other = entities[j];
+            const dx = other.x - entity.x;
+            const dy = other.y - entity.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < config.influenceRadius) {
+              const phaseDiff = Math.abs(
+                Math.sin(entity.phase) - Math.sin(other.phase)
+              );
+              // Only draw connections for entities that are somewhat in sync
+              if (phaseDiff < 0.4) {
+                lines.push({
+                  x1: entity.x,
+                  y1: entity.y,
+                  x2: other.x,
+                  y2: other.y,
+                  strength: 1 - phaseDiff, // Synchronization strength
+                });
+              }
+            }
+          }
+        });
+
+        // Draw new connections
+        linesContainer
+          .selectAll("line")
+          .data(lines)
+          .enter()
+          .append("line")
+          .attr("x1", (d) => d.x1)
+          .attr("y1", (d) => d.y1)
+          .attr("x2", (d) => d.x2)
+          .attr("y2", (d) => d.y2)
+          .attr("stroke", (d) => `rgba(255, 255, 255, ${d.strength * 0.2})`)
+          .attr("stroke-width", (d) => d.strength * 1.5);
+      }
+
+      // Animation loop
+      function animate() {
+        // Update entities
+        entities.forEach((entity) => {
+          entity.update(entities, mouseInfluence);
+        });
+
+        // Update connections between entities (less frequently for performance)
+        if (Math.random() < 0.2) {
+          // Only update connections every few frames
+          updateConnections();
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      // Handle window resize
+      window.addEventListener("resize", function () {
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight;
+
+        svg.attr("width", newWidth).attr("height", newHeight);
+
+        svg.select("rect").attr("width", newWidth).attr("height", newHeight);
+      });
+
+      // Initialize
+      resetSimulation();
+      animate();
+    </script>
+  </body>
+</html>

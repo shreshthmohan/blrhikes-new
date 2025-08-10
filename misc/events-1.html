@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events | BLR Hikes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-amber-50 min-h-screen text-stone-800 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-stone-800 text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <div class="bg-yellow-400 p-2 text-stone-800 font-bold">
+            BLR Hikes
+          </div>
+        </div>
+        <div class="hidden md:flex space-x-6">
+          <a href="#" class="hover:text-yellow-400">Trails</a>
+          <a href="#" class="hover:text-yellow-400">Community</a>
+          <a href="#" class="hover:text-yellow-400 font-medium">Events</a>
+          <a href="#" class="hover:text-yellow-400">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="container mx-auto py-8 px-4">
+      <h1 class="text-4xl font-serif mb-2">Events</h1>
+      <p class="text-stone-600">
+        Join us for guided hikes, workshops, and community gatherings
+      </p>
+    </header>
+
+    <main class="container mx-auto px-4 pb-16">
+      <!-- Upcoming Events Section -->
+      <section class="mb-16">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-serif">Upcoming Events</h2>
+          <div class="text-yellow-600 flex items-center">
+            <span>Calendar View</span>
+            <i class="fas fa-calendar-alt ml-2"></i>
+          </div>
+        </div>
+
+        <!-- Upcoming Event Cards -->
+        <div class="space-y-6">
+          <!-- Event 1 -->
+          <div
+            class="bg-white rounded-lg overflow-hidden shadow-md border border-stone-200"
+          >
+            <div class="md:flex">
+              <div class="md:w-1/3 h-64 overflow-hidden">
+                <img
+                  src="/api/placeholder/600/400"
+                  alt="Sunset Hike at Skandagiri"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="md:w-2/3 p-6">
+                <div class="flex justify-between items-start mb-4">
+                  <h3 class="text-xl font-medium">Sunset Hike at Skandagiri</h3>
+                  <span
+                    class="bg-yellow-400 text-stone-800 px-3 py-1 rounded-full text-sm font-medium"
+                    >₹799</span
+                  >
+                </div>
+                <div class="flex items-center text-stone-600 mb-4">
+                  <i class="far fa-calendar mr-2"></i>
+                  <span>April 2, 2025 • 3:00 PM - 8:30 PM</span>
+                </div>
+                <div class="flex items-center text-stone-600 mb-4">
+                  <i class="fas fa-map-marker-alt mr-2"></i>
+                  <span>Skandagiri Hills, Chikkaballapur</span>
+                </div>
+                <p class="text-stone-700 mb-6">
+                  Experience the magic of sunset from atop Skandagiri Hills.
+                  This guided trek includes transportation from Bangalore,
+                  snacks, and safety equipment.
+                </p>
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center">
+                    <span class="text-sm text-stone-600 mr-4"
+                      ><i class="fas fa-users mr-1"></i> 8 spots left</span
+                    >
+                    <span class="text-sm text-stone-600"
+                      ><i class="fas fa-hiking mr-1"></i> Moderate</span
+                    >
+                  </div>
+                  <button
+                    class="bg-yellow-400 hover:bg-yellow-500 text-stone-800 font-medium py-2 px-4 rounded"
+                  >
+                    Register Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 2 -->
+          <div
+            class="bg-white rounded-lg overflow-hidden shadow-md border border-stone-200"
+          >
+            <div class="md:flex">
+              <div class="md:w-1/3 h-64 overflow-hidden">
+                <img
+                  src="/api/placeholder/600/400"
+                  alt="Wildlife Photography Workshop"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="md:w-2/3 p-6">
+                <div class="flex justify-between items-start mb-4">
+                  <h3 class="text-xl font-medium">
+                    Wildlife Photography Workshop
+                  </h3>
+                  <span
+                    class="bg-yellow-400 text-stone-800 px-3 py-1 rounded-full text-sm font-medium"
+                    >₹1299</span
+                  >
+                </div>
+                <div class="flex items-center text-stone-600 mb-4">
+                  <i class="far fa-calendar mr-2"></i>
+                  <span>April 15-16, 2025 • Full Day</span>
+                </div>
+                <div class="flex items-center text-stone-600 mb-4">
+                  <i class="fas fa-map-marker-alt mr-2"></i>
+                  <span>Bannerghatta National Park</span>
+                </div>
+                <p class="text-stone-700 mb-6">
+                  Learn wildlife photography techniques from expert
+                  photographers. This two-day workshop includes park entrance,
+                  lunch, and a printed photo book of your best shots.
+                </p>
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center">
+                    <span class="text-sm text-stone-600 mr-4"
+                      ><i class="fas fa-users mr-1"></i> 3 spots left</span
+                    >
+                    <span class="text-sm text-stone-600"
+                      ><i class="fas fa-camera mr-1"></i> All levels</span
+                    >
+                  </div>
+                  <button
+                    class="bg-yellow-400 hover:bg-yellow-500 text-stone-800 font-medium py-2 px-4 rounded"
+                  >
+                    Register Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 3 -->
+          <div
+            class="bg-white rounded-lg overflow-hidden shadow-md border border-stone-200"
+          >
+            <div class="md:flex">
+              <div class="md:w-1/3 h-64 overflow-hidden">
+                <img
+                  src="/api/placeholder/600/400"
+                  alt="Cleanup Trek at Savandurga"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="md:w-2/3 p-6">
+                <div class="flex justify-between items-start mb-4">
+                  <h3 class="text-xl font-medium">
+                    Cleanup Trek at Savandurga
+                  </h3>
+                  <span
+                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium"
+                    >Free</span
+                  >
+                </div>
+                <div class="flex items-center text-stone-600 mb-4">
+                  <i class="far fa-calendar mr-2"></i>
+                  <span>April 22, 2025 • 7:00 AM - 2:00 PM</span>
+                </div>
+                <div class="flex items-center text-stone-600 mb-4">
+                  <i class="fas fa-map-marker-alt mr-2"></i>
+                  <span>Savandurga, Ramanagara</span>
+                </div>
+                <p class="text-stone-700 mb-6">
+                  Join our community initiative to clean up one of Bangalore's
+                  most beautiful monoliths. We'll provide gloves, bags, and
+                  refreshments. Transportation available from select points in
+                  the city.
+                </p>
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center">
+                    <span class="text-sm text-stone-600 mr-4"
+                      ><i class="fas fa-users mr-1"></i> Unlimited spots</span
+                    >
+                    <span class="text-sm text-stone-600"
+                      ><i class="fas fa-leaf mr-1"></i> Conservation</span
+                    >
+                  </div>
+                  <button
+                    class="bg-yellow-400 hover:bg-yellow-500 text-stone-800 font-medium py-2 px-4 rounded"
+                  >
+                    Join Event
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Past Events Section -->
+      <section>
+        <h2 class="text-2xl font-serif mb-6">Past Events</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Past Event 1 -->
+          <div
+            class="bg-white rounded-lg overflow-hidden shadow-sm border border-stone-200"
+          >
+            <div class="relative h-48 overflow-hidden">
+              <img
+                src="/api/placeholder/600/400"
+                alt="Nandi Hills Sunrise Trek"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"
+              >
+                <span class="text-white text-lg font-medium">March 2025</span>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-medium mb-2">Nandi Hills Sunrise Trek</h3>
+              <div
+                class="flex justify-between items-center text-sm text-stone-600 mb-3"
+              >
+                <span><i class="far fa-calendar mr-1"></i> March 15, 2025</span>
+                <span><i class="fas fa-users mr-1"></i> 24 participants</span>
+              </div>
+              <button
+                class="text-yellow-600 hover:text-yellow-700 text-sm font-medium flex items-center mt-2"
+              >
+                View Event Recap <i class="fas fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Past Event 2 -->
+          <div
+            class="bg-white rounded-lg overflow-hidden shadow-sm border border-stone-200"
+          >
+            <div class="relative h-48 overflow-hidden">
+              <img
+                src="/api/placeholder/600/400"
+                alt="Wilderness First Aid Workshop"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"
+              >
+                <span class="text-white text-lg font-medium"
+                  >February 2025</span
+                >
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-medium mb-2">Wilderness First Aid Workshop</h3>
+              <div
+                class="flex justify-between items-center text-sm text-stone-600 mb-3"
+              >
+                <span
+                  ><i class="far fa-calendar mr-1"></i> February 28, 2025</span
+                >
+                <span><i class="fas fa-users mr-1"></i> 18 participants</span>
+              </div>
+              <button
+                class="text-yellow-600 hover:text-yellow-700 text-sm font-medium flex items-center mt-2"
+              >
+                View Event Recap <i class="fas fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Past Event 3 -->
+          <div
+            class="bg-white rounded-lg overflow-hidden shadow-sm border border-stone-200"
+          >
+            <div class="relative h-48 overflow-hidden">
+              <img
+                src="/api/placeholder/600/400"
+                alt="Night Trek to Anthargange"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"
+              >
+                <span class="text-white text-lg font-medium"
+                  >February 2025</span
+                >
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-medium mb-2">Night Trek to Anthargange</h3>
+              <div
+                class="flex justify-between items-center text-sm text-stone-600 mb-3"
+              >
+                <span
+                  ><i class="far fa-calendar mr-1"></i> February 14, 2025</span
+                >
+                <span><i class="fas fa-users mr-1"></i> 32 participants</span>
+              </div>
+              <button
+                class="text-yellow-600 hover:text-yellow-700 text-sm font-medium flex items-center mt-2"
+              >
+                View Event Recap <i class="fas fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Past Event 4 -->
+          <div
+            class="bg-white rounded-lg overflow-hidden shadow-sm border border-stone-200"
+          >
+            <div class="relative h-48 overflow-hidden">
+              <img
+                src="/api/placeholder/600/400"
+                alt="Tree Plantation Drive"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"
+              >
+                <span class="text-white text-lg font-medium">January 2025</span>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-medium mb-2">Tree Plantation Drive</h3>
+              <div
+                class="flex justify-between items-center text-sm text-stone-600 mb-3"
+              >
+                <span
+                  ><i class="far fa-calendar mr-1"></i> January 26, 2025</span
+                >
+                <span><i class="fas fa-users mr-1"></i> 45 participants</span>
+              </div>
+              <button
+                class="text-yellow-600 hover:text-yellow-700 text-sm font-medium flex items-center mt-2"
+              >
+                View Event Recap <i class="fas fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center mt-10">
+          <nav class="flex items-center space-x-1">
+            <a
+              href="#"
+              class="px-3 py-2 rounded-md text-stone-600 hover:bg-stone-100"
+            >
+              <span class="sr-only">Previous</span>
+              <i class="fas fa-chevron-left"></i>
+            </a>
+            <a
+              href="#"
+              class="px-3 py-2 rounded-md bg-yellow-400 text-stone-800 font-medium"
+              >1</a
+            >
+            <a
+              href="#"
+              class="px-3 py-2 rounded-md text-stone-600 hover:bg-stone-100"
+              >2</a
+            >
+            <a
+              href="#"
+              class="px-3 py-2 rounded-md text-stone-600 hover:bg-stone-100"
+              >3</a
+            >
+            <span class="px-3 py-2 text-stone-400">...</span>
+            <a
+              href="#"
+              class="px-3 py-2 rounded-md text-stone-600 hover:bg-stone-100"
+              >8</a
+            >
+            <a
+              href="#"
+              class="px-3 py-2 rounded-md text-stone-600 hover:bg-stone-100"
+            >
+              <span class="sr-only">Next</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </nav>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-white py-10">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between">
+          <div class="mb-6 md:mb-0">
+            <div
+              class="bg-yellow-400 inline-block p-2 text-stone-800 font-bold mb-4"
+            >
+              BLR Hikes
+            </div>
+            <p class="text-stone-300 max-w-md">
+              Discover hidden trails and outdoor adventures around Bangalore
+              with our community of nature enthusiasts.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="font-medium mb-4">Explore</h3>
+              <ul class="space-y-2 text-stone-400">
+                <li>
+                  <a href="#" class="hover:text-yellow-400">All Trails</a>
+                </li>
+                <li>
+                  <a href="#" class="hover:text-yellow-400">Membership</a>
+                </li>
+                <li><a href="#" class="hover:text-yellow-400">Events</a></li>
+                <li><a href="#" class="hover:text-yellow-400">Blog</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-medium mb-4">Community</h3>
+              <ul class="space-y-2 text-stone-400">
+                <li><a href="#" class="hover:text-yellow-400">Join Us</a></li>
+                <li>
+                  <a href="#" class="hover:text-yellow-400">Our Mission</a>
+                </li>
+                <li><a href="#" class="hover:text-yellow-400">Partners</a></li>
+                <li>
+                  <a href="#" class="hover:text-yellow-400">Testimonials</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-medium mb-4">Connect</h3>
+              <ul class="space-y-2 text-stone-400">
+                <li>
+                  <a href="#" class="hover:text-yellow-400">Contact Us</a>
+                </li>
+                <li><a href="#" class="hover:text-yellow-400">Instagram</a></li>
+                <li><a href="#" class="hover:text-yellow-400">WhatsApp</a></li>
+                <li>
+                  <a href="#" class="hover:text-yellow-400">Newsletter</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-stone-700 mt-10 pt-6 text-sm text-stone-400 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p>© 2025 BLR Hikes. All rights reserved.</p>
+          <div class="flex space-x-4 mt-4 md:mt-0">
+            <a href="#" class="hover:text-yellow-400">Privacy Policy</a>
+            <a href="#" class="hover:text-yellow-400">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Stigmergy</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #000510;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .controls {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background-color: rgba(0, 5, 16, 0.7);
+        padding: 15px;
+        border-radius: 8px;
+        color: #a3b8cc;
+        z-index: 100;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 20px rgba(0, 30, 60, 0.2);
+        transition: opacity 0.5s ease;
+      }
+
+      .controls:hover {
+        opacity: 1;
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      .hide-controls {
+        opacity: 0.3;
+      }
+
+      .info-panel {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(0, 5, 16, 0.7);
+        padding: 15px;
+        border-radius: 8px;
+        color: #a3b8cc;
+        max-width: 300px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 20px rgba(0, 30, 60, 0.2);
+        transition: opacity 0.5s ease;
+      }
+
+      .info-panel:hover {
+        opacity: 1;
+      }
+
+      .hide-panel {
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body class="bg-black">
+    <!-- Trail layer -->
+    <canvas id="trailCanvas"></canvas>
+
+    <!-- Particle layer -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="controls hide-controls">
+      <h2 class="text-lg font-semibold mb-3 text-blue-200">
+        Ecosystem Parameters
+      </h2>
+
+      <div class="mb-3">
+        <label for="particleCount" class="block text-sm mb-1"
+          >Particle Count</label
+        >
+        <input
+          type="range"
+          id="particleCount"
+          min="50"
+          max="500"
+          step="10"
+          value="200"
+          class="mb-2"
+        />
+        <button
+          id="updateCount"
+          class="px-2 py-1 bg-blue-800 text-blue-100 rounded text-xs"
+        >
+          Update
+        </button>
+      </div>
+
+      <div class="mb-3">
+        <label for="maxSpeed" class="block text-sm mb-1">Movement Speed</label>
+        <input
+          type="range"
+          id="maxSpeed"
+          min="0.5"
+          max="5"
+          step="0.1"
+          value="2"
+          class="mb-2"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="trailStrength" class="block text-sm mb-1"
+          >Trail Intensity</label
+        >
+        <input
+          type="range"
+          id="trailStrength"
+          min="0.01"
+          max="0.2"
+          step="0.01"
+          value="0.05"
+          class="mb-2"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="trailInfluence" class="block text-sm mb-1"
+          >Trail Influence</label
+        >
+        <input
+          type="range"
+          id="trailInfluence"
+          min="0"
+          max="2"
+          step="0.05"
+          value="0.8"
+          class="mb-2"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="evaporationRate" class="block text-sm mb-1"
+          >Evaporation Rate</label
+        >
+        <input
+          type="range"
+          id="evaporationRate"
+          min="0.01"
+          max="0.1"
+          step="0.005"
+          value="0.03"
+          class="mb-2"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="wanderStrength" class="block text-sm mb-1"
+          >Wandering Tendency</label
+        >
+        <input
+          type="range"
+          id="wanderStrength"
+          min="0"
+          max="0.2"
+          step="0.01"
+          value="0.05"
+          class="mb-2"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="colorMode" class="block text-sm mb-1">Color Mode</label>
+        <select
+          id="colorMode"
+          class="w-full bg-blue-900 text-blue-100 p-1 rounded text-sm"
+        >
+          <option value="flow">Flow Patterns</option>
+          <option value="age">Trail Age</option>
+          <option value="density">Trail Density</option>
+        </select>
+      </div>
+
+      <div class="flex space-x-2 mt-4">
+        <button
+          id="resetBtn"
+          class="px-3 py-1 bg-blue-800 text-blue-100 rounded text-sm"
+        >
+          Reset
+        </button>
+        <button
+          id="pauseBtn"
+          class="px-3 py-1 bg-blue-800 text-blue-100 rounded text-sm"
+        >
+          Pause
+        </button>
+        <button
+          id="clearTrailsBtn"
+          class="px-3 py-1 bg-blue-800 text-blue-100 rounded text-sm"
+        >
+          Clear Trails
+        </button>
+      </div>
+    </div>
+
+    <div class="info-panel hide-panel">
+      <h2 class="text-lg font-semibold mb-2 text-blue-200">
+        Digital Stigmergy
+      </h2>
+      <p class="text-sm mb-2">
+        This ecosystem demonstrates how memory can exist outside of individuals,
+        embedded in the environment itself.
+      </p>
+      <p class="text-sm mb-2">
+        Like ants leaving pheromone trails or footpaths forming in meadows, the
+        particles here leave traces that influence future movement, creating
+        emergent pathways of collective intelligence.
+      </p>
+      <p class="text-sm italic">
+        Move your cursor to create environmental disturbances that the system
+        will respond to and remember.
+      </p>
+    </div>
+
+    <script>
+      // Canvas setup
+      const trailCanvas = document.getElementById("trailCanvas");
+      const particleCanvas = document.getElementById("particleCanvas");
+      const trailCtx = trailCanvas.getContext("2d");
+      const particleCtx = particleCanvas.getContext("2d");
+
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let paused = false;
+
+      // Set canvas dimensions
+      function setupCanvases() {
+        trailCanvas.width = width;
+        trailCanvas.height = height;
+        particleCanvas.width = width;
+        particleCanvas.height = height;
+      }
+
+      // Resize handler
+      window.addEventListener("resize", () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        setupCanvases();
+        initializeTrailMap();
+      });
+
+      // UI interactions
+      document.querySelector(".controls").addEventListener("mouseenter", () => {
+        document.querySelector(".controls").classList.remove("hide-controls");
+      });
+
+      document.querySelector(".controls").addEventListener("mouseleave", () => {
+        document.querySelector(".controls").classList.add("hide-controls");
+      });
+
+      document
+        .querySelector(".info-panel")
+        .addEventListener("mouseenter", () => {
+          document.querySelector(".info-panel").classList.remove("hide-panel");
+        });
+
+      document
+        .querySelector(".info-panel")
+        .addEventListener("mouseleave", () => {
+          document.querySelector(".info-panel").classList.add("hide-panel");
+        });
+
+      // Parameters
+      const params = {
+        particleCount: 200,
+        maxSpeed: 2,
+        trailStrength: 0.05,
+        trailInfluence: 0.8,
+        evaporationRate: 0.03,
+        wanderStrength: 0.05,
+        sensorDistance: 20,
+        sensorAngle: Math.PI / 4,
+        mouseInfluence: 100,
+        mouseStrength: 0.2,
+        colorMode: "flow",
+      };
+
+      // Parameter controls
+      document.getElementById("maxSpeed").addEventListener("input", (e) => {
+        params.maxSpeed = parseFloat(e.target.value);
+      });
+
+      document
+        .getElementById("trailStrength")
+        .addEventListener("input", (e) => {
+          params.trailStrength = parseFloat(e.target.value);
+        });
+
+      document
+        .getElementById("trailInfluence")
+        .addEventListener("input", (e) => {
+          params.trailInfluence = parseFloat(e.target.value);
+        });
+
+      document
+        .getElementById("evaporationRate")
+        .addEventListener("input", (e) => {
+          params.evaporationRate = parseFloat(e.target.value);
+        });
+
+      document
+        .getElementById("wanderStrength")
+        .addEventListener("input", (e) => {
+          params.wanderStrength = parseFloat(e.target.value);
+        });
+
+      document.getElementById("colorMode").addEventListener("change", (e) => {
+        params.colorMode = e.target.value;
+      });
+
+      document
+        .getElementById("resetBtn")
+        .addEventListener("click", resetSimulation);
+
+      document.getElementById("pauseBtn").addEventListener("click", () => {
+        paused = !paused;
+        document.getElementById("pauseBtn").textContent = paused
+          ? "Resume"
+          : "Pause";
+      });
+
+      document
+        .getElementById("clearTrailsBtn")
+        .addEventListener("click", () => {
+          initializeTrailMap();
+        });
+
+      document.getElementById("updateCount").addEventListener("click", () => {
+        const newCount = parseInt(
+          document.getElementById("particleCount").value
+        );
+        params.particleCount = newCount;
+        updateParticleCount(newCount);
+      });
+
+      // Mouse interaction
+      let mouseX = 0;
+      let mouseY = 0;
+      let mousePresent = false;
+
+      particleCanvas.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        mousePresent = true;
+      });
+
+      particleCanvas.addEventListener("mouseout", () => {
+        mousePresent = false;
+      });
+
+      // Trail map (where the memory lives)
+      let trailMap = [];
+      let directionMap = []; // stores direction information for coloring
+
+      function initializeTrailMap() {
+        trailMap = new Array(width).fill().map(() => new Array(height).fill(0));
+        directionMap = new Array(width)
+          .fill()
+          .map(() => new Array(height).fill([0, 0]));
+
+        // Clear the trail canvas
+        trailCtx.clearRect(0, 0, width, height);
+      }
+
+      // Particle class
+      class Particle {
+        constructor(id) {
+          this.id = id;
+          this.position = {
+            x: Math.random() * width,
+            y: Math.random() * height,
+          };
+          this.angle = Math.random() * Math.PI * 2;
+          this.speed = Math.random() * 0.5 + 0.5; // Base speed variation
+          this.color = `hsl(${Math.random() * 60 + 190}, 80%, 60%)`;
+          this.size = Math.random() * 2 + 1;
+        }
+
+        sense() {
+          // Create three sensors: left, center, right
+          const sensorAngle = params.sensorAngle;
+
+          // Get sensor positions
+          const centerSensor = {
+            x: this.position.x + Math.cos(this.angle) * params.sensorDistance,
+            y: this.position.y + Math.sin(this.angle) * params.sensorDistance,
+          };
+
+          const leftSensor = {
+            x:
+              this.position.x +
+              Math.cos(this.angle - sensorAngle) * params.sensorDistance,
+            y:
+              this.position.y +
+              Math.sin(this.angle - sensorAngle) * params.sensorDistance,
+          };
+
+          const rightSensor = {
+            x:
+              this.position.x +
+              Math.cos(this.angle + sensorAngle) * params.sensorDistance,
+            y:
+              this.position.y +
+              Math.sin(this.angle + sensorAngle) * params.sensorDistance,
+          };
+
+          // Get trail values at sensor positions
+          const centerTrail = this.sampleTrail(centerSensor.x, centerSensor.y);
+          const leftTrail = this.sampleTrail(leftSensor.x, leftSensor.y);
+          const rightTrail = this.sampleTrail(rightSensor.x, rightSensor.y);
+
+          // Steering behavior based on sensor readings
+          if (centerTrail > leftTrail && centerTrail > rightTrail) {
+            // Continue forward
+            return 0;
+          } else if (leftTrail > rightTrail) {
+            // Steer left
+            return -0.1;
+          } else if (rightTrail > leftTrail) {
+            // Steer right
+            return 0.1;
+          } else {
+            // Random steering if equal
+            return (Math.random() - 0.5) * 0.2;
+          }
+        }
+
+        sampleTrail(x, y) {
+          // Ensure coordinates are within bounds
+          x = Math.floor(Math.max(0, Math.min(width - 1, x)));
+          y = Math.floor(Math.max(0, Math.min(height - 1, y)));
+
+          // Return trail value at coordinates
+          return trailMap[x][y];
+        }
+
+        update() {
+          // Sample the environment to determine steering
+          const steering = this.sense() * params.trailInfluence;
+
+          // Add random wandering behavior
+          const wander = (Math.random() - 0.5) * params.wanderStrength;
+
+          // Update angle
+          this.angle += steering + wander;
+
+          // Apply mouse influence if present
+          if (mousePresent) {
+            const dx = mouseX - this.position.x;
+            const dy = mouseY - this.position.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < params.mouseInfluence) {
+              // Calculate angle to mouse
+              const angleToMouse = Math.atan2(dy, dx);
+
+              // Gentle attraction to mouse (or repulsion)
+              const strength =
+                (1 - distance / params.mouseInfluence) * params.mouseStrength;
+
+              // Blend current angle with angle to mouse
+              this.angle =
+                this.angle * (1 - strength) + angleToMouse * strength;
+            }
+          }
+
+          // Calculate velocity from angle and speed
+          const velocity = {
+            x: Math.cos(this.angle) * this.speed * params.maxSpeed,
+            y: Math.sin(this.angle) * this.speed * params.maxSpeed,
+          };
+
+          // Update position
+          this.position.x += velocity.x;
+          this.position.y += velocity.y;
+
+          // Handle boundaries - wrap around edges
+          if (this.position.x < 0) this.position.x = width;
+          if (this.position.x > width) this.position.x = 0;
+          if (this.position.y < 0) this.position.y = height;
+          if (this.position.y > height) this.position.y = 0;
+
+          // Deposit trail pheromone
+          this.depositTrail();
+        }
+
+        depositTrail() {
+          const x = Math.floor(this.position.x);
+          const y = Math.floor(this.position.y);
+
+          // Ensure coordinates are within bounds
+          if (x >= 0 && x < width && y >= 0 && y < height) {
+            // Add trail
+            trailMap[x][y] += params.trailStrength;
+
+            // Clamp trail value to prevent overflow
+            trailMap[x][y] = Math.min(1, trailMap[x][y]);
+
+            // Update direction map with normalized direction vector
+            const dirX = Math.cos(this.angle);
+            const dirY = Math.sin(this.angle);
+            directionMap[x][y] = [dirX, dirY];
+
+            // Draw the trail deposit
+            this.drawTrailDeposit(x, y);
+          }
+        }
+
+        drawTrailDeposit(x, y) {
+          const trailValue = trailMap[x][y];
+          const direction = directionMap[x][y];
+
+          // Set color based on mode
+          let color;
+          if (params.colorMode === "flow") {
+            // Color based on movement direction
+            const hue =
+              ((Math.atan2(direction[1], direction[0]) * 180) / Math.PI + 360) %
+              360;
+            color = `hsla(${hue}, 80%, 50%, ${trailValue * 0.5})`;
+          } else if (params.colorMode === "age") {
+            // Color based on trail intensity (newer trails brighter)
+            color = `hsla(200, 80%, ${50 + trailValue * 30}%, ${
+              trailValue * 0.5
+            })`;
+          } else if (params.colorMode === "density") {
+            // Color based on trail density
+            color = `hsla(${240 - trailValue * 120}, 80%, 50%, ${
+              trailValue * 0.5
+            })`;
+          }
+
+          // Draw trail deposit
+          trailCtx.fillStyle = color;
+          trailCtx.fillRect(x, y, 1, 1);
+        }
+
+        draw() {
+          // Draw particle
+          particleCtx.beginPath();
+          particleCtx.arc(
+            this.position.x,
+            this.position.y,
+            this.size,
+            0,
+            Math.PI * 2
+          );
+          particleCtx.fillStyle = this.color;
+          particleCtx.fill();
+
+          // Optional: Draw direction indicator
+          const headX = this.position.x + Math.cos(this.angle) * this.size * 2;
+          const headY = this.position.y + Math.sin(this.angle) * this.size * 2;
+
+          particleCtx.beginPath();
+          particleCtx.moveTo(this.position.x, this.position.y);
+          particleCtx.lineTo(headX, headY);
+          particleCtx.strokeStyle = this.color;
+          particleCtx.stroke();
+        }
+      }
+
+      // Create particles
+      let particles = [];
+      function createParticles(count) {
+        for (let i = 0; i < count; i++) {
+          particles.push(new Particle(i));
+        }
+      }
+
+      function updateParticleCount(newCount) {
+        // If we need more particles
+        if (newCount > particles.length) {
+          for (let i = particles.length; i < newCount; i++) {
+            particles.push(new Particle(i));
+          }
+        }
+        // If we need fewer particles
+        else if (newCount < particles.length) {
+          particles = particles.slice(0, newCount);
+        }
+      }
+
+      function resetSimulation() {
+        // Remove all existing particles
+        particles = [];
+
+        // Create new particles
+        const count = parseInt(document.getElementById("particleCount").value);
+        createParticles(count);
+
+        // Reset trail map
+        initializeTrailMap();
+      }
+
+      // Trail evaporation function
+      function evaporateTrails() {
+        // Apply a subtle blur effect to simulate diffusion
+        trailCtx.globalAlpha = 0.95;
+        trailCtx.filter = "blur(1px)";
+        trailCtx.drawImage(trailCanvas, 0, 0);
+        trailCtx.globalAlpha = 1;
+        trailCtx.filter = "none";
+
+        // Evaporate trails by sampling the new canvas
+        const imageData = trailCtx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+
+        // Create a temporary copy of the trail map
+        const tempTrailMap = new Array(width)
+          .fill()
+          .map(() => new Array(height).fill(0));
+
+        // Update trail map from canvas
+        for (let x = 0; x < width; x++) {
+          for (let y = 0; y < height; y++) {
+            const idx = (y * width + x) * 4;
+            const alpha = data[idx + 3] / 255; // Alpha channel normalized to 0-1
+
+            // Apply evaporation
+            tempTrailMap[x][y] = Math.max(0, alpha - params.evaporationRate);
+          }
+        }
+
+        // Copy temp trail map to actual trail map
+        for (let x = 0; x < width; x++) {
+          for (let y = 0; y < height; y++) {
+            trailMap[x][y] = tempTrailMap[x][y];
+          }
+        }
+
+        // Redraw entire trail map
+        trailCtx.clearRect(0, 0, width, height);
+
+        for (let x = 0; x < width; x++) {
+          for (let y = 0; y < height; y++) {
+            if (trailMap[x][y] > 0.01) {
+              // Only draw visible trails
+              const trailValue = trailMap[x][y];
+              const direction = directionMap[x][y];
+
+              // Set color based on mode
+              let color;
+              if (params.colorMode === "flow") {
+                // Color based on movement direction
+                const hue =
+                  ((Math.atan2(direction[1], direction[0]) * 180) / Math.PI +
+                    360) %
+                  360;
+                color = `hsla(${hue}, 80%, 50%, ${trailValue * 0.5})`;
+              } else if (params.colorMode === "age") {
+                // Color based on trail intensity (newer trails brighter)
+                color = `hsla(200, 80%, ${50 + trailValue * 30}%, ${
+                  trailValue * 0.5
+                })`;
+              } else if (params.colorMode === "density") {
+                // Color based on trail density
+                color = `hsla(${240 - trailValue * 120}, 80%, 50%, ${
+                  trailValue * 0.5
+                })`;
+              }
+
+              trailCtx.fillStyle = color;
+              trailCtx.fillRect(x, y, 1, 1);
+            }
+          }
+        }
+      }
+
+      // Animation loop
+      function animate() {
+        if (!paused) {
+          // Clear particle canvas
+          particleCtx.clearRect(0, 0, width, height);
+
+          // Update and draw particles
+          particles.forEach((p) => p.update());
+          particles.forEach((p) => p.draw());
+
+          // Evaporate trails occasionally (to improve performance)
+          if (Math.random() < 0.1) {
+            evaporateTrails();
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      // Initialize
+      setupCanvases();
+      initializeTrailMap();
+      createParticles(params.particleCount);
+      animate();
+    </script>
+  </body>
+</html>
